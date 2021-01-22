@@ -1,0 +1,429 @@
+@extends('layouts.app')
+
+@php $active_sidebar = 'about2'; @endphp
+
+@section('title')
+    @php
+        // $title = 'Ali Haider'
+    @endphp
+@endsection
+
+@section('header')
+    @include('partials.loginModal')
+    @include('partials.nav')
+@endsection
+
+@section('content')
+    <section id="header">
+        <div class="bg-img">
+            <img src="{{ asset('/img/10.jpg') }}" alt="" srcset="">
+        </div>
+
+        <div class="cont">
+
+            <div class="text-header text-center">
+            <h1>عَمِّر سَعادتك من خلال</h1>
+            <h1>المُساعَدة في<span> إعمار سَعادة الآخرين</span></h1>
+            </div>
+
+            <div class="links-header">
+            <div class="container p-0">
+                <div class="row d-flex align-items-stretch">
+                <a href="#joinUs" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--doctor">
+                    <h3 class="floatItem-tagline">أنضم إلينا</h3>
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                </a>
+                <a href="{{ route('cases.create') }}" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--conditions">
+                    <h3 class="floatItem-tagline">أضافة حالة</h3>
+                    <i class="floatItem-icon fas fa-plus"></i>
+                </a>
+                <a href="#" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--appointment">
+                    <h3 class="floatItem-tagline">تبرع الآن</h3>
+                    <i class="floatItem-icon fas fa-file-signature"></i>
+                </a>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section id="achievements">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-12 col-lg-6 p-1 left">
+              <div class="d-flex flex-wrap">
+                <div class="larg">
+                  <img src="{{ asset('img/01.jpg') }}">
+                </div>
+                <div class="small">
+                  <img class="img-laft" src="{{ asset('img/02.jpg') }}">
+                  <img class="img-right" src="{{ asset('img/03.jpg') }}">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 p-1 right">
+              <div class="d-flex flex-wrap">
+
+                <div class="small">
+                  <div class="card">
+                    <h3>لقطة منجزات</h3>
+                    <p>وعند موافقه العميل المبدئيه على التصميم يتم ازالة هذا النص من التصميم ويتم وضع النصوص النهائية المطلوبة للتصميم ويقول البعض ان وضع النصوص التجريبية بالتصميم قد تشغل المشاهد عن وضع الكثير من الملاحظات او الانتقادات للتصميم الاساسي.</p>
+                  </div>
+                </div>
+
+                <div class="larg">
+                  <div class="d-flex">
+
+                    <div class="larg-img">
+                      <img src="{{ asset('img/04.jpg') }}" alt="" srcset="">
+                    </div>
+
+                    <div class="small-2-img d-flex flex-wrap">
+                      <img src="{{ asset('img/05.jpg') }}" alt="" srcset="">
+                      <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+    </section>
+
+
+      <section id="howCanYouHelp">
+        <div class="container">
+          <div class="text-center">
+            <h1 class="h1-header">كيف يمكن المساعدة</h1>
+
+            <!-- <div class="row justify-content-between flex-row-reverse"> -->
+            <div class="row">
+
+
+              <div class="col-12 col-md-4 col-lg-4 col-card">
+                <div class="card">
+                  <div class="card-body">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <h4>1تطوع الان</h4>
+                    <p>و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة</p>
+                  </div>
+                  <div class="card-footer">
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                    <a href="" class="btn btn-info">ساعد الان</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-4 col-card">
+                <div class="card">
+                  <div class="card-body">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <h4>2تطوع الان</h4>
+                    <p>اذا كنت منهدس بناء كهربائي او عامل او يمكنك المساعدة في عمليات البناء بئي شكل من الاشكال واحببت المساعدة يشرفنا قبول ذلك</p>
+                  </div>
+                  <div class="card-footer">
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                    <a href="" class="btn btn-info">ساعد الان</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-4 col-lg-4 col-card">
+                <div class="card">
+                  <div class="card-body">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <h4>3تطوع الان</h4>
+                    <p>و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة</p>
+                  </div>
+                  <div class="card-footer">
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                    <a href="" class="btn btn-info">ساعد الان</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+    <section id="joinUs">
+        <div class="container">
+          <div class="text-center">
+            <h1 class="h1-header">انضم الينا</h1>
+            <h4 class="sub-header">المحافظة على ابتسامتهم هدفنا...شاركنا في ذلك</h4>
+            <div class="card">
+                <form action="{{ route('join-us') }}" method="post">
+                    @csrf
+                    <div class="row justify-content-between flex-row-reverse">
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                          <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <select name="governorate" class="custom-select">
+                            <option selected>المحافضة</option>
+                            @foreach ($governorates as $governorate)
+                                <option value="{{ $governorate->id }}">{{ $governorate->name }}</option>
+                            @endforeach
+                            {{-- <option value="2">Two</option>
+                            <option value="3">Three</option> --}}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <select name="district" class="custom-select">
+                                <option selected>القضاء</option>
+                                {{-- <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option> --}}
+                            </select>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                          <input name="region" class="form-control" type="text" placeholder="منطقة/ناحية">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-group">
+                          <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="تفاصيل اكثر"></textarea>
+                        </div>
+                      </div>
+                      <div class="mx-auto">
+                        <button type="submit" class="btn btn-submit">أرسال</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+          </div>
+        </div>
+    </section>
+
+
+    <section id="responsibles">
+        <div class="container">
+          <h1 class="h1-header text-center">بعض القائمين على الموقع</h1>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card2 mx-auto">
+                <div class="img">
+                  <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+                </div>
+                <h4 class="text-center m-3">علي حيدر</h4>
+                <p>
+                  هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
+                </p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card2 mx-auto">
+                <div class="img">
+                  <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+                </div>
+                <h4 class="text-center m-3">علي حيدر</h4>
+                <p>
+                  هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
+                </p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card2 mx-auto">
+                <div class="img">
+                  <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+                </div>
+                <h4 class="text-center m-3">علي حيدر</h4>
+                <p>
+                  هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
+                </p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card2 mx-auto">
+                <div class="img">
+                  <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+                </div>
+                <h4 class="text-center m-3">علي حيدر</h4>
+                <p>
+                  هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </section>
+
+
+    <section id="connectWithUs">
+      <div class="container">
+        <h1 class="h1-header text-center">تواصل معنا</h1>
+        <div class="card3">
+          <div class="row flex-row-reverse">
+
+
+            <div class="right col-12 col-sm-12 col-md-12 col-lg-8">
+                <form action="{{ route('message') }}" method="post">
+              <div class="row justify-content-between flex-row-reverse">
+
+                    @csrf
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="form-group">
+                        <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="form-group">
+                        <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4">
+                      <div class="form-group">
+                        <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <div class="form-group">
+                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="الوصف"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="mx-auto">
+                      <button type="submit" class="btn btn-submit">أرسال</button>
+                    </div>
+
+                </div>
+            </form>
+            </div>
+            <div class="left col-12 col-sm-12 col-md-12 col-lg-4">
+              <h4>هل لديك أسئلة؟</h4>
+              <ul>
+                <li class="d-flex flex-row-reverse">
+                  <i class="floatItem-icon fas fa-user-md"></i>
+                  <p>الرمادي, شارع الملعب, قرب عمارة الحاج ثامر</p>
+                </li>
+                <li class="d-flex flex-row-reverse">
+                  <i class="floatItem-icon fas fa-user-md"></i>
+                  <p>9647800000000+</p>
+                </li>
+                <li class="d-flex flex-row-reverse">
+                  <i class="floatItem-icon fas fa-user-md"></i>
+                  <p>info@email.com</p>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+@endsection
+
+
+
+
+
+@section('js')
+    <script>
+
+        $(Document).on('click','#login-submit', function(){
+            var form = $('#login-form').serialize();
+            var url = $('#login-form').attr('action');
+            $.ajax({
+                url:url,
+                dataType:'json',
+                data:form,
+                type:'post',
+                beforeSend: function(){
+
+                },
+                success: function(){
+                    $('#login-modal').hide();
+                    location.reload();
+                },
+            }).fail(function (error) {
+                // console.dir(error.responseJSON.errors);
+                if(error.responseJSON.errors.email){
+                    // alert(error.responseJSON.errors.email[0]);
+                    $("#loginInputEmail").val('');
+                    $("#loginInputPassword").val('');
+                    $("#loginInputEmail").addClass("form-control-error");
+                    $("#loginInputEmail").attr("placeholder", error.responseJSON.errors.email[0]);
+                }
+                if(!error.responseJSON.errors.email){
+                    $("#loginInputEmail").removeClass("form-control-error");
+                }
+
+                if(error.responseJSON.errors.password){
+                    // alert(error.responseJSON.errors.email[0]);
+                    $("#loginInputPassword").val('');
+                    $("#loginInputPassword").addClass("form-control-error");
+                    $("#loginInputPassword").attr("placeholder", error.responseJSON.errors.password[0]);
+                }
+                if(!error.responseJSON.errors.password){
+                    $("#loginInputPassword").removeClass("form-control-error");
+                }
+            });
+
+            // .always(function () {
+            //     // location.reload();
+            // });
+
+            return false;
+
+        });
+
+
+        $(document).ready(function () {
+            $('select[name="governorate"]').on('change',function(){
+                // console.log('ali');
+                var governorate_id = $(this).val();
+                if(governorate_id){
+                    // console.log(governorate_id);
+                    $.ajax({
+                        url: '/district/'+governorate_id+'/get',
+                        type: 'POST',
+                        data: { somefield: "Some field value", _token: '{{csrf_token()}}' },
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            $('select[name="district"]').empty();
+                            $.each(data, function (key, value) {
+                                $('select[name="district"]').append('<option value="'+key+'">'+value+'</option>');
+                            });
+                        }
+                    });
+
+                }
+            });
+        });
+
+    </script>
+@endsection
