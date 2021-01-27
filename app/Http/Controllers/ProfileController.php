@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware(['auth']);
     }
 
@@ -63,7 +62,7 @@ class ProfileController extends Controller
 
     public function update(UpdateProfile $request,User $user){
 
-        
+
 
         $user_date      = $user->only(['name']);
         $profile_date   = $user->profile->only(['phone','birthdate','governorate','district','region']);

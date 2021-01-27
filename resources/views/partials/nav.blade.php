@@ -40,8 +40,8 @@
             <li class="nav-item @if ($active_sidebar=='about') active @endif">
                 <a class="nav-link" href="#">حول الموقع<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">الانجازات</a>
+            <li class="nav-item @if ($active_sidebar=='achievements') active @endif">
+                <a class="nav-link" href="{{ route('achievements') }}">الانجازات</a>
             </li>
             <li class="nav-item @if ($active_sidebar=='addsituation') active @endif">
                 <a class="nav-link" href="{{ route('cases.create') }}">إضافة حالة</a>

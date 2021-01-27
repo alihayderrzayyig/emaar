@@ -2,6 +2,7 @@
 
 use App\District;
 use App\Governorate;
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AddCasesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BranchController;
@@ -72,9 +73,7 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::post('/message', [MessageController::class, 'store'])->name('message');
 
 
-    Route::get('ach', function () {
-        return view('achievements');
-    });
+    Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
 });
 
 
