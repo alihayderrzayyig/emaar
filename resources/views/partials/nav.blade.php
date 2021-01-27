@@ -46,7 +46,7 @@
             <li class="nav-item @if ($active_sidebar=='addsituation') active @endif">
                 <a class="nav-link" href="{{ route('cases.create') }}">إضافة حالة</a>
             </li>
-            <li class="nav-item @if ($active_sidebar=='situation') active @endif"">
+            <li class="nav-item @if ($active_sidebar=='situation') active @endif">
                 {{-- situation --}}
                 <a class="nav-link" href="{{ route('cases.index') }}">الحالات</a>
             </li>

@@ -3,6 +3,8 @@
 use App\District;
 use App\Governorate;
 use App\Http\Controllers\AddCasesController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\JoinUsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
@@ -36,8 +38,18 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Auth::routes();
 
 
-    Route::get('/admin','Admin\AdminController@index')->name('admin.index');
+    Route::get('/admin',[AdminController::class,'index'])->name('admin.index');
+    Route::get('/admin/achievments', [AdminController::class,'achievments'])->name('achievments');
+
+    Route::resource('/admin/achievments/branch', 'Admin\BranchController');
+    Route::resource('/admin/achievments/project', 'Admin\ProjectController');
+
     Route::get('/admin/users','Admin\UserController@index')->name('admin.users.index');
+
+
+
+
+
 
     // تسجيل الدخول خلال الفيس والكوكل
     Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login-test');
@@ -46,7 +58,8 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
 
     Route::get('/profile', [ProfileController::class,'showe'])->name('profile');
-    Route::get('/profile/{user}/edit', [ProfileController::class,'editprofile'])->name('edit-profile');
+    Route::get('/profile/{user}/edit', [ProfileController::class,'edit'])->name('edit-profile');
+    Route::put('/profile/{user}/edit', [ProfileController::class,'update'])->name('edit-profile');
     Route::put('/profile/{user}/edit-image', [ProfileController::class,'editImage'])->name('edit-image');
 
     // Route::get('test', function () {
@@ -57,6 +70,11 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::resource('/cases', 'SituationController');
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');
     Route::post('/message', [MessageController::class, 'store'])->name('message');
+
+
+    Route::get('ach', function () {
+        return view('achievements');
+    });
 });
 
 

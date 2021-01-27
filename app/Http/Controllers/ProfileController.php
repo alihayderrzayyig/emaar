@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\District;
 use App\Governorate;
+use App\Http\Requests\UpdateProfile;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -12,7 +13,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     public function showe(){
+        // dd(Route::hase());
         $user = Auth::user();
         $governorate =Governorate::where('id', $user->profile->governorate)->first();
         $district = District::where('governorate_id', $user->profile->governorate)->where('id', $user->profile->district)->first();
@@ -42,14 +49,47 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    // public function editProfile(User $user){
+    public function edit(User $user){
+        // dd('TTTTTT');
+        if(Auth::user()->id === $user->id){
+            return view('edit-profile',[
+                'user'=>$user,
+                'governorates' =>Governorate::all(),
+                'districts' => District::all()
+            ]);
+        }
 
-    //     dd('TTTTTT');
-    //     if(Auth::user() == $user){
-    //     }
+    }
 
-    //     // return view('edit-profile',['user'=>$user]);
-    // }
+    public function update(UpdateProfile $request,User $user){
+
+        
+
+        $user_date      = $user->only(['name']);
+        $profile_date   = $user->profile->only(['phone','birthdate','governorate','district','region']);
+
+        if (Auth::user()->id == $user->id) {
+            // return $request;
+            $user_date['name'] = $request->name;
+
+            $profile_date['phone'] = $request->phone;
+            $profile_date['birthdate'] = $request->birthdate;
+            $profile_date['governorate'] = $request->governorate;
+            $profile_date['district'] = $request->district;
+            $profile_date['region'] = $request->region;
+
+            $user->update($user_date);
+            $user->profile->update($profile_date);
+
+            session()->flash('success', 'تم تعديل بياناتك بنجاح');
+
+            return \redirect()->back();
+            # code...
+        } else {
+            # code...
+        }
+
+    }
 
     public function complete(Profile $profile){
         // return $profile->user->name;

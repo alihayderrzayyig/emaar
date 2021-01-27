@@ -17,9 +17,9 @@
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">الصفحة الرئيسية</p>
         </a>
-        <a href="#" class="d-flex flex-row-reverse @if ($active_sidebar=='main2') active @endif">
+        <a href="{{ route('achievments') }}" class="d-flex flex-row-reverse @if ($active_sidebar=='achievments') active @endif">
             <i class="fab fa-facebook-square align-self-center"></i>
-            <p class="align-self-center">اجزاء الموقع </p>
+            <p class="align-self-center">الانجازات</p>
         </a>
         <a href="#" class="d-flex flex-row-reverse @if ($active_sidebar=='main3') active @endif">
             <i class="fab fa-facebook-square align-self-center"></i>

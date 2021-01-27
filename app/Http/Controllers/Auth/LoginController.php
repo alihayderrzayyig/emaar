@@ -83,7 +83,9 @@ class LoginController extends Controller
 
             // dd('ttttttt');
 
-            $user->profile()->create();
+            $user->profile()->create([
+                'avatar' => $socialuser->getAvatar(),
+            ]);
 
             $user->socialProviders()->create([
                 'provider_id' =>$socialuser->getId(),
