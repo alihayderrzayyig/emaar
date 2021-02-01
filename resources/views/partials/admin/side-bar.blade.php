@@ -21,11 +21,15 @@
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">الانجازات</p>
         </a>
-        <a href="#" class="d-flex flex-row-reverse @if ($active_sidebar=='main3') active @endif">
+        <a href="{{ route('admin-message.index') }}" class="d-flex flex-row-reverse @if ($active_sidebar=='admin-message') active @endif">
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">الرسائل</p>
         </a>
-        <a href="#" class="d-flex flex-row-reverse @if ($active_sidebar=='main4') active @endif">
+        <a href="{{ route('admin-joinus.index') }}" class="d-flex flex-row-reverse @if ($active_sidebar=='joinus') active @endif">
+            <i class="fab fa-facebook-square align-self-center"></i>
+            <p class="align-self-center">أنضم الينا</p>
+        </a>
+        <a href="{{ route('admin-situation.index') }}" class="d-flex flex-row-reverse @if ($active_sidebar=='Situation') active @endif">
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">الحالات</p>
         </a>

@@ -39,6 +39,24 @@
 
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '534267997480471',
+            xfbml      : true,
+            version    : 'v9.0'
+          });
+          FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+      </script>
     @yield('js')
   </body>
 </html>

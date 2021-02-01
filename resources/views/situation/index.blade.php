@@ -59,8 +59,8 @@
                               <h4>{{ $situation->name }}</h4>
                             </div>
                             <div class="card-footer">
-                              <button class="btn btn-primary m-0">إقراء المزيد</button>
-                              <button class="btn btn-primary m-0">إقراء المزيد</button>
+                              <a href="{{ route('gift.create2', $situation->id) }}/#gift" class="btn btn-primary m-0">تبرع الان</a>
+                              <a href="{{ route('situation.show', $situation->id) }}" class="btn btn-primary m-0">إقراء المزيد</a>
                             </div>
                         </div>
                     </div>

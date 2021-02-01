@@ -21,8 +21,8 @@ class SituationController extends Controller
      */
     public function index()
     {
-        $situations = Situation::paginate(20);
-        return view('situations',['situations'=>$situations]);
+        $situations = Situation::where('status',1)->paginate(20);
+        return view('situation.index',['situations'=>$situations]);
     }
 
     /**
@@ -33,7 +33,7 @@ class SituationController extends Controller
     public function create()
     {
         $governorates = Governorate::all();
-        return view('add-situation', ['governorates'=>$governorates]);
+        return view('situation.create', ['governorates'=>$governorates]);
     }
 
     /**
@@ -79,9 +79,14 @@ class SituationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Situation $situation)
     {
-        //
+        // return $situation;
+        $governorates = Governorate::all();
+        return view('situation.show',[
+            'governorates'=>$governorates,
+            'situation'=>$situation
+        ]);
     }
 
     /**
@@ -92,6 +97,7 @@ class SituationController extends Controller
      */
     public function edit($id)
     {
+        
         //
     }
 
@@ -116,5 +122,10 @@ class SituationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function give(Situation $situation){
+        return view('showSituation',['situation'=>$situation]);
     }
 }

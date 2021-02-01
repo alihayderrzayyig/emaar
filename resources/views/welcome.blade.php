@@ -33,11 +33,11 @@
                     <h3 class="floatItem-tagline">أنضم إلينا</h3>
                     <i class="floatItem-icon fas fa-user-md"></i>
                 </a>
-                <a href="{{ route('cases.create') }}" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--conditions">
+                <a href="{{ route('situation.create') }}" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--conditions">
                     <h3 class="floatItem-tagline">أضافة حالة</h3>
                     <i class="floatItem-icon fas fa-plus"></i>
                 </a>
-                <a href="#" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--appointment">
+                <a href="{{ route('gift.create') }}" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--appointment">
                     <h3 class="floatItem-tagline">تبرع الآن</h3>
                     <i class="floatItem-icon fas fa-file-signature"></i>
                 </a>
@@ -281,67 +281,67 @@
 
 
     <section id="connectWithUs">
-      <div class="container">
-        <h1 class="h1-header text-center">تواصل معنا</h1>
-        <div class="card3">
-          <div class="row flex-row-reverse">
+        <div class="container">
+            <h1 class="h1-header text-center">تواصل معنا</h1>
+            <div class="card3">
+            <div class="row flex-row-reverse">
 
 
-            <div class="right col-12 col-sm-12 col-md-12 col-lg-8">
-                <form action="{{ route('message') }}" method="post">
-              <div class="row justify-content-between flex-row-reverse">
+                <div class="right col-12 col-sm-12 col-md-12 col-lg-8">
+                    <form action="{{ route('message') }}" method="post">
+                <div class="row justify-content-between flex-row-reverse">
 
-                    @csrf
-                    <div class="col-sm-12 col-md-12 col-lg-4">
-                      <div class="form-group">
-                        <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
-                      </div>
+                        @csrf
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                            <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                            <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
+                        </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4">
+                        <div class="form-group">
+                            <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
+                        </div>
+                        </div>
+
+                        <div class="col-12">
+                        <div class="form-group">
+                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="الوصف"></textarea>
+                        </div>
+                        </div>
+
+                        <div class="mx-auto">
+                        <button type="submit" class="btn btn-submit">أرسال</button>
+                        </div>
+
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4">
-                      <div class="form-group">
-                        <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
-                      </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-4">
-                      <div class="form-group">
-                        <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <div class="form-group">
-                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="الوصف"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="mx-auto">
-                      <button type="submit" class="btn btn-submit">أرسال</button>
-                    </div>
-
+                </form>
                 </div>
-            </form>
-            </div>
-            <div class="left col-12 col-sm-12 col-md-12 col-lg-4">
-              <h4>هل لديك أسئلة؟</h4>
-              <ul>
-                <li class="d-flex flex-row-reverse">
-                  <i class="floatItem-icon fas fa-user-md"></i>
-                  <p>الرمادي, شارع الملعب, قرب عمارة الحاج ثامر</p>
-                </li>
-                <li class="d-flex flex-row-reverse">
-                  <i class="floatItem-icon fas fa-user-md"></i>
-                  <p>9647800000000+</p>
-                </li>
-                <li class="d-flex flex-row-reverse">
-                  <i class="floatItem-icon fas fa-user-md"></i>
-                  <p>info@email.com</p>
-                </li>
-              </ul>
-            </div>
+                <div class="left col-12 col-sm-12 col-md-12 col-lg-4">
+                <h4>هل لديك أسئلة؟</h4>
+                <ul>
+                    <li class="d-flex flex-row-reverse">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <p>الرمادي, شارع الملعب, قرب عمارة الحاج ثامر</p>
+                    </li>
+                    <li class="d-flex flex-row-reverse">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <p>9647800000000+</p>
+                    </li>
+                    <li class="d-flex flex-row-reverse">
+                    <i class="floatItem-icon fas fa-user-md"></i>
+                    <p>info@email.com</p>
+                    </li>
+                </ul>
+                </div>
 
-          </div>
+            </div>
+            </div>
         </div>
-      </div>
     </section>
 
 @endsection

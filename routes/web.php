@@ -5,6 +5,9 @@ use App\Governorate;
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AddCasesController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminjoinUsController;
+use App\Http\Controllers\Admin\AdminMessageController;
+use App\Http\Controllers\Admin\AdminSituationController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\JoinUsController;
 use App\Http\Controllers\MessageController;
@@ -47,16 +50,19 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
     Route::get('/admin/users','Admin\UserController@index')->name('admin.users.index');
 
+    Route::get('/admin/admin-situation/waiting', [AdminSituationController::class,'waitingForApproval'])->name('admin-situation.waiting');
+    Route::put('/admin/admin-situation/{situation}/agree', [AdminSituationController::class,'agree'])->name('admin-situation.agree');
+    Route::resource('/admin/admin-situation', 'Admin\AdminSituationController');
 
+    Route::get('/admin/admin-message', [AdminMessageController::class,'index'])->name('admin-message.index');
+    Route::delete('/admin/admin-message/{message}', [AdminMessageController::class,'destroy']);
 
-
-
+    Route::get('/admin/admin-joinus', [AdminjoinUsController::class,'index'])->name('admin-joinus.index');
+    Route::delete('/admin/admin-joinus/{joinus}', [AdminjoinUsController::class,'destroy']);
 
     // تسجيل الدخول خلال الفيس والكوكل
     Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login-test');
     Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
-
-
 
     Route::get('/profile', [ProfileController::class,'showe'])->name('profile');
     Route::get('/profile/{user}/edit', [ProfileController::class,'edit'])->name('edit-profile');
@@ -67,8 +73,17 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     //     return view('auth.registerProfile', ['governorates' =>Governorate::all()]);
     // });
 
+    // Route::get('/gift/{situation}/#give', 'GiftController@create')->name('situation-gift');
+    Route::get('/gift/{situation}/gift', 'GiftController@create2')->name('gift.create2');
+    Route::resource('/gift', 'GiftController');
 
-    Route::resource('/cases', 'SituationController');
+
+
+
+
+    // Route::get('/situation/{situation}/#give', 'SituationController@give')->name('situation-give');
+    Route::resource('/situation', 'SituationController');
+
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');
     Route::post('/message', [MessageController::class, 'store'])->name('message');
 

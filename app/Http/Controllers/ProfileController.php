@@ -22,7 +22,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $governorate =Governorate::where('id', $user->profile->governorate)->first();
         $district = District::where('governorate_id', $user->profile->governorate)->where('id', $user->profile->district)->first();
-        return view('profile', ['user'=>$user, 'governorate'=>$governorate , 'district'=>$district]);
+        return view('profile.index', ['user'=>$user, 'governorate'=>$governorate , 'district'=>$district]);
     }
 
     public function editImage(User $user, Request $request){
@@ -51,7 +51,7 @@ class ProfileController extends Controller
     public function edit(User $user){
         // dd('TTTTTT');
         if(Auth::user()->id === $user->id){
-            return view('edit-profile',[
+            return view('profile.edit',[
                 'user'=>$user,
                 'governorates' =>Governorate::all(),
                 'districts' => District::all()

@@ -52,4 +52,7 @@ class User extends Authenticatable
     public function situations(){
         return $this->hasMany(Situation::class);
     }
+    public function gifts(){
+        return $this->hasMany(Gift::class);
+    }
 }

@@ -18,12 +18,13 @@ class CreateSituationsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('phone');
-            $table->string('governorate');
-            $table->string('district');
+            $table->integer('governorate');
+            $table->integer('district');
             $table->string('region');
             $table->string('money');
             $table->text('description');
             $table->string('image');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

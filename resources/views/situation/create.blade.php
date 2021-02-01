@@ -10,7 +10,7 @@
 @section('content')
     <section id="addCases">
         <div class="container">
-        <form action="{{ route('cases.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('situation.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card">
             <div class="row justify-content-between">

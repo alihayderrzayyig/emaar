@@ -44,11 +44,11 @@
                 <a class="nav-link" href="{{ route('achievements') }}">الانجازات</a>
             </li>
             <li class="nav-item @if ($active_sidebar=='addsituation') active @endif">
-                <a class="nav-link" href="{{ route('cases.create') }}">إضافة حالة</a>
+                <a class="nav-link" href="{{ route('situation.create') }}">إضافة حالة</a>
             </li>
             <li class="nav-item @if ($active_sidebar=='situation') active @endif">
                 {{-- situation --}}
-                <a class="nav-link" href="{{ route('cases.index') }}">الحالات</a>
+                <a class="nav-link" href="{{ route('situation.index') }}">الحالات</a>
             </li>
             @auth
                 @if (Auth::user()->isAdmin == 1)
