@@ -48,7 +48,11 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::resource('/admin/achievments/branch', 'Admin\BranchController');
     Route::resource('/admin/achievments/project', 'Admin\ProjectController');
 
-    Route::get('/admin/users','Admin\UserController@index')->name('admin.users.index');
+    // Route::get('/admin/users','Admin\UserController@index')->name('admin.users.index');
+    Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+        // Route::resource('users','UserController');
+        Route::resource('/users', 'AdminUserController');
+    });
 
     Route::get('/admin/admin-situation/waiting', [AdminSituationController::class,'waitingForApproval'])->name('admin-situation.waiting');
     Route::put('/admin/admin-situation/{situation}/agree', [AdminSituationController::class,'agree'])->name('admin-situation.agree');

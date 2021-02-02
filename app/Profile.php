@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Profile extends Model
 {
@@ -17,7 +18,9 @@ class Profile extends Model
         'completed'
     ];
 
-
+    public function deleteImage(){
+        Storage::delete($this->avatar);
+    }
 
 
     public function user()
