@@ -14,10 +14,14 @@
 @endsection
 
 @section('content')
-    <section id="header">
-        <div class="bg-img">
-            <img src="{{ asset('/img/10.jpg') }}" alt="" srcset="">
-        </div>
+<section id="header">
+    <div class="bg-img">
+        <img src="{{ asset('/img/10.jpg') }}" alt="" srcset="">
+    </div>
+    <div class="session-messages mt-3">
+        @include('partials.error-message')
+        @include('partials.success-message')
+    </div>
 
         <div class="cont">
 
@@ -165,22 +169,32 @@
             <h1 class="h1-header">انضم الينا</h1>
             <h4 class="sub-header">المحافظة على ابتسامتهم هدفنا...شاركنا في ذلك</h4>
             <div class="card">
+                @if (session('joinus-error') && $errors->any())
+                    <div class="alert alert-danger text-left">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form action="{{ route('join-us') }}" method="post">
                     @csrf
                     <div class="row justify-content-between flex-row-reverse">
                       <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
-                          <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
+                          {{-- <input name="name" class="form-control" type="text" placeholder="{{ __('الاسم الكامل') }}"> --}}
+                          <input name="name" class="form-control" type="text" placeholder="{{ __('الاسم الكامل') }}" required value="{{ old('name') }}">
                         </div>
                       </div>
                       <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
-                          <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
+                          <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف" required value="{{ old('phone') }}">
                         </div>
                       </div>
                       <div class="col-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                          <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
+                          <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني" required value="{{ old('email') }}">
                         </div>
                       </div>
                       <div class="col-12 col-md-6 col-lg-4">
@@ -207,12 +221,12 @@
                       </div>
                       <div class="col-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                          <input name="region" class="form-control" type="text" placeholder="منطقة/ناحية">
+                          <input name="region" class="form-control" type="text" placeholder="منطقة/ناحية" required value="{{ old('region') }}">
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="form-group">
-                          <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="تفاصيل اكثر"></textarea>
+                          <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="تفاصيل اكثر" required>{{ old('description') }}</textarea>
                         </div>
                       </div>
                       <div class="mx-auto">
@@ -284,33 +298,44 @@
         <div class="container">
             <h1 class="h1-header text-center">تواصل معنا</h1>
             <div class="card3">
-            <div class="row flex-row-reverse">
+                <div class="row flex-row-reverse">
 
 
-                <div class="right col-12 col-sm-12 col-md-12 col-lg-8">
+                    <div class="right col-12 col-sm-12 col-md-12 col-lg-8">
+                        @if (session('message-error'))
+                            @if ($errors->any())
+                                <div class="alert alert-danger text-left">
+                                    <ul class="list-unstyled">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        @endif
                     <form action="{{ route('message') }}" method="post">
                 <div class="row justify-content-between flex-row-reverse">
 
                         @csrf
                         <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                            <input name="name" class="form-control" type="text" placeholder="الاسم الكامل">
+                            <input name="name" class="form-control" type="text" placeholder="الاسم الكامل" required>
                         </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                            <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف">
+                            <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف" required>
                         </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="form-group">
-                            <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني">
+                            <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني" required>
                         </div>
                         </div>
 
                         <div class="col-12">
                         <div class="form-group">
-                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="الوصف"></textarea>
+                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5np" placeholder="الوصف" required></textarea>
                         </div>
                         </div>
 
@@ -348,59 +373,23 @@
 
 
 
+@section('css')
+    <style>
+        .session-messages{
+            width: 90%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            margin-left: auto
+        }
+    </style>
+@endsection
 
 
 @section('js')
     <script>
-
-        $(Document).on('click','#login-submit', function(){
-            var form = $('#login-form').serialize();
-            var url = $('#login-form').attr('action');
-            $.ajax({
-                url:url,
-                dataType:'json',
-                data:form,
-                type:'post',
-                beforeSend: function(){
-
-                },
-                success: function(){
-                    $('#login-modal').hide();
-                    location.reload();
-                },
-            }).fail(function (error) {
-                // console.dir(error.responseJSON.errors);
-                if(error.responseJSON.errors.email){
-                    // alert(error.responseJSON.errors.email[0]);
-                    $("#loginInputEmail").val('');
-                    $("#loginInputPassword").val('');
-                    $("#loginInputEmail").addClass("form-control-error");
-                    $("#loginInputEmail").attr("placeholder", error.responseJSON.errors.email[0]);
-                }
-                if(!error.responseJSON.errors.email){
-                    $("#loginInputEmail").removeClass("form-control-error");
-                }
-
-                if(error.responseJSON.errors.password){
-                    // alert(error.responseJSON.errors.email[0]);
-                    $("#loginInputPassword").val('');
-                    $("#loginInputPassword").addClass("form-control-error");
-                    $("#loginInputPassword").attr("placeholder", error.responseJSON.errors.password[0]);
-                }
-                if(!error.responseJSON.errors.password){
-                    $("#loginInputPassword").removeClass("form-control-error");
-                }
-            });
-
-            // .always(function () {
-            //     // location.reload();
-            // });
-
-            return false;
-
-        });
-
-
         $(document).ready(function () {
             $('select[name="governorate"]').on('change',function(){
                 // console.log('ali');

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\joinUsRequest;
 use App\JoinUs;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 class JoinUsController extends Controller
 {
     //
 
-    public function store(Request $request){
-        // return($request);
+    public function store(joinUsRequest $request){
 
         JoinUs::create([
             'name'          =>$request->name,
@@ -21,6 +22,8 @@ class JoinUsController extends Controller
             'region'        =>$request->region,
             'description'   =>$request->description,
         ]);
+
+        session()->flash('success', 'تمة عملية الارسال بنجاح');
 
         return \redirect()->back();
 
