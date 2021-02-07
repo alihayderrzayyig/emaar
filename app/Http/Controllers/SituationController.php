@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Governorate;
+use App\Http\Requests\SituationRequest;
 use App\Situation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,18 +43,18 @@ class SituationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SituationRequest $request)
     {
-            $request->validateWithBag('post', [
-                'name'          => ['required', 'max:255'],
-                'phone'         => ['required'],
-                'governorate'   => ['required', 'integer'],
-                'district'      => ['required', 'integer'],
-                'region'        => ['required'],
-                'money'         => ['required'],
-                'image'         => ['required', 'image'],
-                'description'   => ['required'],
-            ]);
+            // $request->validateWithBag('post', [
+            //     'name'          => ['required', 'max:255'],
+            //     'phone'         => ['required'],
+            //     'governorate'   => ['required', 'integer'],
+            //     'district'      => ['required', 'integer'],
+            //     'region'        => ['required'],
+            //     'money'         => ['required'],
+            //     'image'         => ['required', 'image'],
+            //     'description'   => ['required'],
+            // ]);
 
         // dd($request->image);
 
@@ -70,7 +71,9 @@ class SituationController extends Controller
             'description'   => $request->description,
         ]);
 
-        return redirect('/');
+        session()->flash('success', 'تمة عملة الارسال بنجاح');
+
+        return redirect()->back();
     }
 
     /**
@@ -97,7 +100,7 @@ class SituationController extends Controller
      */
     public function edit($id)
     {
-        
+
         //
     }
 
