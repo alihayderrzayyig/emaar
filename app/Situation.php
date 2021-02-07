@@ -15,6 +15,7 @@ class Situation extends Model
         'district',
         'region',
         'money',
+        'achieve',
         'status',
         'image',
         'description',
@@ -31,5 +32,9 @@ class Situation extends Model
 
     public function gifts(){
         return $this->hasMany(Gift::class);
+    }
+
+    public function completed(){
+        return intval($this->achieve/$this->money*100);
     }
 }

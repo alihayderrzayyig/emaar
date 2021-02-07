@@ -5,6 +5,7 @@ use App\Governorate;
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AddCasesController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminGiftController;
 use App\Http\Controllers\Admin\AdminjoinUsController;
 use App\Http\Controllers\Admin\AdminMessageController;
 use App\Http\Controllers\Admin\AdminSituationController;
@@ -52,8 +53,15 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // Route::resource('users','UserController');
         Route::resource('/users', 'AdminUserController');
+
+
+        Route::get('/gift', [AdminGiftController::class,'index'])->name('gift.index');
+        Route::delete('/gift/{gift}', [AdminGiftController::class,'destroy'])->name('gift.destroy');
+
     });
 
+
+    Route::post('/admin/admin-situation/{situation}', [AdminSituationController::class,'addGift'])->name('admin-situation.addGift');
     Route::get('/admin/admin-situation/waiting', [AdminSituationController::class,'waitingForApproval'])->name('admin-situation.waiting');
     Route::put('/admin/admin-situation/{situation}/agree', [AdminSituationController::class,'agree'])->name('admin-situation.agree');
     Route::resource('/admin/admin-situation', 'Admin\AdminSituationController');
@@ -73,19 +81,9 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::put('/profile/{user}/edit', [ProfileController::class,'update'])->name('edit-profile');
     Route::put('/profile/{user}/edit-image', [ProfileController::class,'editImage'])->name('edit-image');
 
-    // Route::get('test', function () {
-    //     return view('auth.registerProfile', ['governorates' =>Governorate::all()]);
-    // });
-
-    // Route::get('/gift/{situation}/#give', 'GiftController@create')->name('situation-gift');
     Route::get('/gift/{situation}/gift', 'GiftController@create2')->name('gift.create2');
     Route::resource('/gift', 'GiftController');
 
-
-
-
-
-    // Route::get('/situation/{situation}/#give', 'SituationController@give')->name('situation-give');
     Route::resource('/situation', 'SituationController');
 
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');
@@ -94,6 +92,11 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
     Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
 });
+
+
+
+
+
 
 
 

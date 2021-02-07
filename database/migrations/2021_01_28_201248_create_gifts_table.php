@@ -23,7 +23,7 @@ class CreateGiftsTable extends Migration
             $table->integer('governorate')->require();
             $table->integer('district')->require();
             $table->string('region')->require();
-            $table->text('description')->require();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -195,4 +195,23 @@ class AdminSituationController extends Controller
         session()->flash('success', 'تمة عملة الحذف بنجاح');
         return \redirect()->route('admin-situation.index');
     }
+
+    public function addGift(Request $request, $id){
+        // Achieve
+        $situation = Situation::find($id);
+        $oldval = $situation->achieve;
+        $newval = $oldval + $request->money;
+        $date['achieve'] = $newval;
+        $situation->update($date);
+
+
+        session()->flash('success', 'تمة عملة الاضافة بنجاح');
+        return \redirect()->back();
+
+
+
+        // $situation->achieve += $request->money;
+        // $situation->save();
+
+    }
 }

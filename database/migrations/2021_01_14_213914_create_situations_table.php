@@ -21,7 +21,8 @@ class CreateSituationsTable extends Migration
             $table->integer('governorate');
             $table->integer('district');
             $table->string('region');
-            $table->string('money');
+            $table->integer('money');
+            $table->bigInteger('achieve')->default(0);
             $table->text('description');
             $table->string('image');
             $table->integer('status')->default(0);

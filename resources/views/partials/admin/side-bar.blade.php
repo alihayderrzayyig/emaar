@@ -33,7 +33,7 @@
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">الحالات</p>
         </a>
-        <a href="#" class="d-flex flex-row-reverse @if ($active_sidebar=='main5') active @endif">
+        <a href="{{ route('admin.gift.index') }}" class="d-flex flex-row-reverse @if ($active_sidebar=='gift') active @endif">
             <i class="fab fa-facebook-square align-self-center"></i>
             <p class="align-self-center">التبرعات</p>
         </a>

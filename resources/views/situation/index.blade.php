@@ -52,7 +52,7 @@
                               <p>
                                 <i class="fas fa-hand-holding-usd"></i>
                                 تم انجاز
-                                0%
+                                {{ $situation->completed() }}%
                               </p>
                             </div>
                             <div class="body">

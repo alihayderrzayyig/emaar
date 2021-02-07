@@ -71,6 +71,11 @@
                                             </div>
                                         </form>
                                         @endif
+                                        @if ($item->status)
+                                            <div class="flex btn btn-success btn-table ml-2">
+                                                <button onclick="addGift('admin-situation/{{  $item->id }}')" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-donate"></i></button>
+                                            </div>
+                                        @endif
                                         <div class="ml-2 flex btn btn-warning btn-table ">
                                             <a href="{{ route('admin-situation.edit', $item->id) }}"><i class="fas fa-cog"></i></a>
                                         </div>
@@ -87,6 +92,26 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body p-4">
+                            <form id="addGiftSituation" action="{{ route('admin-situation.addGift', $item->id) }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">كمية المال:</label>
+                                    <input type="number" name="money" class="form-control" id="exampleInputPassword1">
+                                </div>
+                                {{-- <div class="mx-auto w-100"> --}}
+                                    <button type="submit" class="btn btn-primary btn-block mx-auto">إدخال قيمة</button>
+                                {{-- </div> --}}
+                            </form>
+                        </div>
+                    </div>
+                    </div>
                 </div>
 
                 {{-- مودل الحذف --}}
@@ -110,10 +135,10 @@
 @endsection
 @section('js')
     <script>
-        function handldelete2(id){
+        function addGift(id){
             // console.log(id)
-            var form = document.getElementById('formedeletecategoy')
-            form.action =  'achievments/'+id
+            var form = document.getElementById('addGiftSituation')
+            form.action =  id
         }
     </script>
 @endsection

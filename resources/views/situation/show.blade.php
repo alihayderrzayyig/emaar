@@ -17,12 +17,12 @@
             <div class="d1">
             <!-- <div class="d1 d-flex flex-row-reverse align-items-center justify-content-between"> -->
                 <div class="d-flex flex-row-reverse ">
-                    <div class="d2 m-0 p-0 mr-4">
+                    {{-- <div class="d2 m-0 p-0 mr-4">
                         <h3 class="text-center m-0 p-0">0</h3>
                         <h6 class="mb-0">التبرعات</h6>
-                    </div>
+                    </div> --}}
                     <div class="d2 m-0 p-0">
-                        <h3 class="text-center m-0 p-0">0%</h3>
+                        <h3 class="text-center m-0 p-0">%{{ $situation->completed() }}</h3>
                         <h6 class="mb-0">من هدفنا</h6>
                     </div>
                 </div>
