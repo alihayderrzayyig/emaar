@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Governorate;
+use App\Http\Requests\GiftRequest;
 use App\Situation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,6 @@ class GiftController extends Controller
             'governorates'=>$governorates
         ]);
     }
-    // public function give(Situation $situation){
-    //     return view('showSituation',['situation'=>$situation]);
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -47,38 +45,25 @@ class GiftController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GiftRequest $request)
     {
-        // dd('ttttttttttttt');
-        // return $request;
         if(Auth::check()){
             if(isset($request->situation_id)){
-                // \dd('ttttttttttttt');
-                Auth::user()->gifts()->create([
-                    // 'user_id',
-                    'situation_id'  => $request->situation_id,
-                    'name'          => $request->name,
-                    'phone'         => $request->phone,
-                    'gift'          => $request->gift,
-                    'governorate'   => $request->governorate,
-                    'district'      => $request->district,
-                    'region'        => $request->region,
-                    'description'   => $request->description,
-                ]);
+                $situation_id = $request->situation_id;
             }else{
-                // \dd('fffffffffffff');
-                Auth::user()->gifts()->create([
-                    // 'user_id',
-                    // 'situation_id',
-                    'name'          => $request->name,
-                    'phone'         => $request->phone,
-                    'gift'          => $request->gift,
-                    'governorate'   => $request->governorate,
-                    'district'      => $request->district,
-                    'region'        => $request->region,
-                    'description'   => $request->description,
-                ]);
+                $situation_id = null;
             }
+            Auth::user()->gifts()->create([
+                'situation_id'  => $situation_id,
+                'name'          => $request->name,
+                'phone'         => $request->phone,
+                'gift'          => $request->gift,
+                'governorate'   => $request->governorate,
+                'district'      => $request->district,
+                'region'        => $request->region,
+                'description'   => $request->description,
+            ]);
+            session()->flash('success', 'تمة عملية الارسال بنجاح');
         }
 
         return \redirect()->back();

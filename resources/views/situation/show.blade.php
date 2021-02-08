@@ -12,6 +12,10 @@
 <section id="showCase">
     <div class="container">
         <div class="header mb-5">
+            <div class="session-messages mt-3">
+                @include('partials.error-message')
+                @include('partials.success-message')
+            </div>
         <!-- <div class="header d-flex flex-row-reverse align-items-center justify-content-between"> -->
             <h2>{{ $situation->name }}</h2>
             <div class="d1">
@@ -48,21 +52,21 @@
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="form-group">
                     <label for="name">الاسم الثلاثي:</label>
-                    <input id="name" name="name" class="form-control" type="text" placeholder="">
+                    <input id="name" name="name" class="form-control" type="text" placeholder="" value="{{ old('name') }}" required>
                     </div>
                 </div>
 
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="form-group">
                     <label for="phone">رقم الهاتف:</label>
-                    <input id="phone" name="phone" class="form-control" type="text" placeholder="">
+                    <input id="phone" name="phone" class="form-control" type="text" placeholder="" value="{{ old('phone') }}" required>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group">
                     <label for="des">بماذا تريد التبرع:</label>
-                    <textarea id="des" name="gift" class="form-control" id="exampleFormControlTextarea1" rows="2np" placeholder=""></textarea>
+                    <textarea id="des" name="gift" class="form-control" id="exampleFormControlTextarea1" rows="2np" placeholder="" required>{{ old('gift') }}</textarea>
                     </div>
                 </div>
 
@@ -71,7 +75,7 @@
                     <label for="governorate">عنوان السكن:</label>
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-3" >
-                        <select name="governorate" id="governorate" class="custom-select">
+                        <select name="governorate" id="governorate" class="custom-select" required>
                             {{-- <option value="" selected>المحافضة</option> --}}
                             @foreach ($governorates as $governorate)
                                 <option value="{{ $governorate->id }}">{{ $governorate->name }}</option>
@@ -79,18 +83,18 @@
                         </select>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-3" >
-                        <select name="district" class="custom-select">
+                        <select name="district" class="custom-select" required>
                             {{-- <option value="" selected>القضاء</option> --}}
                         </select>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4 col-lg- mb-3">
-                        <input name="region" class="form-control" type="text" placeholder="منطقة/ناحية">
+                        <input name="region" class="form-control" type="text" placeholder="منطقة/ناحية" value="{{ old('region') }}" required>
                         </div>
 
                         <div class="col-12 ">
                             <div class="form-group">
                                 <!-- <label for="des">وصف الحالة:</label> -->
-                                <textarea name="description" id="des" class="form-control" id="exampleFormControlTextarea1" rows="2np" placeholder="تفاصيل اكثر"></textarea>
+                                <textarea name="description" id="des" class="form-control" id="exampleFormControlTextarea1" rows="2np" placeholder="تفاصيل اكثر" required>{{ old('description') }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -110,6 +114,19 @@
 
 
 
+@section('css')
+    <style>
+        .session-messages{
+            width: 90%;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            margin-left: auto
+        }
+    </style>
+@endsection
 
 @section('js')
     <script>

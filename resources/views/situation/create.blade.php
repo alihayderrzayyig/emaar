@@ -15,14 +15,14 @@
             @csrf
             <div class="card">
                 @if ($errors->any())
-                <div class="alert alert-danger text-left">
-                    <ul class="list-unstyled">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="alert alert-danger text-left">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <div class="row justify-content-between">
 
                 <div class="col-sm-12 col-md-12 col-lg-6">
