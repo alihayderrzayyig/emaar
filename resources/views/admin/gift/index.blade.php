@@ -109,8 +109,13 @@
                                                     <p>{{ $gift->gift }}</p>
                                                 </div>
                                             </div>
-                                            <div class="flex btn btn-danger btn-table mx-auto btn-sm mb-2">
-                                                <button onclick="handldelete2('/admin/admin-joinus/{{ $gift->id }}')" data-toggle="modal" data-target="#deleteCategory">حذف</button>
+
+                                            <div class="flex mx-auto mb-2">
+                                                <form action="{{ route('admin.gift.destroy', $gift->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">حذف</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

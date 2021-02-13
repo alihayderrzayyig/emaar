@@ -8,11 +8,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminGiftController;
 use App\Http\Controllers\Admin\AdminjoinUsController;
 use App\Http\Controllers\Admin\AdminMessageController;
+use App\Http\Controllers\Admin\AdminResponsibleController;
 use App\Http\Controllers\Admin\AdminSituationController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\JoinUsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
+use App\Responsible;
 use App\User;
 use Illuminate\Support\Facades\Route;
 
@@ -36,8 +38,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['profileCompleted']], function () {
 
     Route::get('/', function () {
+        $responsibles = Responsible::all();
         $governorates = Governorate::all();
-        return view('welcome',['governorates'=>$governorates]);
+        return view('welcome',[
+            'governorates'=>$governorates,
+            'responsibles'=>$responsibles,
+        ]);
     })->name('home');
 
     Auth::routes();
@@ -58,7 +64,18 @@ Route::group(['middleware' => ['profileCompleted']], function () {
         Route::get('/gift', [AdminGiftController::class,'index'])->name('gift.index');
         Route::delete('/gift/{gift}', [AdminGiftController::class,'destroy'])->name('gift.destroy');
 
+
+        Route::resource('responsible', 'AdminResponsibleController');
+
+        // Route::post('/responsible', [AdminResponsibleController::class, 'store'])->name('responsible.store');
+        // Route::get('/responsible/create', [AdminResponsibleController::class, 'create'])->name('responsible.create');
     });
+
+
+
+    //****************************************************** */
+    Route::put('/admin/achievements', [AdminController::class,'editImage']);
+    //****************************************************** */
 
 
     Route::post('/admin/admin-situation/{situation}', [AdminSituationController::class,'addGift'])->name('admin-situation.addGift');
@@ -76,21 +93,28 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login-test');
     Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
-    Route::get('/profile', [ProfileController::class,'showe'])->name('profile');
-    Route::get('/profile/{user}/edit', [ProfileController::class,'edit'])->name('edit-profile');
-    Route::put('/profile/{user}/edit', [ProfileController::class,'update'])->name('edit-profile');
-    Route::put('/profile/{user}/edit-image', [ProfileController::class,'editImage'])->name('edit-image');
+
+
+    Route::get('/profile/{user:slug}', [ProfileController::class,'show'])->name('profile.show');
+    Route::get('/profile/{user:slug}/edit', [ProfileController::class,'edit'])->name('profile.edit');
+    Route::put('/profile/{user:slug}/edit', [ProfileController::class,'update'])->name('profile.update');
+    Route::put('/profile/{user:slug}/edit-image', [ProfileController::class,'editImage'])->name('edit-image');
+
+
+
 
     Route::get('/gift/{situation}/gift', 'GiftController@create2')->name('gift.create2');
     Route::resource('/gift', 'GiftController');
 
+
     Route::resource('/situation', 'SituationController');
+
 
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');
     Route::post('/message', [MessageController::class, 'store'])->name('message');
-
-
     Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
+
+
 });
 
 

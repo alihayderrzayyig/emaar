@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,10 +65,45 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+        $data_recaptcha = [
+                'secret' => config('services.recaptcha.secret'),
+                'response' => $data['recaptcha'],
+                'remoteip' => $remoteip
+            ];
+        $options = [
+                'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data_recaptcha)
+                ]
+            ];
+        $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            $resultJson = json_decode($result);
+        if ($resultJson->success != true) {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
+
+        // dd($resultJson);
+
+        // if ($resultJson->score >= 0.6) {
+        if ($resultJson->success == true) {
+            // dd($data);
+            return User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'slug' => SlugService::createSlug(User::class, 'slug', $data['name'],),
+                'password' => Hash::make($data['password']),
+            ]);
+                //Validation was successful, add your form submission logic here
+                // return back()->with('message', 'Thanks for your message!');
+        } else {
+            session()->flash('error', 'ReCaptcha Error');
+            // return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+            return \redirect()->back();
+        }
+
     }
 }

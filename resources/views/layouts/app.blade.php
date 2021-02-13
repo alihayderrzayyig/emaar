@@ -40,7 +40,7 @@
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script>
-                $(Document).on('click','#login-submit', function(){
+        $(Document).on('click','#login-submit', function(){
             var form = $('#login-form').serialize();
             var url = $('#login-form').attr('action');
             $.ajax({
@@ -104,7 +104,10 @@
            js.src = "https://connect.facebook.net/en_US/sdk.js";
            fjs.parentNode.insertBefore(js, fjs);
          }(document, 'script', 'facebook-jssdk'));
-      </script>
+
+    </script>
+
     @yield('js')
+
   </body>
 </html>

@@ -43,6 +43,8 @@
                                             </div>
                                         </td>
                                     </tr>
+
+                                    
                                     <!-- View Modal -->
                                     <div class="modal fade" id="messageShow{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">

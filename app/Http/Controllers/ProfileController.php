@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -17,9 +18,7 @@ class ProfileController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function showe(){
-        // dd(Route::hase());
-        $user = Auth::user();
+    public function show(User $user){
         $governorate =Governorate::where('id', $user->profile->governorate)->first();
         $district = District::where('governorate_id', $user->profile->governorate)->where('id', $user->profile->district)->first();
         return view('profile.index', ['user'=>$user, 'governorate'=>$governorate , 'district'=>$district]);
@@ -32,14 +31,17 @@ class ProfileController extends Controller
         if($request->hasFile('image')){
             //حفظ الصورة الجديدة
             $image=$request->image->store('profile');
-
             //اذا اكو صورة قديمة يتم مسحها
             if($user->profile->avatar !== 'img/user.png'){
                 Storage::delete($user->profile->avatar);
             }
-
             //حفظ مسار الصورة الجديدة
             $date['avatar'] = $image;
+
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(300, 200);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
         }
 
         //تحديث البيانات
@@ -61,8 +63,6 @@ class ProfileController extends Controller
     }
 
     public function update(UpdateProfile $request,User $user){
-
-
 
         $user_date      = $user->only(['name']);
         $profile_date   = $user->profile->only(['phone','birthdate','governorate','district','region']);
@@ -96,22 +96,8 @@ class ProfileController extends Controller
     }
 
     public function storeComplete(Profile $profile, Request $request){
-        // dd('fffffff');ur
-        // $date = $user->profile->only(['phone','birthdate','governorate','district', 'region']);
+
         $date = $profile->only(['phone','birthdate','governorate','district', 'completed', 'region']);
-        // $date;
-
-        // $x="fffffff";
-        // if(Auth::user()->id === $profile->user_id){
-        //     $x='ttttttt';
-        // }
-
-        // dd($x);
-
-
-
-        // dd(Auth::user()->id );
-        // dd( $profile);
 
         if(Auth::user()->id === $profile->user_id){
             $date['phone'] = $request->phone;

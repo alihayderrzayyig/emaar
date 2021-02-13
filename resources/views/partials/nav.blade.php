@@ -5,7 +5,7 @@
         <img src="{{ asset(auth()->user()->profile->avatar) }}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
       </a>
       <div class="dropdown-menu  text-right " aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ route('profile') }}">معلومات الحساب</a>
+        <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->slug) }}">معلومات الحساب</a>
         <div class="dropdown-divider"></div>
         <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-avatar">تغيير الصورة الشخصة</button>
             <!-- Button trigger modal -->
@@ -13,7 +13,8 @@
                 Launch demo modal
             </button> --}}
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('edit-profile', auth()->user()->id) }}">تعديل الحساب</a>
+        <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()->slug) }}">تعديل الحساب</a>
+        {{-- <a class="dropdown-item" href="{{ route('edit-profile', auth()->user()->id) }}">تعديل الحساب</a> --}}
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">تعديل كلمة السر</a>
         <div class="dropdown-divider"></div>
@@ -68,7 +69,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-body">
-        <form action="{{ route('edit-image', auth()->user()->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('edit-image', auth()->user()->slug) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">

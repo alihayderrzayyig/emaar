@@ -7,6 +7,8 @@ use App\Http\Requests\SituationRequest;
 use App\Situation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 class SituationController extends Controller
 {
@@ -45,35 +47,61 @@ class SituationController extends Controller
      */
     public function store(SituationRequest $request)
     {
-            // $request->validateWithBag('post', [
-            //     'name'          => ['required', 'max:255'],
-            //     'phone'         => ['required'],
-            //     'governorate'   => ['required', 'integer'],
-            //     'district'      => ['required', 'integer'],
-            //     'region'        => ['required'],
-            //     'money'         => ['required'],
-            //     'image'         => ['required', 'image'],
-            //     'description'   => ['required'],
-            // ]);
 
-        // dd($request->image);
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+        $data_recaptcha = [
+                'secret' => config('services.recaptcha.secret'),
+                'response' => $request->recaptcha,
+                'remoteip' => $remoteip
+            ];
+        $options = [
+                'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data_recaptcha)
+                ]
+            ];
+        $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            $resultJson = json_decode($result);
+        if ($resultJson->success != true) {
+            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        }
 
-        $image=$request->image->store('situations');
+        // dd($resultJson);
 
-        Auth::user()->situations()->create([
-            'name'          => $request->name,
-            'phone'         => $request->phone,
-            'governorate'   => $request->governorate,
-            'district'      => $request->district,
-            'region'        => $request->region,
-            'money'         => $request->money,
-            'image'         => $image,
-            'description'   => $request->description,
-        ]);
+        // if ($resultJson->score >= 0.6) {
+        if ($resultJson->success == true) {
+            // dd($data);
+            $image=$request->image->store('situations');
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
 
-        session()->flash('success', 'تمة عملة الارسال بنجاح');
+            Auth::user()->situations()->create([
+                'name'          => $request->name,
+                'phone'         => $request->phone,
+                'governorate'   => $request->governorate,
+                'district'      => $request->district,
+                'region'        => $request->region,
+                'money'         => $request->money,
+                'image'         => $image,
+                'description'   => $request->description,
+            ]);
 
-        return redirect()->back();
+            session()->flash('success', 'تمة عملة الارسال بنجاح');
+
+            return redirect()->back();
+            //Validation was successful, add your form submission logic here
+            // return back()->with('message', 'Thanks for your message!');
+        } else {
+            session()->flash('error', 'ReCaptcha Error');
+            // return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+            return \redirect()->back();
+        }
+
     }
 
     /**

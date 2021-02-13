@@ -116,6 +116,7 @@
 
           <form action="{{ route('register') }}" method="POST">
             @csrf
+            <input type="hidden" name="recaptcha" id="recaptcha">
             <div class="form-group">
               <input type="text" name="name" class="form-control" placeholder="الاسم الرباعي">
             </div>
@@ -149,3 +150,15 @@
 </section>
 @endsection
 
+@section('js')
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.sitekey') }}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{ config('services.recaptcha.sitekey') }}', {action: 'contact'}).then(function(token) {
+        if (token) {
+            document.getElementById('recaptcha').value = token;
+        }
+        });
+    });
+</script>
+@endsection

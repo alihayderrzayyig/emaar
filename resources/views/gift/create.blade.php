@@ -13,6 +13,7 @@
         @include('partials.success-message')
         <form action="{{ route('gift.store') }}" method="post">
             @csrf
+            <input type="hidden" name="recaptcha" id="recaptcha">
             <div class="card">
                 @if ($errors->any())
                     <div class="alert alert-danger text-left">
@@ -135,6 +136,16 @@
                     });
 
                 }
+            });
+        });
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.sitekey') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.sitekey') }}', {action: 'contact'}).then(function(token) {
+            if (token) {
+                document.getElementById('recaptcha').value = token;
+            }
             });
         });
     </script>

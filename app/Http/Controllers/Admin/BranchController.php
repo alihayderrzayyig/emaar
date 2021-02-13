@@ -6,6 +6,7 @@ use App\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class BranchController extends Controller
 {
@@ -48,6 +49,10 @@ class BranchController extends Controller
         if(Auth::user()->isAdmin){
             if($request->hasFile('image')){
                 $image=$request->image->store('branch');
+                // تعديل الصورة
+                $img2 = Image::make('storage/'.$image)->resize(600, 500);
+                //حفظ الصورة الجديدة بنفس الاسم والمكان
+                $img2->save();
             }
 
             Branch::create([
@@ -98,9 +103,13 @@ class BranchController extends Controller
         // return $date;
         if($request->hasFile('image')){
             $image=$request->image->store('branch');
-
             // Storage::delete($post->image);
             $branch->deleteImage();
+
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
 
             $date['image'] = $image;
         }

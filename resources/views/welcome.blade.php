@@ -61,11 +61,11 @@
             <div class="col-12 col-lg-6 p-1 left">
               <div class="d-flex flex-wrap">
                 <div class="larg">
-                  <img src="{{ asset('img/01.jpg') }}">
+                  <img src="{{ asset('img/achievements01.jpg') }}">
                 </div>
                 <div class="small">
-                  <img class="img-laft" src="{{ asset('img/02.jpg') }}">
-                  <img class="img-right" src="{{ asset('img/03.jpg') }}">
+                  <img class="img-laft" src="{{ asset('img/achievements02.jpg') }}">
+                  <img class="img-right" src="{{ asset('img/achievements03.jpg') }}">
                 </div>
               </div>
             </div>
@@ -84,12 +84,12 @@
                   <div class="d-flex">
 
                     <div class="larg-img">
-                      <img src="{{ asset('img/04.jpg') }}" alt="" srcset="">
+                      <img src="{{ asset('img/achievements04.jpg') }}" alt="" srcset="">
                     </div>
 
                     <div class="small-2-img d-flex flex-wrap">
-                      <img src="{{ asset('img/05.jpg') }}" alt="" srcset="">
-                      <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
+                      <img src="{{ asset('img/achievements05.jpg') }}" alt="" srcset="">
+                      <img src="{{ asset('img/achievements06.jpg') }}" alt="" srcset="">
 
                     </div>
                   </div>
@@ -180,6 +180,7 @@
                 @endif
                 <form action="{{ route('join-us') }}" method="post">
                     @csrf
+                    <input type="hidden" name="recaptcha" id="recaptcha">
                     <div class="row justify-content-between flex-row-reverse">
                       <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
@@ -199,8 +200,8 @@
                       </div>
                       <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
-                          <select name="governorate" class="custom-select">
-                            <option selected>المحافضة</option>
+                          <select name="governorate" class="custom-select" required>
+                            <option value="" selected>المحافضة</option>
                             @foreach ($governorates as $governorate)
                                 <option value="{{ $governorate->id }}">{{ $governorate->name }}</option>
                             @endforeach
@@ -211,8 +212,8 @@
                       </div>
                       <div class="col-12 col-md-6 col-lg-4">
                         <div class="form-group">
-                            <select name="district" class="custom-select">
-                                <option selected>القضاء</option>
+                            <select name="district" class="custom-select" required>
+                                <option value="" selected>القضاء</option>
                                 {{-- <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option> --}}
@@ -244,7 +245,18 @@
         <div class="container">
           <h1 class="h1-header text-center">بعض القائمين على الموقع</h1>
           <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
+              @foreach ($responsibles as $item)
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <div class="card2 h-100 w-100">
+                    <div class="img">
+                        <img src="{{ asset($item->image) }}" alt="" srcset="">
+                    </div>
+                    <h4 class="text-center m-3">{{ $item->name }}</h4>
+                    <p>{{ $item->body }}</p>
+                    </div>
+                </div>
+              @endforeach
+            {{-- <div class="col-12 col-md-6 col-lg-3">
               <div class="card2 mx-auto">
                 <div class="img">
                   <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
@@ -276,18 +288,7 @@
                   هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
                 </p>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-              <div class="card2 mx-auto">
-                <div class="img">
-                  <img src="{{ asset('img/06.jpg') }}" alt="" srcset="">
-                </div>
-                <h4 class="text-center m-3">علي حيدر</h4>
-                <p>
-                  هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص
-                </p>
-              </div>
-            </div>
+            </div> --}}
 
           </div>
         </div>
@@ -317,6 +318,7 @@
                 <div class="row justify-content-between flex-row-reverse">
 
                         @csrf
+                        <input type="hidden" name="recaptcha" id="recaptcha">
                         <div class="col-sm-12 col-md-12 col-lg-4">
                         <div class="form-group">
                             <input name="name" class="form-control" type="text" placeholder="الاسم الكامل" required>
@@ -414,5 +416,15 @@
             });
         });
 
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.sitekey') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.sitekey') }}', {action: 'contact'}).then(function(token) {
+            if (token) {
+                document.getElementById('recaptcha').value = token;
+            }
+            });
+        });
     </script>
 @endsection

@@ -9,10 +9,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "biscolab/laravel-recaptcha": "^5.0",
+        "cviebrock/eloquent-sluggable": "^7.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
+        "intervention/image": "^2.5",
         "laravel/framework": "^7.29",
+        "laravel/helpers": "^1.4",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4"

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class AdminUserController extends Controller
 {
@@ -62,12 +63,15 @@ class AdminUserController extends Controller
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
             'isAdmin'   => $isAdmin,
-            // 'isAdmin'   => $request->isAdmin,
         ]);
 
         if($request->hasFile('image')){
             //حفظ الصورة الجديدة
             $image = $request->image->store('profile');
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(300, 200);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
 
         }else{
             $image = 'img/user.png';
@@ -162,9 +166,11 @@ class AdminUserController extends Controller
         ]);
         if($request->hasFile('image')){
             $image=$request->image->store('profile');
-
-            // Storage::delete($post->image);
             $user->profile->deleteImage();
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(300, 200);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
 
             $date_profile['avatar'] = $image;
         }
@@ -178,7 +184,6 @@ class AdminUserController extends Controller
         session()->flash('success', 'تم تحديث البيانات بنجاح');
 
         return \redirect()->back();
-
 
     }
 

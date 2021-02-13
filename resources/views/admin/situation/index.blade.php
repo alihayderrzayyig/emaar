@@ -99,7 +99,7 @@
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body p-4">
-                            <form id="addGiftSituation" action="{{ route('admin-situation.addGift', $item->id) }}" method="post">
+                            <form id="addGiftSituation" action="" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">كمية المال:</label>
@@ -130,6 +130,12 @@
         .modal-header .close {
             padding: 1rem 1rem;
             margin: -1rem -1rem -1rem -1rem;
+        }
+        .modal,
+        .card .card-body,
+        .card .card-header,
+        .card .card-footer{
+            direction: rtl;
         }
     </style>
 @endsection

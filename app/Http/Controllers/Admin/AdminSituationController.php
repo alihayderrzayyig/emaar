@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Situation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class AdminSituationController extends Controller
 {
@@ -87,9 +88,11 @@ class AdminSituationController extends Controller
             'description'   => ['required'],
         ]);
 
-        // dd($request->image);
-
         $image=$request->image->store('situations');
+        // تعديل الصورة
+        $img2 = Image::make('storage/'.$image)->resize(600, 500);
+        //حفظ الصورة الجديدة بنفس الاسم والمكان
+        $img2->save();
 
         Auth::user()->situations()->create([
             'name'          => $request->name,
@@ -117,7 +120,6 @@ class AdminSituationController extends Controller
     public function show($id)
     {
         $situation = Situation::find($id);
-        // return $situation;
         $governorate = Governorate::find($situation->governorate);
         $district = District::find($situation->district);
         return \view('admin.situation.show',[
@@ -165,12 +167,15 @@ class AdminSituationController extends Controller
             'description',
             'status',
         ]);
-        // return $date;
+
         if($request->hasFile('image')){
             $image=$request->image->store('situations');
-
             // Storage::delete($post->image);
             $situation->deleteImage();
+            // تعديل الصورة
+            $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $img2->save();
 
             $date['image'] = $image;
         }
@@ -197,7 +202,7 @@ class AdminSituationController extends Controller
     }
 
     public function addGift(Request $request, $id){
-        // Achieve
+
         $situation = Situation::find($id);
         $oldval = $situation->achieve;
         $newval = $oldval + $request->money;
@@ -207,11 +212,6 @@ class AdminSituationController extends Controller
 
         session()->flash('success', 'تمة عملة الاضافة بنجاح');
         return \redirect()->back();
-
-
-
-        // $situation->achieve += $request->money;
-        // $situation->save();
 
     }
 }

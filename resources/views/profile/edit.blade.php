@@ -42,7 +42,7 @@
               {{ asset($user->profile->avatar) }}
               " alt="">
           </div> --}}
-            <form action="{{ route('edit-profile', $user->id) }}" method="post">
+            <form action="{{ route('profile.update', $user->slug) }}" method="post">
                 @csrf
                 @method('PUT')
               <div class="card2">
@@ -108,7 +108,7 @@
                     </div>
 
                     <div class="mx-auto">
-                        <button type="submit" class="btn btn-primary btn-block">أرسال</button>
+                        <button type="submit" class="btn btn-primary btn-block">تحديت</button>
                     </div>
                   </div>
             </form>
