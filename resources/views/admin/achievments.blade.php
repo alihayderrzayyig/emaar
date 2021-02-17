@@ -6,106 +6,99 @@
         @include('partials.admin.side-bar')
         <div class="admin-content col-9">
             <div class="container">
-                <div class="d-flex flex-row-reverse justify-content-around mb-5">
-                    <a href="{{ route('branch.index') }}" class="btn-admin-header btn-admin-header-blue">
-                        <div class="card d-flex flex-row-reverse">
-                            <div class="icone m-0">
-                                <i class="far fa-file-alt m-0 p-0"></i>
-                            </div>
-                            <div class="text">
-                                <p class="m-0 p-0">فروعنا</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ route('project.index') }}" class="btn-admin-header btn-admin-header-green">
-                        <div class="card d-flex flex-row-reverse">
-                            <div class="icone m-0">
-                                <i class="far fa-file-alt m-0 p-0"></i>
-                            </div>
-                            <div class="text">
-                                <p class="m-0 p-0">مشاريع منجزة</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @include('partials.admin.success-m')
+                @include('partials.admin.error-m')
+
+                @include('partials.admin.allBranchAndProjects')
+
+
                 {{-- <h1>tttttttttttttttt</h1> --}}
                 <h1 class="text-center">جديد فروعنا </h1>
 
                 <div class="mb-3">
-                    <a href="{{ route('branch.create') }}" class="btn btn-success">إضافة فرع جديد</a>
+                    <a href="{{ route('admin.branch.create') }}" class="btn btn-success">إضافة فرع جديد</a>
                 </div>
 
-                <div class="card mb-5">
-                    <table dir="rtl" class="table table-striped">
-                        <thead class="thead-primary">
-                            <tr>
-                            <th scope="col">ت</th>
-                            <th scope="col">صورة</th>
-                            <th scope="col">العنوان</th>
-                            <th scope="col">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($branches as $item)
+                @if ($branches->count())
+                    <div class="card mb-5">
+                        <table dir="rtl" class="table table-striped">
+                            <thead class="thead-primary">
                                 <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td><img style="height: 30px; width: 50px;" src="{{ asset($item->image) }}" alt="" srcset=""></td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>
-                                        <div class="flex btn btn-info btn-table">
-                                            <a href="{{ route('branch.show', $item->id) }}"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                        <div class="flex btn btn-warning btn-table mx-3">
-                                            <a href="{{ route('branch.edit', $item->id) }}"><i class="fas fa-cog"></i></a>
-                                        </div>
-                                        <div class="flex btn btn-danger btn-table">
-                                            <button onclick="handldelete2('branch/{{ $item->id }}')" data-toggle="modal" data-target="#deleteCategory"><i class="far fa-trash-alt"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <h1 class="text-center">جديد المشاريع المكتملة</h1>
-
-                <div class="mb-3">
-                    <a href="{{ route('project.create') }}" class="btn btn-success">إضافة مشروع منجز</a>
-                </div>
-
-                <div class="card">
-                    <table dir="rtl" class="table table-striped" style="overflow-y:auto;">
-                        <thead class="thead-primary">
-                            <tr>
                                 <th scope="col">ت</th>
-                                <th scope="col">الصورة</th>
+                                <th scope="col">صورة</th>
                                 <th scope="col">العنوان</th>
                                 <th scope="col">الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($projects as $item)
-                                <tr>
-                                    <th scope="row">{{ $loop->index + 1 }}</th>
-                                    <td><img style="height: 30px; width: 50px;" src="{{ asset($item->image) }}" alt="" srcset=""></td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>
-                                        <div class="flex btn btn-info btn-table">
-                                            <a href="{{ route('project.show', $item->id) }}"><i class="fas fa-eye"></i></a>
-                                        </div>
-                                        <div class="flex btn btn-warning btn-table mx-3">
-                                            <a href="{{ route('project.edit', $item->id) }}"><i class="fas fa-cog"></i></a>
-                                        </div>
-                                        <div class="flex btn btn-danger btn-table">
-                                            <button onclick="handldelete2('project/{{ $item->id }}')" data-toggle="modal" data-target="#deleteCategory"><i class="far fa-trash-alt"></i></button>
-                                        </div>
-                                    </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($branches as $item)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td><img style="height: 30px; width: 50px;" src="{{ asset($item->image) }}" alt="" srcset=""></td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>
+                                            <div class="flex btn btn-info btn-table">
+                                                <a href="{{ route('admin.branch.show', $item->id) }}"><i class="fas fa-eye"></i></a>
+                                            </div>
+                                            <div class="flex btn btn-warning btn-table mx-3">
+                                                <a href="{{ route('admin.branch.edit', $item->id) }}"><i class="fas fa-cog"></i></a>
+                                            </div>
+                                            <div class="flex btn btn-danger btn-table">
+                                                <button onclick="handldelete2('branch/{{ $item->id }}')" data-toggle="modal" data-target="#deleteCategory"><i class="far fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <h5 class="text-center">لا يوجد فروع ليتم عرضها</h5>
+                @endif
+
+                <hr>
+                <h1 class="text-center mt-5">جديد المشاريع المكتملة</h1>
+
+                <div class="mb-3">
+                    <a href="{{ route('admin.project.create') }}" class="btn btn-success">إضافة مشروع منجز</a>
                 </div>
+
+                @if ($projects->count())
+                    <div class="card">
+                        <table dir="rtl" class="table table-striped" style="overflow-y:auto;">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th scope="col">ت</th>
+                                    <th scope="col">الصورة</th>
+                                    <th scope="col">العنوان</th>
+                                    <th scope="col">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($projects as $item)
+                                    <tr>
+                                        <th scope="row">{{ $loop->index + 1 }}</th>
+                                        <td><img style="height: 30px; width: 50px;" src="{{ asset($item->image) }}" alt="" srcset=""></td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>
+                                            <div class="flex btn btn-info btn-table">
+                                                <a href="{{ route('admin.project.show', $item->id) }}"><i class="fas fa-eye"></i></a>
+                                            </div>
+                                            <div class="flex btn btn-warning btn-table mx-3">
+                                                <a href="{{ route('admin.project.edit', $item->id) }}"><i class="fas fa-cog"></i></a>
+                                            </div>
+                                            <div class="flex btn btn-danger btn-table">
+                                                <button onclick="handldelete2('project/{{ $item->id }}')" data-toggle="modal" data-target="#deleteCategory"><i class="far fa-trash-alt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <h5 class="text-center">لا يوجد مشاريع ليتم عرضها</h5>
+                @endif
 
                 {{-- مودل الحذف --}}
                 @include('partials.admin.delete-model')
@@ -131,7 +124,7 @@
         function handldelete2(id){
             // console.log(id)
             var form = document.getElementById('formedeletecategoy')
-            form.action =  'achievments/'+id
+            form.action =  id
         }
     </script>
 @endsection

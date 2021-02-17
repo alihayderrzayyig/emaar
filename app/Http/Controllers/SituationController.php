@@ -15,7 +15,7 @@ class SituationController extends Controller
     public function __construct()
     {
         // $this->middleware(['auth']);
-        $this->middleware(['auth'])->only(['store']);
+        $this->middleware(['auth','verified'])->only(['store']);
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +24,25 @@ class SituationController extends Controller
      */
     public function index()
     {
-        $situations = Situation::where('status',1)->paginate(20);
+        $filter = request()->query('filter');
+        $sort = null;
+        if (request()->query('sort')) {
+            // dd(request()->query('sort'));
+            $sort = 'DESC';
+        } else {
+            $sort = 'ASC';
+        }
+
+        if($filter){
+            $situations = Situation::where('status',1)
+            ->orderBy($filter, $sort)
+            ->paginate(20);
+        }else{
+            $situations = Situation::where('status',1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(20);
+        }
+
         return view('situation.index',['situations'=>$situations]);
     }
 
@@ -47,6 +65,7 @@ class SituationController extends Controller
      */
     public function store(SituationRequest $request)
     {
+        // dd($request->recaptcha);
 
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
@@ -71,8 +90,8 @@ class SituationController extends Controller
 
         // dd($resultJson);
 
-        // if ($resultJson->score >= 0.6) {
-        if ($resultJson->success == true) {
+        if ($resultJson->score >= 0.6) {
+        // if ($resultJson->success == true) {
             // dd($data);
             $image=$request->image->store('situations');
             // تعديل الصورة
@@ -112,6 +131,7 @@ class SituationController extends Controller
      */
     public function show(Situation $situation)
     {
+        // dd($situation);
         // return $situation;
         $governorates = Governorate::all();
         return view('situation.show',[

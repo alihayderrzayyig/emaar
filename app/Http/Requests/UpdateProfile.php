@@ -26,7 +26,8 @@ class UpdateProfile extends FormRequest
         return [
             'name'          => 'required',
             'phone'         => ['required' , 'regex:/^0*7(7|8|9|5)\d{8}$/', 'max:11', 'min:10'],
-            'birthdate'     => 'required|date',
+            // 'birthdate'     => 'required|date',
+            'birthdate'     => ['required', 'date', 'before:12 years ago'],
             'governorate'   => 'required|integer',
             'district'      => 'required|integer',
             'region'        => 'required|string',
@@ -37,10 +38,22 @@ class UpdateProfile extends FormRequest
     {
         return [
             'name.required'     => 'الاسم مطلوب',
-            'phone.required'    => 'حقل الهاتف مطلوب',
-            'regex'             => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
-            'max'               => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
-            'min'               => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
+            'phone.required'          => 'حقل الهاتف مطلوب',
+            'phone.regex'             => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
+            'phone.max'               => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
+            'phone.min'               => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
+
+
+            'birthdate.required'               => 'الرجاء من الختيار تاريخ الميلاد',
+            'birthdate.date'               => 'يرجا اختيار تاريخ الميلاد بشكل صحيح',
+            'birthdate.before'               => 'لا يسمح لمن هم اصغر من ال 12 سنة بالتسجيل',
+
+
+            'governorate.required'               => 'يرجا اختيار محافظة',
+            'governorate.integer'               => 'يرجا اختيار محافظة',
+            'district.required'               => 'يرجا اختيار مدينة',
+            'district.integer'               => 'يرجا اختيار مدينة',
+            'region.required'               => 'يرجا ادخال منطقة او ناحية',
         ];
     }
 }

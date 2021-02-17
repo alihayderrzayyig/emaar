@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Branch;
+use App\Gift;
 use App\Http\Controllers\Controller;
+use App\JoinUs;
+use App\Message;
 use App\Project;
 use App\Responsible;
+use App\Situation;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -18,10 +22,18 @@ class AdminController extends Controller
     }
 
     public function index(){
+        $situationAccept = Situation::where('status', 0)->get()->count();
+        $messagesCount = Message::get()->count();
+        $joinUsCount = JoinUs::get()->count();
+        $giftCount = Gift::get()->count();
         $responsibles = Responsible::all();
         return view('admin.index', [
             'responsibles' => $responsibles,
-        ]);
+        ])
+        ->with('situationAccept', $situationAccept)
+        ->with('joinUsCount', $joinUsCount)
+        ->with('giftCount', $giftCount)
+        ->with('messagesCount', $messagesCount);
     }
 
     public function achievments(){

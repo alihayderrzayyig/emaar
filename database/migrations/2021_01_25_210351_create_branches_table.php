@@ -17,8 +17,8 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->string('title')->require();
             $table->text('body')->require();
-            $table->boolean('show');
-            $table->string('image');
+            $table->boolean('show')->require();
+            $table->string('image')->require();
             $table->timestamps();
         });
     }

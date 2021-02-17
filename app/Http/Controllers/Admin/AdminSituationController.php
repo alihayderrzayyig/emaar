@@ -14,7 +14,7 @@ class AdminSituationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','checkIsAdmin']);
+        $this->middleware(['auth', 'checkIsAdmin']);
     }
 
 
@@ -25,10 +25,21 @@ class AdminSituationController extends Controller
      */
     public function index()
     {
+        $search = request()->query('search');
+        if ($search) {
+            $situations = Situation::where('id', 'LIKE', $search)
+                ->orWhere('name', 'LIKE', '%' . $search . '%')
+                ->where('status', 1)
+                ->paginate(30);
+        } else {
+            // $users = User::orderBy('name')->paginate(30);
+            $situations = Situation::where('status', 1)->paginate(30);
+        }
+
+
         // dd(Situation::where('status',0)->get()->count());
-        $situationAccept = Situation::where('status',0)->get()->count();
-        $situations = Situation::where('status',1)->get();
-        return \view('admin.situation.index',['situations'=>$situations])->with('situationAccept', $situationAccept);
+        $situationAccept = Situation::where('status', 0)->get()->count();
+        return \view('admin.situation.index', ['situations' => $situations])->with('situationAccept', $situationAccept);
     }
 
 
@@ -42,10 +53,25 @@ class AdminSituationController extends Controller
 
     public function waitingForApproval()
     {
-        $DisplayButton=true;
-        $situationAccept = Situation::where('status',0)->get()->count();
-        $situations = Situation::where('status',0)->get();
-        return \view('admin.situation.index',['situations'=>$situations])->with('situationAccept', $situationAccept)->with('DisplayButton', $DisplayButton);
+        $DisplayButton = true;
+
+        $search = request()->query('search');
+        if ($search) {
+            $situations = Situation::where('id', 'LIKE', $search)
+                ->orWhere('name', 'LIKE', '%' . $search . '%')
+                ->where('status', 0)
+                ->paginate(30);
+        } else {
+            // $users = User::orderBy('name')->paginate(30);
+            // $situations = Situation::where('status', 1)->paginate(30);
+            $situations = Situation::where('status', 0)->paginate(30);
+        }
+
+        $situationAccept = Situation::where('status', 0)->get()->count();
+        return \view('admin.situation.index', ['situations' => $situations])
+            ->with('situationAccept', $situationAccept)
+            ->with('DisplayButton', $DisplayButton)
+            ->with('accept', true);
     }
 
 
@@ -66,7 +92,7 @@ class AdminSituationController extends Controller
     public function create()
     {
         $governorates = Governorate::all();
-        return view('admin.situation.create', ['governorates'=>$governorates]);
+        return view('admin.situation.create', ['governorates' => $governorates]);
     }
 
     /**
@@ -88,9 +114,9 @@ class AdminSituationController extends Controller
             'description'   => ['required'],
         ]);
 
-        $image=$request->image->store('situations');
+        $image = $request->image->store('situations');
         // تعديل الصورة
-        $img2 = Image::make('storage/'.$image)->resize(600, 500);
+        $img2 = Image::make('storage/' . $image)->resize(600, 500);
         //حفظ الصورة الجديدة بنفس الاسم والمكان
         $img2->save();
 
@@ -122,7 +148,7 @@ class AdminSituationController extends Controller
         $situation = Situation::find($id);
         $governorate = Governorate::find($situation->governorate);
         $district = District::find($situation->district);
-        return \view('admin.situation.show',[
+        return \view('admin.situation.show', [
             'situation'     => $situation,
             'governorate'   => $governorate,
             'district'      => $district,
@@ -168,12 +194,12 @@ class AdminSituationController extends Controller
             'status',
         ]);
 
-        if($request->hasFile('image')){
-            $image=$request->image->store('situations');
+        if ($request->hasFile('image')) {
+            $image = $request->image->store('situations');
             // Storage::delete($post->image);
             $situation->deleteImage();
             // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            $img2 = Image::make('storage/' . $image)->resize(600, 500);
             //حفظ الصورة الجديدة بنفس الاسم والمكان
             $img2->save();
 
@@ -201,7 +227,8 @@ class AdminSituationController extends Controller
         return \redirect()->route('admin-situation.index');
     }
 
-    public function addGift(Request $request, $id){
+    public function addGift(Request $request, $id)
+    {
 
         $situation = Situation::find($id);
         $oldval = $situation->achieve;
@@ -212,6 +239,5 @@ class AdminSituationController extends Controller
 
         session()->flash('success', 'تمة عملة الاضافة بنجاح');
         return \redirect()->back();
-
     }
 }

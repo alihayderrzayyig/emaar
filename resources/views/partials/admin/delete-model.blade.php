@@ -2,7 +2,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header d-flex">
-                <button type="button" class="close align-self-end" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close align-self-end" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h5 class="modal-title text-danger" id="exampleModalLabel">تحـــذير</h5>
             </div>
             <div class="modal-body text-center text-danger font-weight-bold">

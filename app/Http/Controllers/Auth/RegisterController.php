@@ -53,7 +53,23 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'max:22', 'confirmed'],
+        ],[
+            'name.required' => 'يجب ادخال اسم المستخدم',
+            'name.string' => 'الاسم مطلوب',
+            'name.max' => 'يجب الايزيد اسم المستخدم عن 255 حرف',
+
+            'email.required' => 'يجب ادخال البريد الالكتروني',
+            // 'email.string' => 'الاسم مطلوب',
+            'email.email' => 'ادخل البريد الالكتروني بشكل صحيح',
+            'email.max' => 'يجب الايزيد البريد الالكتروني عن 255 حرف',
+            'email.unique' => 'البريد الالكتروني مستخدم بالفعل',
+
+            'password.required' => 'يجب ادخال الرقم السري',
+            'password.min' => 'يجب ان يتكون الرقم السري على الاقل من 8 رموز',
+            'password.max' => 'يحب الايزيد الرقم السري على 22 رمز',
+            'password.confirmed' => 'كلمة السر غير متطابقة',
+
         ]);
     }
 
@@ -88,8 +104,8 @@ class RegisterController extends Controller
 
         // dd($resultJson);
 
-        // if ($resultJson->score >= 0.6) {
-        if ($resultJson->success == true) {
+        if ($resultJson->score >= 0.6) {
+        // if ($resultJson->success == true) {
             // dd($data);
             return User::create([
                 'name' => $data['name'],

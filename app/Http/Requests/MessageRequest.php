@@ -24,9 +24,10 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
+            // 'recaptcha'          => 'required',
             'name'          => 'required',
             'phone'         => ['required' , 'regex:/^0*7(7|8|9|5)\d{8}$/', 'max:11', 'min:10'],
-            'email'     => 'required|email',
+            'email'         => 'required|email',
             'description'   => 'required|string',
         ];
     }

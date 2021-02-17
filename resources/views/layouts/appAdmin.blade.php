@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,8 +13,9 @@
     @yield('css')
 
     <title>إعمار</title>
-  </head>
-  <body>
+</head>
+
+<body>
 
     <header>
         @yield('header')
@@ -21,7 +23,7 @@
 
 
     <nav class="navbar navbar-light nav-secondary flex-row-reverse">
-        <a class="navbar-brand" href="#">إعمار</a>
+        <a class="navbar-brand" href="{{ route('home') }}">إعمار</a>
         <i class="fab fa-facebook-square align-self-center"></i>
     </nav>
 
@@ -40,5 +42,6 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     @yield('js')
 
-  </body>
+</body>
+
 </html>

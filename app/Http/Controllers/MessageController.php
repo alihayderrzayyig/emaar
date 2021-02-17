@@ -10,6 +10,7 @@ class MessageController extends Controller
 {
     public function store(MessageRequest $request){
 
+        // dd($request->recaptcha);
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
         $data_recaptcha = [
@@ -33,8 +34,8 @@ class MessageController extends Controller
 
         // dd($resultJson);
 
-        // if ($resultJson->score >= 0.6) {
-        if ($resultJson->success == true) {
+        if ($resultJson->score >= 0.6) {
+        // if ($resultJson->success == true) {
             // dd($data);
             Message::create([
                 'name'          =>$request->name,

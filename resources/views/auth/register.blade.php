@@ -118,7 +118,7 @@
             @csrf
             <input type="hidden" name="recaptcha" id="recaptcha">
             <div class="form-group">
-              <input type="text" name="name" class="form-control" placeholder="الاسم الرباعي">
+              <input type="text" name="name" class="form-control" placeholder="الاسم الرباعي" value="{{ old('name') }}">
             </div>
 
             {{-- <div class="form-group">
@@ -126,7 +126,7 @@
             </div> --}}
 
             <div class="form-group">
-              <input type="email" name="email" class="form-control" placeholder="البريد الالكتروني">
+              <input type="email" name="email" class="form-control" placeholder="البريد الالكتروني" value="{{ old('email') }}">
             </div>
 
             <div class="form-group">
@@ -136,6 +136,16 @@
             <div class="form-group">
               <input type="password" class="form-control" name="password_confirmation" placeholder="اعدكتابة كلمة السر">
             </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger text-left">
+                    <ul class="list-unstyled">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <button type="submit" class="btn btn-primary mb-3">أنشاء حساب</button>
           </form>

@@ -22,20 +22,24 @@
         <div class="container">
             <h1 class="h1-header text-center">جميع الحالات</h1>
             <p class="filter">
-                <button class="btn btn-filter" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                  ترتيب
-                  حسب
-                  :
+                <button class="btn btn-filter" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    ترتيب
+                    حسب
+                    :
                 </button>
-                <div class="collapse" id="collapseExample">
-                  <div class="card-body filter-body">
+            <div class="collapse" id="collapseExample">
+                <div class="card-body filter-body">
                     <div class="row">
-                      <a class="" href="#">Action</a>
-                      <a class="" href="#">Another action</a>
-                      <a class="" href="#">Something else here</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=name&sort=des">الاسم ب-ا</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=name">الاسم أ-ب</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=money&sort=des">ترتيب حسب الهدف تنازلي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=money">ترتيب حسب الهدف تصاعدي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=achieve&sort=des">ترتيب حسب المنجز تنازلي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=achieve">ترتيب حسب المنجز تصاعدي</a>
                     </div>
-                  </div>
                 </div>
+            </div>
             </p>
             <div class="row flex-row-reverse">
                 @foreach ($situations as $situation)
@@ -43,24 +47,26 @@
                         <div class="card">
                             <img src="{{ $situation->image }}" alt="">
                             <div class="gole">
-                              <p>
-                                <i class="fas fa-hand-holding-usd"></i>
-                                 الهدف:
-                                 {{ $situation->money }}
-                                IQD
-                              </p>
-                              <p>
-                                <i class="fas fa-hand-holding-usd"></i>
-                                تم انجاز
-                                {{ $situation->completed() }}%
-                              </p>
+                                <p>
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    الهدف:
+                                    {{ $situation->money }}
+                                    IQD
+                                </p>
+                                <p>
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                    تم انجاز
+                                    {{ $situation->completed() }}%
+                                </p>
                             </div>
                             <div class="body">
-                              <h4>{{ $situation->name }}</h4>
+                                <h4>{{ $situation->name }}</h4>
                             </div>
                             <div class="card-footer">
-                              <a href="{{ route('gift.create2', $situation->id) }}/#gift" class="btn btn-primary m-0">تبرع الان</a>
-                              <a href="{{ route('situation.show', $situation->id) }}" class="btn btn-primary m-0">إقراء المزيد</a>
+                                <a href="{{ route('gift.create2', $situation->id) }}/#gift"
+                                    class="btn btn-primary m-0">تبرع الان</a>
+                                <a href="{{ route('situation.show', $situation->id) }}" class="btn btn-primary m-0">إقراء
+                                    المزيد</a>
                             </div>
                         </div>
                     </div>
@@ -80,9 +86,10 @@
 @section('css')
 
     <style>
-        body{
+        body {
             text-align: left
         }
+
     </style>
 
 @endsection

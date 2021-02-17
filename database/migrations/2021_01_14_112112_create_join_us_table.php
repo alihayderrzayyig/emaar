@@ -15,13 +15,13 @@ class CreateJoinUsTable extends Migration
     {
         Schema::create('join_us', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('governorate');
-            $table->string('district');
-            $table->string('region');
-            $table->text('description');
+            $table->string('name')->require();
+            $table->string('phone')->require();
+            $table->string('email')->require();
+            $table->string('governorate')->require();
+            $table->string('district')->require();
+            $table->string('region')->require();
+            $table->text('description')->require();
             $table->timestamps();
         });
     }

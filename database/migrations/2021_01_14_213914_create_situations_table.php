@@ -16,15 +16,15 @@ class CreateSituationsTable extends Migration
         Schema::create('situations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('phone');
-            $table->integer('governorate');
-            $table->integer('district');
-            $table->string('region');
-            $table->integer('money');
+            $table->string('name')->require();
+            $table->string('phone')->require();
+            $table->integer('governorate')->require();
+            $table->integer('district')->require();
+            $table->string('region')->require();
+            $table->integer('money')->require();
             $table->bigInteger('achieve')->default(0);
-            $table->text('description');
-            $table->string('image');
+            $table->text('description')->require();
+            $table->string('image')->require();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

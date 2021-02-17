@@ -7,6 +7,7 @@ use App\Governorate;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
@@ -14,7 +15,7 @@ class AdminUserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','checkIsAdmin']);
+        $this->middleware(['auth', 'checkIsAdmin']);
     }
 
 
@@ -25,8 +26,16 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name')->paginate(50);
-        return view('admin.user.index',['users'=>$users])->with('no', 1);
+        $search = request()->query('search');
+        if ($search) {
+            // dd(request()->query('search'));
+            $users = User::where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('email', 'LIKE', '%' . $search . '%')
+                ->paginate(30);
+        }else{
+            $users = User::orderBy('name')->paginate(30);
+        }
+        return view('admin.user.index', ['users' => $users])->with('no', 1);
     }
 
     /**
@@ -37,7 +46,7 @@ class AdminUserController extends Controller
     public function create()
     {
         $governorates = Governorate::all();
-        return view('admin.user.create', ['governorates'=>$governorates]);
+        return view('admin.user.create', ['governorates' => $governorates]);
     }
 
     /**
@@ -49,9 +58,9 @@ class AdminUserController extends Controller
     public function store(Request $request)
     {
 
-        if($request->isAdmin === 'on'){
+        if ($request->isAdmin === 'on') {
             $isAdmin = true;
-        }else{
+        } else {
             $isAdmin = false;
         }
         $this->validate($request, [
@@ -65,15 +74,14 @@ class AdminUserController extends Controller
             'isAdmin'   => $isAdmin,
         ]);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             //حفظ الصورة الجديدة
             $image = $request->image->store('profile');
             // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(300, 200);
+            $img2 = Image::make('storage/' . $image)->resize(300, 200);
             //حفظ الصورة الجديدة بنفس الاسم والمكان
             $img2->save();
-
-        }else{
+        } else {
             $image = 'img/user.png';
         }
 
@@ -101,7 +109,7 @@ class AdminUserController extends Controller
      */
     public function show(User $user)
     {
-        $governorate =Governorate::where('id', $user->profile->governorate)->first();
+        $governorate = Governorate::where('id', $user->profile->governorate)->first();
         $district = District::where('id', $user->profile->district)->first();
         return view('admin.user.show', [
             'user'          => $user,
@@ -123,12 +131,9 @@ class AdminUserController extends Controller
         $districts = District::where('governorate_id', $user->profile->governorate)->get();
         return view('admin.user.create', [
             'user' => $user,
-            'governorates'=>$governorates,
-            'districts'=>$districts
+            'governorates' => $governorates,
+            'districts' => $districts
         ]);
-
-
-
     }
 
     /**
@@ -138,19 +143,19 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,User $user)
+    public function update(Request $request, User $user)
     {
         $this->validate($request, [
             'password' => 'nullable|confirmed|min:8',
         ]);
 
-        if($request->isAdmin === 'on'){
+        if ($request->isAdmin === 'on') {
             $isAdmin = true;
-        }else{
+        } else {
             $isAdmin = false;
         }
         $date_user = $request->only(['name', 'email']);
-        if( $request->password != null){
+        if ($request->password != null) {
             $date_user['password'] = Hash::make($request->password);
         }
         $date_user['isAdmin'] = $isAdmin;
@@ -164,11 +169,11 @@ class AdminUserController extends Controller
             'district',
             'region',
         ]);
-        if($request->hasFile('image')){
-            $image=$request->image->store('profile');
+        if ($request->hasFile('image')) {
+            $image = $request->image->store('profile');
             $user->profile->deleteImage();
             // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(300, 200);
+            $img2 = Image::make('storage/' . $image)->resize(300, 200);
             //حفظ الصورة الجديدة بنفس الاسم والمكان
             $img2->save();
 
@@ -184,7 +189,6 @@ class AdminUserController extends Controller
         session()->flash('success', 'تم تحديث البيانات بنجاح');
 
         return \redirect()->back();
-
     }
 
     /**
@@ -195,10 +199,14 @@ class AdminUserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->profile->deleteImage();
-        $user->profile->delete();
-        $user->delete();
-        session()->flash('success', 'تمة عملة الحذف بنجاح');
-        return redirect()->back();
+        if (Auth::user()->isAdmin && (Auth::user()->id != $user->id)) {
+            $user->profile->deleteImage();
+            $user->profile->delete();
+            $user->delete();
+            session()->flash('success', 'تمة عملة الحذف بنجاح');
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 }

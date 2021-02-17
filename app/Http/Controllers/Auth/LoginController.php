@@ -75,9 +75,10 @@ class LoginController extends Controller
         if(!$socialprovider){
 
             $user = User::create([
-                'name'      => $socialuser->getName(),
-                'email'     => $socialuser->getEmail(),
-                // 'phone'     => '07829386530',
+                
+                'name'                  => $socialuser->getName(),
+                'email'                 => $socialuser->getEmail(),
+                'email_verified_at'     => now(),
                 // 'password'  => Hash::make('password'),
             ]);
 

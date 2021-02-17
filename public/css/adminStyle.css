@@ -74,6 +74,18 @@ body {
 .btn-admin-header-green:hover {
   background-image: linear-gradient(to right, #057e37, #09af25); }
 
+.btn-admin-header-red {
+  background-image: linear-gradient(to right, #fa0a32, #c46a21); }
+
+.btn-admin-header-red:hover {
+  background-image: linear-gradient(to right, #a8041f, #ff2e51); }
+
+.btn-admin-header-purpel {
+  background-image: linear-gradient(to right, #c50063, #ff0080); }
+
+.btn-admin-header-purpel:hover {
+  background-image: linear-gradient(to right, #ff0080, #c50063); }
+
 .btn-admin-header {
   overflow: hidden;
   width: 16rem;
@@ -319,6 +331,72 @@ nav {
       border-bottom-left-radius: 0rem;
       border-top-right-radius: 0.25rem;
       border-bottom-right-radius: 0.25rem; }
+
+#achievements {
+  background-color: #F7FBFB;
+  padding: 5rem 1rem; }
+  #achievements .container {
+    max-width: 1100px; }
+    #achievements .container .row .left .larg {
+      width: 100%;
+      height: 30rem;
+      margin-bottom: .5rem; }
+      #achievements .container .row .left .larg img {
+        width: 100%;
+        height: 100%; }
+    #achievements .container .row .left .small {
+      overflow: hidden;
+      width: 100%;
+      height: 20rem;
+      display: flex; }
+      #achievements .container .row .left .small img {
+        width: 50%;
+        height: 100%; }
+      #achievements .container .row .left .small img:first-child {
+        margin-right: .5rem; }
+    #achievements .container .row .right .small {
+      height: 20rem;
+      width: 100%;
+      margin-bottom: .5rem; }
+      #achievements .container .row .right .small .card {
+        width: 100%;
+        height: 100%;
+        background-color: #ffff;
+        padding: 2rem 1rem;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 15px #3e3e3e4f; }
+        #achievements .container .row .right .small .card h3 {
+          text-align: center;
+          margin-bottom: 1rem; }
+        #achievements .container .row .right .small .card p {
+          direction: rtl;
+          text-align: right;
+          text-align: justify;
+          font-size: 1rem; }
+    #achievements .container .row .right .larg {
+      height: 30rem;
+      width: 100%; }
+      #achievements .container .row .right .larg .d-flex {
+        height: 100%; }
+        #achievements .container .row .right .larg .d-flex .larg-img {
+          width: 50%;
+          height: 100%;
+          margin-right: .5rem; }
+          #achievements .container .row .right .larg .d-flex .larg-img img {
+            width: 100%;
+            height: 100%; }
+        #achievements .container .row .right .larg .d-flex .small-2-img {
+          overflow: hidden;
+          width: 50%;
+          height: 100%; }
+          #achievements .container .row .right .larg .d-flex .small-2-img img {
+            width: 100%;
+            height: 50%; }
+          #achievements .container .row .right .larg .d-flex .small-2-img img:first-child {
+            margin-bottom: .5rem; }
 
 #admin .btn-secondary {
   background-color: #0A3D3F;

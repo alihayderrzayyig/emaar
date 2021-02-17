@@ -36,8 +36,8 @@ class JoinUsController extends Controller
         // dd($resultJson);
 
 
-        // if ($resultJson->score >= 0.6) {
-        if ($resultJson->success == true) {
+        if ($resultJson->score >= 0.6) {
+        // if ($resultJson->success == true) {
             // dd($data);
             JoinUs::create([
                 'name'          =>$request->name,

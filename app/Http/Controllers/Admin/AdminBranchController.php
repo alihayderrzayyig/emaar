@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Branch;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreBranchRequest;
+use App\Http\Requests\Admin\UpdateBranchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
-class BranchController extends Controller
+class AdminBranchController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware(['auth','checkIsAdmin']);
@@ -25,6 +28,7 @@ class BranchController extends Controller
     {
         $branches = Branch::all();
         return \view('admin.branches.index',['branches'=>$branches]);
+
     }
 
     /**
@@ -43,9 +47,10 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBranchRequest $request)
     {
 
+        // \dd($request);
         if(Auth::user()->isAdmin){
             if($request->hasFile('image')){
                 $image=$request->image->store('branch');
@@ -63,8 +68,8 @@ class BranchController extends Controller
             ]);
         }
 
-        return \redirect()->route('achievments');
-
+        session()->flash('success', 'تمة عملة الاضافة بنجاح');
+        return \redirect()->back();
     }
 
     /**
@@ -96,7 +101,7 @@ class BranchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Branch $branch)
+    public function update(UpdateBranchRequest $request, Branch $branch)
     {
         // return $request;
         $date = $request->only(['title','body','show']);
@@ -116,9 +121,8 @@ class BranchController extends Controller
 
         $branch->update($date);
 
-        // session()->flash('success', 'post updated success');
-
-        return redirect(route('achievments'));
+        session()->flash('success', 'تمة عملة التحديث بنجاح');
+        return \redirect()->back();
     }
 
     /**
@@ -131,6 +135,6 @@ class BranchController extends Controller
     {
         $branch->deleteImage();
         $branch->delete();
-        return \redirect()->back();
-    }
+        session()->flash('success', 'تمة عملة الحذف بنجاح');
+        return \redirect()->back();    }
 }

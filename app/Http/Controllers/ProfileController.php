@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\District;
 use App\Governorate;
+use App\Http\Requests\CompletedProfile;
 use App\Http\Requests\UpdateProfile;
 use App\Profile;
 use App\User;
@@ -95,7 +96,7 @@ class ProfileController extends Controller
         return \view('auth.registerProfile',['governorates' =>Governorate::all(), 'profile'=>$profile]);
     }
 
-    public function storeComplete(Profile $profile, Request $request){
+    public function storeComplete(Profile $profile, CompletedProfile $request){
 
         $date = $profile->only(['phone','birthdate','governorate','district', 'completed', 'region']);
 

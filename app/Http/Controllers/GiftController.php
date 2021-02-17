@@ -71,8 +71,8 @@ class GiftController extends Controller
 
         // dd($resultJson);
 
-        // if ($resultJson->score >= 0.6) {
-        if ($resultJson->success == true) {
+        if ($resultJson->score >= 0.6) {
+        // if ($resultJson->success == true) {
             // dd($data);
             if(Auth::check()){
                 if(isset($request->situation_id)){

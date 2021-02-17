@@ -19,6 +19,6 @@ class AdminMessageController extends Controller
     public function destroy(Message $message){
         $message->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
-        return \redirect()->route('admin-message.index');
+        return \redirect()->route('admin.message.index');
     }
 }

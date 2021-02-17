@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 //to use slug package
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     //to use slug package
@@ -28,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
         'isAdmin',
+        'email_verified_at'
     ];
 
     /**

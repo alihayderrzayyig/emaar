@@ -25,6 +25,6 @@ class AdminjoinUsController extends Controller
     public function destroy(JoinUs $joinus){
         $joinus->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
-        return \redirect()->route('admin-joinus.index');
+        return \redirect()->route('admin.joinus.index');
     }
 }
