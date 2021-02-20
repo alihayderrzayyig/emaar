@@ -3,19 +3,15 @@
 use App\District;
 use App\Governorate;
 use App\Http\Controllers\AchievementController;
-use App\Http\Controllers\AddCasesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminGiftController;
 use App\Http\Controllers\Admin\AdminjoinUsController;
 use App\Http\Controllers\Admin\AdminMessageController;
-use App\Http\Controllers\Admin\AdminResponsibleController;
 use App\Http\Controllers\Admin\AdminSituationController;
-use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\JoinUsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Responsible;
-use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,10 +45,10 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Auth::routes(['verify' => true]);
 
 
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/achievments', [AdminController::class, 'achievments'])->name('achievments');
-
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+
+        Route::get('/', [AdminController::class, 'index'])->name('index');
+        Route::get('/achievments', [AdminController::class, 'achievments'])->name('achievments');
 
         Route::resource('/users', 'AdminUserController');
 
@@ -62,9 +58,7 @@ Route::group(['middleware' => ['profileCompleted']], function () {
         Route::get('/gift', [AdminGiftController::class, 'index'])->name('gift.index');
         Route::delete('/gift/{gift}', [AdminGiftController::class, 'destroy'])->name('gift.destroy');
 
-
         Route::resource('responsible', 'AdminResponsibleController');
-
 
         Route::post('/situation/{situation}/addGift', [AdminSituationController::class, 'addGift'])->name('situation.addGift');
         Route::get('/situation/waiting', [AdminSituationController::class, 'waitingForApproval'])->name('situation.waiting');
@@ -79,11 +73,12 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
         Route::get('/joinus', [AdminjoinUsController::class, 'index'])->name('joinus.index');
         Route::delete('/joinus/{joinus}', [AdminjoinUsController::class, 'destroy']);
+
+        Route::get('/notifications', [AdminController::class, 'notifications'])->name('notifications.show');
+        Route::get('/notifications/{message}/message', [AdminController::class, 'showMessageNotifications'])->name('notifications.message.show');
+        Route::get('/notifications/{joinUs}/joinUs', [AdminController::class, 'showJoinUsNotifications'])->name('notifications.joinUs.show');
+        Route::get('/notifications/{gift}/gift', [AdminController::class, 'showGiftNotifications'])->name('notifications.gift.show');
     });
-
-
-
-
 
 
     // تسجيل الدخول خلال الفيس والكوكل
@@ -97,6 +92,9 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::put('/profile/{user:slug}/edit', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/{user:slug}/edit-image', [ProfileController::class, 'editImage'])->name('edit-image');
 
+    // Route::put('/password/{user:slug}/update', [ProfileController::class, 'passUpdate'])->name('password.update2');
+    // Route::get('change-password', 'ChangePasswordController@index');
+    Route::put('change-password', 'ChangePasswordController@store')->name('change.password');
 
 
 

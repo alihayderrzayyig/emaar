@@ -61,7 +61,7 @@
                                     class="btn-admin-header btn-admin-header-green w-100">
                                     <div class="card d-flex flex-row-reverse">
                                         <div class="icone m-0">
-                                            <i class="far fa-file-alt m-0 p-0"></i>
+                                            <i class="far fa-clock m-0 p-0"></i>
                                         </div>
                                         <div class="text">
                                             <p style="line-height: 100%" class="m-0 p-0 text-center">
@@ -79,7 +79,7 @@
                                     class="btn-admin-header btn-admin-header-blue w-100">
                                     <div class="card d-flex flex-row-reverse">
                                         <div class="icone m-0">
-                                            <i class="far fa-file-alt m-0 p-0"></i>
+                                            <i class="fas fa-sms m-0 p-0"></i>
                                         </div>
                                         <div class="text">
                                             <p style="line-height: 100%" class="m-0 p-0">
@@ -100,7 +100,7 @@
                                     class="btn-admin-header btn-admin-header-purpel w-100">
                                     <div class="card d-flex flex-row-reverse">
                                         <div class="icone m-0">
-                                            <i class="far fa-file-alt m-0 p-0"></i>
+                                            <i class="fas fa-user-plus m-0 p-0"></i>
                                         </div>
                                         <div class="text">
                                             <p style="line-height: 100%" class="m-0 p-0">
@@ -118,7 +118,7 @@
                                     class="btn-admin-header btn-admin-header-red w-100">
                                     <div class="card d-flex flex-row-reverse">
                                         <div class="icone m-0">
-                                            <i class="far fa-file-alt m-0 p-0"></i>
+                                            <i class="fas fa-hand-holding-usd m-0 p-0"></i>
                                         </div>
                                         <div class="text">
                                             <p style="line-height: 100%" class="m-0 p-0">

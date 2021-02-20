@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Governorate;
 use App\Http\Requests\GiftRequest;
+use App\Notifications\NewGiftAdded;
 use App\Situation;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GiftController extends Controller
 {
+
+
+
+    public function __construct()
+    {
+        // $this->middleware(['auth']);
+        $this->middleware(['auth', 'verified'])->only(['store']);
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -28,14 +41,15 @@ class GiftController extends Controller
     public function create()
     {
         $governorates = Governorate::all();
-        return view('gift.create', ['governorates'=>$governorates]);
+        return view('gift.create', ['governorates' => $governorates]);
     }
+    
     public function create2(Situation $situation)
     {
         $governorates = Governorate::all();
-        return view('situation.show',[
-            'situation'=>$situation,
-            'governorates'=>$governorates
+        return view('situation.show', [
+            'situation' => $situation,
+            'governorates' => $governorates
         ]);
     }
 
@@ -51,36 +65,29 @@ class GiftController extends Controller
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
         $data_recaptcha = [
-                'secret' => config('services.recaptcha.secret'),
-                'response' => $request->recaptcha,
-                'remoteip' => $remoteip
-            ];
+            'secret' => config('services.recaptcha.secret'),
+            'response' => $request->recaptcha,
+            'remoteip' => $remoteip
+        ];
         $options = [
-                'http' => [
+            'http' => [
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
                 'content' => http_build_query($data_recaptcha)
-                ]
-            ];
+            ]
+        ];
         $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            $resultJson = json_decode($result);
-        if ($resultJson->success != true) {
-            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
-        }
-
-        // dd($resultJson);
+        $result = file_get_contents($url, false, $context);
+        $resultJson = json_decode($result);
 
         if ($resultJson->score >= 0.6) {
-        // if ($resultJson->success == true) {
-            // dd($data);
-            if(Auth::check()){
-                if(isset($request->situation_id)){
+            if (Auth::check()) {
+                if (isset($request->situation_id)) {
                     $situation_id = $request->situation_id;
-                }else{
+                } else {
                     $situation_id = null;
                 }
-                Auth::user()->gifts()->create([
+                $g = Auth::user()->gifts()->create([
                     'situation_id'  => $situation_id,
                     'name'          => $request->name,
                     'phone'         => $request->phone,
@@ -90,18 +97,20 @@ class GiftController extends Controller
                     'region'        => $request->region,
                     'description'   => $request->description,
                 ]);
-                session()->flash('success', 'تمة عملية الارسال بنجاح');
+
+                $users = User::where('isAdmin', 1)->get();
+                foreach ($users as $i) {
+                    $i->notify(new NewGiftAdded($g));
+                }
             }
 
+
+            session()->flash('success', 'تمة عملية الارسال بنجاح');
             return \redirect()->back();
-            //Validation was successful, add your form submission logic here
-            // return back()->with('message', 'Thanks for your message!');
         } else {
             session()->flash('error', 'ReCaptcha Error');
-            // return back()->withErrors(['captcha' => 'ReCaptcha Error']);
             return \redirect()->back();
         }
-
     }
 
     /**

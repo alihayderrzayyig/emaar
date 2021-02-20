@@ -20,15 +20,12 @@ class AdminGiftController extends Controller
 
         $search = request()->query('search');
 
-
         if ($search) {
             if (is_numeric($search)) {
                 $gifts = Gift::where('id', $search)->get();
             } else {
                 session()->flash('error', 'لا يمكن البحث فقط عن الرقم التسلسلي');
                 $gifts = Gift::all();
-
-                // return \redirect()->back();
             }
         } else {
             $gifts = Gift::all();
@@ -48,23 +45,6 @@ class AdminGiftController extends Controller
     {
         $Gift->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
-        // return \redirect()->route('admin-message.index');
         return \redirect()->back();
     }
-
-
-    // public function show(Gift $gift){
-    //     // return $gift;
-    //     // $gifts = Gift::all();
-
-    //     $governorates = Governorate::all();
-    //     $districts = District::all();
-    //     return view('admin.gift.show',[
-    //         'gifts' => $gifts,
-    //         'governorates' => $governorates,
-    //         'districts' => $districts,
-    //     ]);
-    // }
-
-
 }

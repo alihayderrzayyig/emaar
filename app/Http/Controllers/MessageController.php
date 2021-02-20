@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageRequest;
 use App\Message;
-use Illuminate\Http\Request;
-
+use App\Notifications\NewMessageAdded;
+use App\User;
 class MessageController extends Controller
 {
     public function store(MessageRequest $request){
@@ -28,21 +28,28 @@ class MessageController extends Controller
         $context = stream_context_create($options);
             $result = file_get_contents($url, false, $context);
             $resultJson = json_decode($result);
-        if ($resultJson->success != true) {
-            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
-        }
+        // if ($resultJson->success != true) {
+        //     return back()->withErrors(['captcha' => 'ReCaptcha Error']);
+        // }
 
         // dd($resultJson);
 
         if ($resultJson->score >= 0.6) {
         // if ($resultJson->success == true) {
             // dd($data);
-            Message::create([
+            $m = Message::create([
                 'name'          =>$request->name,
                 'phone'         =>$request->phone,
                 'email'         =>$request->email,
                 'description'   =>$request->description,
             ]);
+
+            $users = User::where('isAdmin', 1)->get();
+            foreach($users as $i){
+                $i->notify(new NewMessageAdded($m));
+            }
+            // User::where('isAdmin', 1)->notify(new \App\Notifications\NewMessageAdded($m));
+
             session()->flash('success', 'تمة عملة الارسال بنجاح');
             return \redirect()->back();
                 //Validation was successful, add your form submission logic here

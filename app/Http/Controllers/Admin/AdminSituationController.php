@@ -33,7 +33,9 @@ class AdminSituationController extends Controller
                 ->paginate(30);
         } else {
             // $users = User::orderBy('name')->paginate(30);
-            $situations = Situation::where('status', 1)->paginate(30);
+            $situations = Situation::where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
         }
 
 
@@ -145,9 +147,9 @@ class AdminSituationController extends Controller
      */
     public function show($id)
     {
-        $situation = Situation::find($id);
-        $governorate = Governorate::find($situation->governorate);
-        $district = District::find($situation->district);
+        $situation = Situation::findOrFail($id);
+        $governorate = Governorate::findOrFail($situation->governorate);
+        $district = District::findOrFail($situation->district);
         return \view('admin.situation.show', [
             'situation'     => $situation,
             'governorate'   => $governorate,
@@ -163,7 +165,7 @@ class AdminSituationController extends Controller
      */
     public function edit($id)
     {
-        $situation = Situation::find($id);
+        $situation = Situation::findOrFail($id);
         $governorates = Governorate::all();
         $districts = District::where('governorate_id', $situation->governorate)->get();
         return view('admin.situation.create', [
@@ -182,7 +184,7 @@ class AdminSituationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $situation = Situation::find($id);
+        $situation = Situation::findOrFail($id);
         $date = $request->only([
             'name',
             'phone',
@@ -221,16 +223,16 @@ class AdminSituationController extends Controller
      */
     public function destroy($id)
     {
-        $situation = Situation::find($id);
+        $situation = Situation::findOrFail($id);
         $situation->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
-        return \redirect()->route('admin-situation.index');
+        return \redirect()->route('admin.situation.index');
     }
 
     public function addGift(Request $request, $id)
     {
 
-        $situation = Situation::find($id);
+        $situation = Situation::findOrFail($id);
         $oldval = $situation->achieve;
         $newval = $oldval + $request->money;
         $date['achieve'] = $newval;

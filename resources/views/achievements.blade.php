@@ -42,8 +42,7 @@
                             <p>{{ str_limit($item->body, 135) }}</p>
                         </div>
                         <div class="card-footer">
-                            {{-- <small class="text-muted">Last updated 3 mins ago</small> --}}
-                            <a href="" class="btn btn-info">المزيد</a>
+                            {{-- <a href="" class="btn btn-info">المزيد</a> --}}
                         </div>
                     </div>
                 </div>

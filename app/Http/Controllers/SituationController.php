@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Governorate;
 use App\Http\Requests\SituationRequest;
+use App\Notifications\NewSituationAdded;
 use App\Situation;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -15,7 +17,7 @@ class SituationController extends Controller
     public function __construct()
     {
         // $this->middleware(['auth']);
-        $this->middleware(['auth','verified'])->only(['store']);
+        $this->middleware(['auth', 'verified'])->only(['store']);
     }
     /**
      * Display a listing of the resource.
@@ -33,17 +35,17 @@ class SituationController extends Controller
             $sort = 'ASC';
         }
 
-        if($filter){
-            $situations = Situation::where('status',1)
-            ->orderBy($filter, $sort)
-            ->paginate(20);
-        }else{
-            $situations = Situation::where('status',1)
-            ->orderBy('created_at', 'DESC')
-            ->paginate(20);
+        if ($filter) {
+            $situations = Situation::where('status', 1)
+                ->orderBy($filter, $sort)
+                ->paginate(20);
+        } else {
+            $situations = Situation::where('status', 1)
+                ->orderBy('created_at', 'DESC')
+                ->paginate(20);
         }
 
-        return view('situation.index',['situations'=>$situations]);
+        return view('situation.index', ['situations' => $situations]);
     }
 
     /**
@@ -54,7 +56,7 @@ class SituationController extends Controller
     public function create()
     {
         $governorates = Governorate::all();
-        return view('situation.create', ['governorates'=>$governorates]);
+        return view('situation.create', ['governorates' => $governorates]);
     }
 
     /**
@@ -70,36 +72,32 @@ class SituationController extends Controller
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
         $data_recaptcha = [
-                'secret' => config('services.recaptcha.secret'),
-                'response' => $request->recaptcha,
-                'remoteip' => $remoteip
-            ];
+            'secret' => config('services.recaptcha.secret'),
+            'response' => $request->recaptcha,
+            'remoteip' => $remoteip
+        ];
         $options = [
-                'http' => [
+            'http' => [
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
                 'content' => http_build_query($data_recaptcha)
-                ]
-            ];
+            ]
+        ];
         $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            $resultJson = json_decode($result);
-        if ($resultJson->success != true) {
-            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
-        }
+        $result = file_get_contents($url, false, $context);
+        $resultJson = json_decode($result);
 
-        // dd($resultJson);
+
 
         if ($resultJson->score >= 0.6) {
-        // if ($resultJson->success == true) {
-            // dd($data);
-            $image=$request->image->store('situations');
+
+            $image = $request->image->store('situations');
             // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            $img2 = Image::make('storage/' . $image)->resize(600, 500);
             //حفظ الصورة الجديدة بنفس الاسم والمكان
             $img2->save();
 
-            Auth::user()->situations()->create([
+            $s = Auth::user()->situations()->create([
                 'name'          => $request->name,
                 'phone'         => $request->phone,
                 'governorate'   => $request->governorate,
@@ -110,17 +108,18 @@ class SituationController extends Controller
                 'description'   => $request->description,
             ]);
 
-            session()->flash('success', 'تمة عملة الارسال بنجاح');
+            $users = User::where('isAdmin', 1)->get();
+            foreach ($users as $i) {
+                $i->notify(new NewSituationAdded($s));
+            }
 
+
+            session()->flash('success', 'تمة عملة الارسال بنجاح');
             return redirect()->back();
-            //Validation was successful, add your form submission logic here
-            // return back()->with('message', 'Thanks for your message!');
         } else {
             session()->flash('error', 'ReCaptcha Error');
-            // return back()->withErrors(['captcha' => 'ReCaptcha Error']);
             return \redirect()->back();
         }
-
     }
 
     /**
@@ -134,9 +133,9 @@ class SituationController extends Controller
         // dd($situation);
         // return $situation;
         $governorates = Governorate::all();
-        return view('situation.show',[
-            'governorates'=>$governorates,
-            'situation'=>$situation
+        return view('situation.show', [
+            'governorates' => $governorates,
+            'situation' => $situation
         ]);
     }
 
@@ -176,7 +175,8 @@ class SituationController extends Controller
     }
 
 
-    public function give(Situation $situation){
-        return view('showSituation',['situation'=>$situation]);
+    public function give(Situation $situation)
+    {
+        return view('showSituation', ['situation' => $situation]);
     }
 }

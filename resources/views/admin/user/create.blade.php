@@ -14,6 +14,15 @@
                     @if (isset($user))
                         @method('PUT')
                     @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger text-left">
+                        <ul class="list-unstyled m-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                     <div class="card py-5 px-3 shadow">
                         @if (isset($user))
                             <div class="mx-auto mb-5" style="width: 20rem; height: 20rem;">
@@ -45,7 +54,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                 <label for="email">البريد الالكتروني:</label>
-                                <input id="email" name="email" class="form-control" type="email" value="{{ isset($user)?$user->email : old('name') }}">
+                                <input id="email" name="email" class="form-control" type="email" value="{{ old('email') }}" placeholder="{{ isset($user)?$user->email: '' }}">
                                 </div>
                             </div>
 
@@ -96,6 +105,7 @@
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-3" >
                                             <select name="district" class="custom-select">
+                                                <option value="">قضاء</option>
                                                 @if (isset($user))
                                                     @foreach ($districts as $district)
                                                         <option value="{{ $district->id }}"
@@ -110,7 +120,7 @@
                                             </select>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg- mb-3">
-                                            <input name="region" class="form-control" type="text" value="{{ isset($user) ? $user->profile->region : old('region') }}">
+                                            <input name="region" class="form-control" type="text" value="{{ isset($user) ? $user->profile->region : old('region') }}" placeholder="منطقة/ناحية">
                                         </div>
                                     </div>
                                 </div>

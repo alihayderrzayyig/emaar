@@ -114,4 +114,8 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function passUpdate(Request $request, User $use){
+        dd('ttttttttttttttttttt');
+    }
 }

@@ -9,19 +9,16 @@
             <div class="dropdown-menu  text-right " aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->slug) }}">معلومات الحساب</a>
                 <div class="dropdown-divider"></div>
-                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-avatar">تغيير الصورة
-                    الشخصة</button>
-                <!-- Button trigger modal -->
-                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ching-avatar">
-                Launch demo modal
-            </button> --}}
+                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-avatar">
+                    تغيير الصوره الشخصية
+                </button>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()->slug) }}">تعديل الحساب</a>
-                {{-- <a class="dropdown-item" href="{{ route('edit-profile', auth()->user()->id) }}">تعديل الحساب</a> --}}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">تعديل كلمة السر</a>
+                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-pass">
+                    تعديل كلمة السر
+                </button>
                 <div class="dropdown-divider"></div>
-                {{-- <a class="dropdown-item" href="">تسجيل الخروج</a> --}}
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button type="submit" class="dropdown-item" href="">تسجيل الخروج</button>
@@ -84,6 +81,42 @@
                         </div>
                         <div class="mx-auto">
                             <button type="submit" class="btn btn-primary btn-block">حفظ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ching-pass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="pass-form" action="{{ route('change.password') }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="old_password">{{ __(': كلمة السر الحالية') }}</label>
+                            <input type="password" name="current_password" class="form-control-file" id="old_password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{ __(': كلمة السر الجديدة') }}</label>
+                            <input type="password" name="new_password" class="form-control-file" id="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">{{ __(': اعد كتابة كلمة السر') }}</label>
+                            <input type="password" name="new_confirm_password" class="form-control-file" id="password_confirmation">
+                        </div>
+
+                        <div class="form-group">
+                            <div id="pass-error" class="alert alert-danger" style="display:none"></div>
+                        </div>
+
+                        <div class="mx-auto">
+                            <button type="submit" id="pass-submit" class="btn btn-primary btn-block">حفظ</button>
                         </div>
                     </form>
                 </div>

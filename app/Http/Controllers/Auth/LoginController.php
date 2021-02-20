@@ -66,23 +66,16 @@ class LoginController extends Controller
             return redirect('/');
         }
 
-
-        // dd($socialuser->getId());
         $socialprovider = SocialProvider::where('provider_id',$socialuser->getId())->where('provider',$provider)->first();
-
-        // dd($socialprovider);
 
         if(!$socialprovider){
 
             $user = User::create([
-                
+
                 'name'                  => $socialuser->getName(),
                 'email'                 => $socialuser->getEmail(),
                 'email_verified_at'     => now(),
-                // 'password'  => Hash::make('password'),
             ]);
-
-            // dd('ttttttt');
 
             $user->profile()->create([
                 'avatar' => $socialuser->getAvatar(),
@@ -97,20 +90,7 @@ class LoginController extends Controller
             $user = $socialprovider->user;
         }
 
-        // auth()->login($user);
-
-        // if( auth()->user()->profile->copleted == false){
-        //     return redirect()->route('profile-completed',[auth()->user()->profile->id]);
-        // }else{
-        //     return redirect()->route('home');
-        // }
-
-
         auth()->login($user);
         return redirect()->route('home');
-
-
-        // dd($user);
-        // $user->token;
     }
 }

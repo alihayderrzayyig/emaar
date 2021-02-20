@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\District;
 use App\Governorate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreUserRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +34,7 @@ class AdminUserController extends Controller
             $users = User::where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('email', 'LIKE', '%' . $search . '%')
                 ->paginate(30);
-        }else{
+        } else {
             $users = User::orderBy('name')->paginate(30);
         }
         return view('admin.user.index', ['users' => $users])->with('no', 1);
@@ -55,7 +57,7 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
 
         if ($request->isAdmin === 'on') {
@@ -63,9 +65,7 @@ class AdminUserController extends Controller
         } else {
             $isAdmin = false;
         }
-        $this->validate($request, [
-            'password' => 'required|confirmed|min:6',
-        ]);
+
 
         $user = User::create([
             'name'      => $request->name,
@@ -143,24 +143,25 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $this->validate($request, [
-            'password' => 'nullable|confirmed|min:8',
-        ]);
-
         if ($request->isAdmin === 'on') {
             $isAdmin = true;
         } else {
             $isAdmin = false;
         }
-        $date_user = $request->only(['name', 'email']);
-        if ($request->password != null) {
+
+
+        $date_user = $request->only(['name']);
+        if ($request->email) {
+            $date_user['email'] = $request->email;
+        }
+
+        if ($request->password) {
             $date_user['password'] = Hash::make($request->password);
         }
+
         $date_user['isAdmin'] = $isAdmin;
-
-
 
         $date_profile = $request->only([
             'phone',
@@ -179,15 +180,12 @@ class AdminUserController extends Controller
 
             $date_profile['avatar'] = $image;
         }
-
         $date_profile['completed'] = true;
 
         $user->update($date_user);
         $user->profile->update($date_profile);
 
-
         session()->flash('success', 'تم تحديث البيانات بنجاح');
-
         return \redirect()->back();
     }
 

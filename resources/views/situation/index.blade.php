@@ -71,9 +71,9 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="paginet mt-5 mx-auto">
-                    {{ $situations->withQueryString()->links() }}
-                </div>
+            </div>
+            <div class="paginet mt-5 mx-auto">
+                {{ $situations->withQueryString()->links() }}
             </div>
         </div>
     </section>

@@ -90,6 +90,41 @@
         });
 
 
+        $(Document).on('click', '#pass-submit', function() {
+            var form = $('#pass-form').serialize();
+            var url = $('#pass-form').attr('action');
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: form,
+                type: 'put',
+                success: function(result) {
+                    if (result.success) {
+                        $('#ching-pass').hide();
+                        location.reload();
+                    }
+                },
+            }).fail(function(errors) {
+                // console.log(errors.responseJSON.errors);
+                if (errors.responseJSON.errors) {
+                    jQuery('#pass-error').html('');
+
+                    jQuery('#pass-error').append('<ul class="list-unstyled m-0"></ul>');
+
+                    jQuery.each(errors.responseJSON.errors, function(key, value) {
+                    jQuery('#pass-error').show();
+                        jQuery('#pass-error ul').append('<li>' + value + '</li>');
+                    });
+
+                    // jQuery('#pass-error').append('</ul>');
+                }
+            });
+            return false;
+        });
+
+
+
+
         window.fbAsyncInit = function() {
             FB.init({
                 appId: '534267997480471',
@@ -111,6 +146,8 @@
         }(document, 'script', 'facebook-jssdk'));
 
     </script>
+
+
 
     @yield('js')
 

@@ -8,15 +8,17 @@ use Illuminate\Http\Request;
 
 class AdminMessageController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $messags = Message::all();
         return view('admin.message.index', [
-            'messags'=>$messags,
+            'messags' => $messags,
         ]);
     }
 
 
-    public function destroy(Message $message){
+    public function destroy(Message $message)
+    {
         $message->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
         return \redirect()->route('admin.message.index');

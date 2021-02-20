@@ -77,7 +77,6 @@ class AdminResponsibleController extends Controller
     }
 
     public function destroy(Responsible $responsible){
-        // dd('ttttttttttt');
         $responsible->deleteImage();
         $responsible->delete();
         session()->flash('success', 'تم الحذف بنجاح');

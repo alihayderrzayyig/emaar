@@ -35,7 +35,8 @@
                     <div class="row d-flex align-items-stretch">
                         <a href="#joinUs" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--doctor">
                             <h3 class="floatItem-tagline">أنضم إلينا</h3>
-                            <i class="floatItem-icon fas fa-user-md"></i>
+                            {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
+                            <i class="floatItem-icon fas fa-users-cog"></i>
                         </a>
                         <a href="{{ route('situation.create') }}"
                             class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--conditions">
@@ -129,7 +130,7 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                                <a href="" class="btn btn-info">ساعد الان</a>
+                                <a href="{{ route('gift.create') }}" class="btn btn-info">ساعد الان</a>
                             </div>
                         </div>
                     </div>
@@ -137,7 +138,9 @@
                     <div class="col-12 col-md-4 col-lg-4 col-card">
                         <div class="card h-100">
                             <div class="card-body">
-                                <i class="floatItem-icon fas fa-user-md"></i>
+                                {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
+                                <i class="floatItem-icon fas fa-hand-holding-usd"></i>
+
                                 <h4>قيمة نقدية</h4>
                                 <p>
                                     يمكن التبرع باي قيمة نقديه للمساعدة في اعمار منزل أي شخص محدد او يمكنك تقديمها لنا ونحن نتكفل بتقديمها حسب الاولوية
@@ -145,7 +148,7 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                                <a href="" class="btn btn-info">ساعد الان</a>
+                                <a href="{{ route('gift.create') }}" class="btn btn-info">ساعد الان</a>
                             </div>
                         </div>
                     </div>
@@ -153,7 +156,8 @@
                     <div class="col-12 col-md-4 col-lg-4 col-card">
                         <div class="card h-100">
                             <div class="card-body">
-                                <i class="floatItem-icon fas fa-user-md"></i>
+                                {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
+                                <i class="floatItem-icon fas fa-people-carry"></i>
                                 <h4>تطوع ميداني</h4>
                                 <p>
                                     اذا كن مهندس بناء كربائي او عامل او يمكنك المساعدة في عمليات اعمار بي شكل من اشكال واحببت المساعدة يشرفنا قبول طلبك
@@ -161,7 +165,7 @@
                             </div>
                             <div class="card-footer">
                                 <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                                <a href="" class="btn btn-info">ساعد الان</a>
+                                <a href="{{ route('gift.create') }}" class="btn btn-info">ساعد الان</a>
                             </div>
                         </div>
                     </div>

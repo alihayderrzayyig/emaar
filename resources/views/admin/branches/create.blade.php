@@ -17,6 +17,8 @@
                             </ul>
                         </div>
                     @endif
+
+                    <h1 class="text-center mb-4">{{ isset($branch) ? __('تحديث فرع'): __('إضافة فرع جديد') }}</h1>
                     <form
                         action="{{ isset($branch) ? route('admin.branch.update', $branch->id) : route('admin.branch.store') }}"
                         method="post" enctype="multipart/form-data">

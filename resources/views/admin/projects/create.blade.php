@@ -17,6 +17,8 @@
                             </ul>
                         </div>
                     @endif
+
+                    <h1 class="text-center mb-4">{{ isset($project) ? __('تحديث مشروع منجز'): __('إضافة مشروع جديد تم انجازة') }}</h1>
                     <form
                         action="{{ isset($project) ? route('admin.project.update', $project->id) : route('admin.project.store') }}"
                         method="post" enctype="multipart/form-data">

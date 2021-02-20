@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'max:22', 'confirmed'],
-        ],[
+        ], [
             'name.required' => 'يجب ادخال اسم المستخدم',
             'name.string' => 'الاسم مطلوب',
             'name.max' => 'يجب الايزيد اسم المستخدم عن 255 حرف',
@@ -84,28 +84,24 @@ class RegisterController extends Controller
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
         $data_recaptcha = [
-                'secret' => config('services.recaptcha.secret'),
-                'response' => $data['recaptcha'],
-                'remoteip' => $remoteip
-            ];
+            'secret' => config('services.recaptcha.secret'),
+            'response' => $data['recaptcha'],
+            'remoteip' => $remoteip
+        ];
         $options = [
-                'http' => [
+            'http' => [
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
                 'content' => http_build_query($data_recaptcha)
-                ]
-            ];
+            ]
+        ];
         $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            $resultJson = json_decode($result);
-        if ($resultJson->success != true) {
-            return back()->withErrors(['captcha' => 'ReCaptcha Error']);
-        }
+        $result = file_get_contents($url, false, $context);
+        $resultJson = json_decode($result);
 
-        // dd($resultJson);
 
         if ($resultJson->score >= 0.6) {
-        // if ($resultJson->success == true) {
+            // if ($resultJson->success == true) {
             // dd($data);
             return User::create([
                 'name' => $data['name'],
@@ -113,13 +109,12 @@ class RegisterController extends Controller
                 'slug' => SlugService::createSlug(User::class, 'slug', $data['name'],),
                 'password' => Hash::make($data['password']),
             ]);
-                //Validation was successful, add your form submission logic here
-                // return back()->with('message', 'Thanks for your message!');
+            //Validation was successful, add your form submission logic here
+            // return back()->with('message', 'Thanks for your message!');
         } else {
             session()->flash('error', 'ReCaptcha Error');
             // return back()->withErrors(['captcha' => 'ReCaptcha Error']);
             return \redirect()->back();
         }
-
     }
 }
