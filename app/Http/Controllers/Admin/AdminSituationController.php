@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\District;
 use App\Governorate;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreSituationRequest;
+use App\Http\Requests\Admin\UpdateSituationRequest;
 use App\Situation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,14 +36,16 @@ class AdminSituationController extends Controller
         } else {
             // $users = User::orderBy('name')->paginate(30);
             $situations = Situation::where('status', 1)
-            ->orderBy('created_at', 'desc')
-            ->paginate(30);
+                ->orderBy('created_at', 'desc')
+                ->paginate(30);
         }
 
 
         // dd(Situation::where('status',0)->get()->count());
         $situationAccept = Situation::where('status', 0)->get()->count();
-        return \view('admin.situation.index', ['situations' => $situations])->with('situationAccept', $situationAccept);
+        return \view('admin.situation.index', [
+            'situations' => $situations,
+        ])->with('situationAccept', $situationAccept);
     }
 
 
@@ -93,6 +97,7 @@ class AdminSituationController extends Controller
      */
     public function create()
     {
+        // \dd('tttttttt');
         $governorates = Governorate::all();
         return view('admin.situation.create', ['governorates' => $governorates]);
     }
@@ -103,18 +108,18 @@ class AdminSituationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSituationRequest $request)
     {
-        $request->validateWithBag('post', [
-            'name'          => ['required', 'max:255'],
-            'phone'         => ['required'],
-            'governorate'   => ['required', 'integer'],
-            'district'      => ['required', 'integer'],
-            'region'        => ['required'],
-            'money'         => ['required'],
-            'image'         => ['required', 'image'],
-            'description'   => ['required'],
-        ]);
+        // $request->validateWithBag('post', [
+        //     'name'          => ['required', 'max:255'],
+        //     'phone'         => ['required'],
+        //     'governorate'   => ['required', 'integer'],
+        //     'district'      => ['required', 'integer'],
+        //     'region'        => ['required'],
+        //     'money'         => ['required'],
+        //     'image'         => ['required', 'image'],
+        //     'description'   => ['required'],
+        // ]);
 
         $image = $request->image->store('situations');
         // تعديل الصورة
@@ -182,7 +187,7 @@ class AdminSituationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSituationRequest $request, $id)
     {
         $situation = Situation::findOrFail($id);
         $date = $request->only([
@@ -223,7 +228,9 @@ class AdminSituationController extends Controller
      */
     public function destroy($id)
     {
+
         $situation = Situation::findOrFail($id);
+        $situation->deleteImage();
         $situation->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
         return \redirect()->route('admin.situation.index');

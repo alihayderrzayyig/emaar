@@ -6,7 +6,7 @@
                 <img src="{{ asset(auth()->user()->profile->avatar) }}" width="30" height="30"
                     class="d-inline-block align-top" alt="" loading="lazy">
             </a>
-            <div class="dropdown-menu  text-right " aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu text-left" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->slug) }}">معلومات الحساب</a>
                 <div class="dropdown-divider"></div>
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-avatar">

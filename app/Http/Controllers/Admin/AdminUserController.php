@@ -31,11 +31,11 @@ class AdminUserController extends Controller
         $search = request()->query('search');
         if ($search) {
             // dd(request()->query('search'));
-            $users = User::where('name', 'LIKE', '%' . $search . '%')
+            $users = User::with(['profile'])->where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('email', 'LIKE', '%' . $search . '%')
                 ->paginate(30);
         } else {
-            $users = User::orderBy('name')->paginate(30);
+            $users = User::with(['profile'])->orderBy('name')->paginate(30);
         }
         return view('admin.user.index', ['users' => $users])->with('no', 1);
     }
@@ -116,7 +116,6 @@ class AdminUserController extends Controller
             'governorate'   => $governorate,
             'district'      => $district,
         ]);
-        // return $user;
     }
 
     /**

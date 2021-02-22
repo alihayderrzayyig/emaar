@@ -9,6 +9,7 @@ use App\Situation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 
@@ -55,7 +56,7 @@ class SituationController extends Controller
      */
     public function create()
     {
-        $governorates = Governorate::all();
+        $governorates = DB::table('governorates')->get();
         return view('situation.create', ['governorates' => $governorates]);
     }
 
@@ -130,9 +131,7 @@ class SituationController extends Controller
      */
     public function show(Situation $situation)
     {
-        // dd($situation);
-        // return $situation;
-        $governorates = Governorate::all();
+        $governorates = DB::table('governorates')->get();
         return view('situation.show', [
             'governorates' => $governorates,
             'situation' => $situation

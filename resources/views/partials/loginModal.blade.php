@@ -39,7 +39,7 @@
                 </form>
 
                 <div class="d-block text-center ">
-                    <a class="btn">هل نسيت كلمة السر؟</a>
+                    <a href="{{ route('password.request') }}" class="btn">هل نسيت كلمة السر؟</a>
                 </div>
 
                 <div class="d-block text-center ">

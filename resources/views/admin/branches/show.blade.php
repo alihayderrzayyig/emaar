@@ -20,7 +20,7 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('project.index') }}" class="btn-admin-header btn-admin-header-green">
+                        <a href="{{ route('admin.project.index') }}" class="btn-admin-header btn-admin-header-green">
                             <div class="card d-flex flex-row-reverse">
                                 <div class="icone m-0">
                                     <i class="far fa-file-alt m-0 p-0"></i>

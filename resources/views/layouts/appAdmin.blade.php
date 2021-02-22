@@ -24,12 +24,10 @@
 
     <nav class="navbar navbar-light nav-secondary flex-row-reverse">
         <a class="navbar-brand" href="{{ route('home') }}">إعمار</a>
-        {{-- <i class="fab fa-facebook-square align-self-center"></i> --}}
         <a href="{{ route('admin.notifications.show') }}">
-            <span class="badge badge-info p-2">
-                {{ _('اشعار ') .
-    auth()->user()->unreadNotifications->count() }}
-            </span>
+
+            <i class="fas fa-bell @if (auth()->user()->unreadNotifications->count()) alert @endif"></i>
+            {{-- {{ auth()->user()->unreadNotifications->count() }} --}}
         </a>
     </nav>
 

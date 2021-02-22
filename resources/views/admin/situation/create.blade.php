@@ -9,9 +9,19 @@
 
                     @include('partials.admin.success-m')
 
+                    @if ($errors->any())
+                        <div class="alert alert-danger text-left">
+                            <ul class="list-unstyled m-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 
                     <form
-                        action="{{ isset($situation) ? route('admin.situation.update', $situation->id) : route('admin-situation.store') }}"
+                        action="{{ isset($situation) ? route('admin.situation.update', $situation->id) : route('admin.situation.store') }}"
                         method="post" enctype="multipart/form-data">
                         @csrf
                         @if (isset($situation))

@@ -11,71 +11,74 @@
                 </div>
 
                 <div class="container p-5">
-                    <div class="card">
+                    @if ($notifications->count())
+                        <div class="card">
+                            <table class="table">
+                                <tbody>
+                                    @foreach ($notifications as $item)
+                                        @if ($item->type == 'App\Notifications\NewMessageAdded')
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('admin.notifications.message.show', $item->id) }}"
+                                                        class="btn btn-info btn-sm">view</a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="m-0 text-left font-s">
+                                                        تم تلقي رسالة جديدة
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        @endif
 
-                        <table class="table">
-                            <tbody>
-                                @foreach ($notifications as $item)
-                                    @if ($item->type == 'App\Notifications\NewMessageAdded')
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('admin.notifications.message.show', $item->id) }}"
-                                                    class="btn btn-info btn-sm">view</a>
-                                            </td>
-                                            <td class="">
-                                                <p class="m-0 text-left font-s">
-                                                    تم تلقي رسالة جديدة
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                        @if ($item->type == 'App\Notifications\NewSituationAdded')
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('admin.situation.show', $item->data['situation']['id']) }}"
+                                                        class="btn btn-info btn-sm">view</a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="m-0 text-left font-s">
+                                                        تم تلقي طلب اضافة حالة
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        @endif
 
-                                    @if ($item->type == 'App\Notifications\NewSituationAdded')
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('admin.situation.show', $item->data['situation']['id']) }}"
-                                                    class="btn btn-info btn-sm">view</a>
-                                            </td>
-                                            <td class="">
-                                                <p class="m-0 text-left font-s">
-                                                    تم تلقي طلب اضافة حالة
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                        @if ($item->type == 'App\Notifications\NewGiftAdded')
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('admin.notifications.gift.show', $item->id) }}"
+                                                        class="btn btn-info btn-sm">view</a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="m-0 text-left font-s">
+                                                        طلب تقديم مساعدة
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        @endif
 
-                                    @if ($item->type == 'App\Notifications\NewGiftAdded')
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('admin.notifications.gift.show', $item->id) }}"
-                                                    class="btn btn-info btn-sm">view</a>
-                                            </td>
-                                            <td class="">
-                                                <p class="m-0 text-left font-s">
-                                                    طلب تقديم مساعدة
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                        @if ($item->type == 'App\Notifications\NewJoinUsAdded')
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('admin.notifications.joinUs.show', $item->id) }}"
+                                                        class="btn btn-info btn-sm">view</a>
+                                                </td>
+                                                <td class="">
+                                                    <p class="m-0 text-left font-s">
+                                                        تم تلقي طلب انضمام جديد
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
 
-                                    @if ($item->type == 'App\Notifications\NewJoinUsAdded')
-                                        <tr>
-                                            <td>
-                                                <a href="{{ route('admin.notifications.joinUs.show', $item->id) }}"
-                                                    class="btn btn-info btn-sm">view</a>
-                                            </td>
-                                            <td class="">
-                                                <p class="m-0 text-left font-s">
-                                                    تم تلقس طلب انضمام جديد
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
+                        </div>
+                    @else
+                        <h5 class="text-center">لا لوجد اي اشعار</h5>
+                    @endif
                 </div>
             </div>
         </div>

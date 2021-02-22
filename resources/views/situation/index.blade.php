@@ -90,6 +90,20 @@
             text-align: left
         }
 
+        .pagination .page-item:first-child .page-link {
+            margin-right: 0;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+            border-top-right-radius: 0rem;
+            border-bottom-right-radius: 0rem;
+        }
+        .pagination .page-item:last-child .page-link {
+            border-top-left-radius: 0rem;
+            border-bottom-left-radius: 0rem;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
     </style>
 
 @endsection

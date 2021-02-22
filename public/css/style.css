@@ -214,6 +214,13 @@ nav {
     font-size: 1.5rem;
     font-weight: 800; }
 
+#password-request {
+  height: 95vh; }
+  #password-request .container {
+    padding-top: 5rem; }
+    #password-request .container .card .card-body .form-group {
+      direction: rtl; }
+
 #header {
   position: relative;
   height: 600px;

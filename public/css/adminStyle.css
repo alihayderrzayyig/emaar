@@ -208,18 +208,20 @@ nav {
     color: inherit !important;
     font-size: 1.5rem;
     font-weight: 800; }
-  nav i {
-    position: relative;
-    font-size: 1.2rem; }
-  nav i::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    right: -8px;
-    width: 10px;
-    height: 10px;
-    background-color: #f73636;
-    border-radius: 50%; }
+  nav a {
+    color: #02363D; }
+    nav a .alert {
+      position: relative;
+      font-size: 1.2rem; }
+    nav a .alert::after {
+      content: '';
+      position: absolute;
+      top: 7px;
+      right: 17px;
+      width: 10px;
+      height: 10px;
+      background-color: #f73636;
+      border-radius: 50%; }
 
 .active {
   color: #3f5cfc !important; }

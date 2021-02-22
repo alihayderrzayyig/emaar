@@ -12,6 +12,7 @@ use App\Http\Controllers\JoinUsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Responsible;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +35,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['profileCompleted']], function () {
 
     Route::get('/', function () {
-        $responsibles = Responsible::all();
-        $governorates = Governorate::all();
+        $responsibles = DB::table('responsibles')->get();
+        $governorates = DB::table('governorates')->get();
+
         return view('index', [
             'governorates' => $governorates,
             'responsibles' => $responsibles,

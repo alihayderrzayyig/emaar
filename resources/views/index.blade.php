@@ -378,15 +378,15 @@
                         <h4>هل لديك أسئلة؟</h4>
                         <ul>
                             <li class="d-flex flex-row-reverse">
-                                <i class="floatItem-icon fas fa-user-md"></i>
+                                <i class="floatItem-icon fas fa-map-marker-alt"></i>
                                 <p>الرمادي, شارع الملعب, قرب عمارة الحاج ثامر</p>
                             </li>
                             <li class="d-flex flex-row-reverse">
-                                <i class="floatItem-icon fas fa-user-md"></i>
+                                <i class="floatItem-icon fas fa-phone"></i>
                                 <p>9647800000000+</p>
                             </li>
                             <li class="d-flex flex-row-reverse">
-                                <i class="floatItem-icon fas fa-user-md"></i>
+                                <i class="floatItem-icon fas fa-at"></i>
                                 <p>info@email.com</p>
                             </li>
                         </ul>
