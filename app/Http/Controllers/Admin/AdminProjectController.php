@@ -14,7 +14,7 @@ class AdminProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','checkIsAdmin']);
+        $this->middleware(['auth', 'checkIsAdmin']);
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class AdminProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return \view('admin.projects.index',['projects'=>$projects]);
+        return \view('admin.projects.index', ['projects' => $projects]);
     }
 
     /**
@@ -45,13 +45,25 @@ class AdminProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        if(Auth::user()->isAdmin){
-            if($request->hasFile('image')){
-                $image=$request->image->store('Project');
-                // تعديل الصورة
-                $img2 = Image::make('storage/'.$image)->resize(600, 500);
-                //حفظ الصورة الجديدة بنفس الاسم والمكان
+        if (Auth::user()->isAdmin) {
+            // if($request->hasFile('image')){
+            //     $image=$request->image->store('Project');
+            //     // تعديل الصورة
+            //     $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+            //     $img2->save();
+            // }
+            if ($request->hasFile('image')) {
+
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = time() . '.' . $extension;
+                $file->move('img/project/', $filename);
+
+                $img2 = Image::make('img/project/' . $filename)->resize(600, 500);
                 $img2->save();
+
+                $image = 'img/project/' . $filename;
             }
 
             Project::create([
@@ -74,7 +86,7 @@ class AdminProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return \view('admin.projects.show', ['project'=>$project]);
+        return \view('admin.projects.show', ['project' => $project]);
     }
 
     /**
@@ -85,7 +97,7 @@ class AdminProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return \view('admin.projects.create',['project'=>$project]);
+        return \view('admin.projects.create', ['project' => $project]);
     }
 
     /**
@@ -98,20 +110,34 @@ class AdminProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         // return $request;
-        $date = $request->only(['title','body','show']);
+        $date = $request->only(['title', 'body', 'show']);
         // return $date;
-        if($request->hasFile('image')){
-            $image=$request->image->store('branch');
-            // Storage::delete($post->image);
-            $project->deleteImage();
-            // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(600, 500);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+        // if($request->hasFile('image')){
+        //     $image=$request->image->store('branch');
+        //     // Storage::delete($post->image);
+        //     $project->deleteImage();
+        //     // تعديل الصورة
+        //     $img2 = Image::make('storage/'.$image)->resize(600, 500);
+        //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $img2->save();
+
+        //     $date['image'] = $image;
+        // }
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            $file->move('img/project/', $filename);
+
+            $img2 = Image::make('img/project/' . $filename)->resize(600, 500);
             $img2->save();
 
-            $date['image'] = $image;
+            $date['image'] = 'img/project/' . $filename;
         }
 
+            $project->deleteImage();
         $project->update($date);
 
         session()->flash('success', 'تمة عملة التحديث بنجاح');

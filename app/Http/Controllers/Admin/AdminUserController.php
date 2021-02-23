@@ -74,16 +74,32 @@ class AdminUserController extends Controller
             'isAdmin'   => $isAdmin,
         ]);
 
+
         if ($request->hasFile('image')) {
-            //حفظ الصورة الجديدة
-            $image = $request->image->store('profile');
-            // تعديل الصورة
-            $img2 = Image::make('storage/' . $image)->resize(300, 200);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . Auth::user()->id . '.' . $extension;
+            $file->move('img/user/', $filename);
+
+            $img2 = Image::make('img/user/' . $filename)->resize(300, 200);
             $img2->save();
+
+            $image = 'img/user/' . $filename;
         } else {
             $image = 'img/user.png';
         }
+
+        // if ($request->hasFile('image')) {
+        //     //حفظ الصورة الجديدة
+        //     $image = $request->image->store('profile');
+        //     // تعديل الصورة
+        //     $img2 = Image::make('storage/' . $image)->resize(300, 200);
+        //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $img2->save();
+        // } else {
+        //     $image = 'img/user.png';
+        // }
 
         $user->profile()->create([
             'phone'         => $request->phone,
@@ -169,19 +185,37 @@ class AdminUserController extends Controller
             'district',
             'region',
         ]);
+        // if ($request->hasFile('image')) {
+        //     $image = $request->image->store('profile');
+        //     $user->profile->deleteImage();
+        //     // تعديل الصورة
+        //     $img2 = Image::make('storage/' . $image)->resize(300, 200);
+        //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $img2->save();
+
+        //     $date_profile['avatar'] = $image;
+        // }
+
+
         if ($request->hasFile('image')) {
-            $image = $request->image->store('profile');
-            $user->profile->deleteImage();
-            // تعديل الصورة
-            $img2 = Image::make('storage/' . $image)->resize(300, 200);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . Auth::user()->id . '.' . $extension;
+            $file->move('img/user/', $filename);
+
+            $img2 = Image::make('img/user/' . $filename)->resize(300, 200);
             $img2->save();
 
-            $date_profile['avatar'] = $image;
+            $date_profile['avatar'] = 'img/user/' . $filename;
         }
+
+
+
         $date_profile['completed'] = true;
 
         $user->update($date_user);
+        $user->profile->deleteImage();
         $user->profile->update($date_profile);
 
         session()->flash('success', 'تم تحديث البيانات بنجاح');

@@ -92,11 +92,19 @@ class SituationController extends Controller
 
         if ($resultJson->score >= 0.6) {
 
-            $image = $request->image->store('situations');
-            // تعديل الصورة
-            $img2 = Image::make('storage/' . $image)->resize(600, 500);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
-            $img2->save();
+            if($request->hasFile('image')){
+
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename =time().'.'.$extension;
+                $file->move('img/situation/', $filename);
+
+                $img2 = Image::make('img/situation/'.$filename)->resize(600, 500);
+                $img2->save();
+
+                $date['image'] = 'img/situation/'.$filename;
+            }
+
 
             $s = Auth::user()->situations()->create([
                 'name'          => $request->name,
@@ -105,7 +113,7 @@ class SituationController extends Controller
                 'district'      => $request->district,
                 'region'        => $request->region,
                 'money'         => $request->money,
-                'image'         => $image,
+                'image'         => 'img/situation/'.$filename,
                 'description'   => $request->description,
             ]);
 

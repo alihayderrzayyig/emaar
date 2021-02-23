@@ -26,26 +26,23 @@ class ProfileController extends Controller
     }
 
     public function editImage(User $user, Request $request){
-
-        $date = $user->profile->only(['address','birthdate']);
+        $date = $user->profile->only(['avatar']);
 
         if($request->hasFile('image')){
-            //حفظ الصورة الجديدة
-            $image=$request->image->store('profile');
-            //اذا اكو صورة قديمة يتم مسحها
-            if($user->profile->avatar !== 'img/user.png'){
-                Storage::delete($user->profile->avatar);
-            }
-            //حفظ مسار الصورة الجديدة
-            $date['avatar'] = $image;
 
-            // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(300, 200);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().Auth::user()->id.'.'.$extension;
+            $file->move('img/user/', $filename);
+
+            $img2 = Image::make('img/user/'.$filename)->resize(300, 200);
             $img2->save();
+
+            $date['avatar'] = 'img/user/'.$filename;
         }
 
         //تحديث البيانات
+        $user->profile->deleteImage();
         $user->profile->update($date);
         // return $user->profile;
         return redirect()->back();
@@ -86,13 +83,12 @@ class ProfileController extends Controller
             return \redirect()->back();
             # code...
         } else {
-            # code...
+            abort(404);
         }
 
     }
 
     public function complete(Profile $profile){
-        // return $profile->user->name;
         return \view('auth.registerProfile',['governorates' =>Governorate::all(), 'profile'=>$profile]);
     }
 
@@ -113,9 +109,5 @@ class ProfileController extends Controller
             return redirect()->back();
         }
 
-    }
-
-    public function passUpdate(Request $request, User $use){
-        dd('ttttttttttttttttttt');
     }
 }

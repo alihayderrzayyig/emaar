@@ -110,22 +110,19 @@ class AdminSituationController extends Controller
      */
     public function store(StoreSituationRequest $request)
     {
-        // $request->validateWithBag('post', [
-        //     'name'          => ['required', 'max:255'],
-        //     'phone'         => ['required'],
-        //     'governorate'   => ['required', 'integer'],
-        //     'district'      => ['required', 'integer'],
-        //     'region'        => ['required'],
-        //     'money'         => ['required'],
-        //     'image'         => ['required', 'image'],
-        //     'description'   => ['required'],
-        // ]);
 
-        $image = $request->image->store('situations');
-        // تعديل الصورة
-        $img2 = Image::make('storage/' . $image)->resize(600, 500);
-        //حفظ الصورة الجديدة بنفس الاسم والمكان
-        $img2->save();
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            $file->move('img/situation/', $filename);
+
+            $img2 = Image::make('img/situation/' . $filename)->resize(600, 500);
+            $img2->save();
+
+            $date['image'] = 'img/situation/' . $filename;
+        }
 
         Auth::user()->situations()->create([
             'name'          => $request->name,
@@ -135,7 +132,7 @@ class AdminSituationController extends Controller
             'region'        => $request->region,
             'status'        => 1,
             'money'         => $request->money,
-            'image'         => $image,
+            'image'         => 'img/situation/' . $filename,
             'description'   => $request->description,
         ]);
 
@@ -202,17 +199,19 @@ class AdminSituationController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $image = $request->image->store('situations');
-            // Storage::delete($post->image);
-            $situation->deleteImage();
-            // تعديل الصورة
-            $img2 = Image::make('storage/' . $image)->resize(600, 500);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            $file->move('img/situation/', $filename);
+
+            $img2 = Image::make('img/situation/' . $filename)->resize(600, 500);
             $img2->save();
 
-            $date['image'] = $image;
+            $date['image'] = 'img/situation/' . $filename;
         }
 
+        $situation->deleteImage();
         $situation->update($date);
 
         session()->flash('success', 'تم تحديث البيانات بنجاح');

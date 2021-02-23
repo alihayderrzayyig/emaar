@@ -110,10 +110,10 @@
                 rtl: false,
             });
         }
-        $(window).on('resize', function() {
-            width = $(this).width();
-            $(location).prop("href", location.href);
-        });
+        // $(window).on('resize', function() {
+        //     width = $(this).width();
+        //     $(location).prop("href", location.href);
+        // });
         //location.reload();
 
     </script>

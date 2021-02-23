@@ -15,10 +15,11 @@ class Branch extends Model
         'image',
     ];
 
-
-
     public function deleteImage(){
-        Storage::delete($this->image);
+        // Storage::delete($this->image);
+        if (\File::exists(public_path($this->image))) {
+            \file::delete(public_path($this->image));
+        }
     }
 
 

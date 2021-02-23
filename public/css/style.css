@@ -1612,3 +1612,33 @@ nav {
       #showCase .container .card .des {
         padding: 1rem;
         width: 100%; } }
+
+@media screen and (min-width: 768px) and (max-width: 805px) {
+  nav {
+    padding-left: .5rem !important;
+    padding-right: .5rem !important; }
+  nav .navbar-nav .nav-link {
+    font-size: 1rem; }
+  .navbar-brand {
+    margin-right: 1rem;
+    padding: 0;
+    font-size: 1.5rem !important; }
+  .navbar-nav .nav-link {
+    display: inline-block; } }
+
+@media screen and (max-width: 768px) {
+  nav {
+    margin: 0;
+    padding: 0 !important; }
+    nav .navbar-collapse {
+      text-align: center; }
+      nav .navbar-collapse .navbar-nav {
+        padding: 0;
+        text-align: center;
+        font-size: 1.5rem; }
+    nav .navbar-toggler {
+      margin: 5px; }
+    nav .navbar-brand {
+      font-size: 2rem; }
+  nav .navbar-nav .nav-link {
+    padding: .3rem; } }

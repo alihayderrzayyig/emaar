@@ -14,9 +14,7 @@ use App\Responsible;
 use App\Situation;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
 use Intervention\Image\Facades\Image;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller

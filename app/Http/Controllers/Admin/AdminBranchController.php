@@ -15,7 +15,7 @@ class AdminBranchController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','checkIsAdmin']);
+        $this->middleware(['auth', 'checkIsAdmin']);
     }
 
 
@@ -27,8 +27,7 @@ class AdminBranchController extends Controller
     public function index()
     {
         $branches = Branch::all();
-        return \view('admin.branches.index',['branches'=>$branches]);
-
+        return \view('admin.branches.index', ['branches' => $branches]);
     }
 
     /**
@@ -51,14 +50,28 @@ class AdminBranchController extends Controller
     {
 
         // \dd($request);
-        if(Auth::user()->isAdmin){
-            if($request->hasFile('image')){
-                $image=$request->image->store('branch');
-                // تعديل الصورة
-                $img2 = Image::make('storage/'.$image)->resize(600, 500);
-                //حفظ الصورة الجديدة بنفس الاسم والمكان
+        if (Auth::user()->isAdmin) {
+            // if($request->hasFile('image')){
+            //     $image=$request->image->store('branch');
+            //     // تعديل الصورة
+            //     $img2 = Image::make('storage/'.$image)->resize(600, 500);
+            //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+            //     $img2->save();
+            // }
+
+            if ($request->hasFile('image')) {
+
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = time() . '.' . $extension;
+                $file->move('img/branch/', $filename);
+
+                $img2 = Image::make('img/branch/' . $filename)->resize(600, 500);
                 $img2->save();
+
+                $image = 'img/branch/' . $filename;
             }
+
 
             Branch::create([
                 'title'     => $request->title,
@@ -80,7 +93,7 @@ class AdminBranchController extends Controller
      */
     public function show(Branch $branch)
     {
-        return \view('admin.branches.show', ['branch'=>$branch]);
+        return \view('admin.branches.show', ['branch' => $branch]);
     }
 
     /**
@@ -91,7 +104,7 @@ class AdminBranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        return \view('admin.branches.create',['branch'=>$branch]);
+        return \view('admin.branches.create', ['branch' => $branch]);
     }
 
     /**
@@ -104,21 +117,35 @@ class AdminBranchController extends Controller
     public function update(UpdateBranchRequest $request, Branch $branch)
     {
         // return $request;
-        $date = $request->only(['title','body','show']);
+        $date = $request->only(['title', 'body', 'show']);
         // return $date;
-        if($request->hasFile('image')){
-            $image=$request->image->store('branch');
-            // Storage::delete($post->image);
-            $branch->deleteImage();
+        // if($request->hasFile('image')){
+        //     $image=$request->image->store('branch');
+        //     // Storage::delete($post->image);
+        //     $branch->deleteImage();
 
-            // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(600, 500);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     // تعديل الصورة
+        //     $img2 = Image::make('storage/'.$image)->resize(600, 500);
+        //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $img2->save();
+
+        //     $date['image'] = $image;
+        // }
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            $file->move('img/branch/', $filename);
+
+            $img2 = Image::make('img/branch/' . $filename)->resize(600, 500);
             $img2->save();
 
-            $date['image'] = $image;
+            $date['image'] = 'img/branch/' . $filename;
         }
 
+        $branch->deleteImage();
         $branch->update($date);
 
         session()->flash('success', 'تمة عملة التحديث بنجاح');
@@ -136,5 +163,6 @@ class AdminBranchController extends Controller
         $branch->deleteImage();
         $branch->delete();
         session()->flash('success', 'تمة عملة الحذف بنجاح');
-        return \redirect()->back();    }
+        return \redirect()->back();
+    }
 }

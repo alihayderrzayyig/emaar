@@ -13,26 +13,46 @@ class AdminResponsibleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','checkIsAdmin']);
+        $this->middleware(['auth', 'checkIsAdmin']);
     }
 
-    public function create(){
+    public function create()
+    {
         return \view('admin.responsible.create');
     }
 
-    public function store(ResponsibleRequest $request){
+    public function store(ResponsibleRequest $request)
+    {
         $sesponsibles = Responsible::all();
         // dd($sesponsibles->count());
 
-        if($sesponsibles->count() <4){
+        if ($sesponsibles->count() < 4) {
             // return($request);
-            if($request->hasFile('image')){
-                $image=$request->image->store('responsibles');
-                // تعديل الصورة
-                $img2 = Image::make('storage/'.$image)->resize(240, 200);
-                //حفظ الصورة الجديدة بنفس الاسم والمكان
+            // if ($request->hasFile('image')) {
+            //     $image = $request->image->store('responsibles');
+            //     // تعديل الصورة
+            //     $img2 = Image::make('storage/' . $image)->resize(240, 200);
+            //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+            //     $img2->save();
+            // }
+
+
+            if ($request->hasFile('image')) {
+
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = time() . '.' . $extension;
+                $file->move('img/responsible/', $filename);
+
+                $img2 = Image::make('img/responsible/' . $filename)->resize(240, 200);
                 $img2->save();
+
+                $image = 'img/responsible/' . $filename;
             }
+
+
+
+
             Responsible::create([
                 'name' => $request->name,
                 'body' => $request->body,
@@ -41,33 +61,50 @@ class AdminResponsibleController extends Controller
 
             session()->flash('success', 'تم إضافة البيانات بنجاح');
             return \redirect()->back();
-        }else{
+        } else {
             session()->flash('error', 'لا يمكن اضافة اكتر من 4 اعضاء');
             return \redirect()->back();
         }
     }
 
-    public function edit(Responsible $responsible){
-        return \view('admin.responsible.create',[
+    public function edit(Responsible $responsible)
+    {
+        return \view('admin.responsible.create', [
             'responsible' => $responsible,
         ]);
     }
 
-    public function update(UpdateResponsibleRequest $request, Responsible $responsible){
+    public function update(UpdateResponsibleRequest $request, Responsible $responsible)
+    {
         $date = $request->only(['name', 'body']);
 
-        if($request->hasFile('image')){
+        // if ($request->hasFile('image')) {
 
-            $image=$request->image->store('responsibles');
+        //     $image = $request->image->store('responsibles');
 
-            $responsible->deleteImage();
-            // تعديل الصورة
-            $img2 = Image::make('storage/'.$image)->resize(240, 200);
-            //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $responsible->deleteImage();
+        //     // تعديل الصورة
+        //     $img2 = Image::make('storage/' . $image)->resize(240, 200);
+        //     //حفظ الصورة الجديدة بنفس الاسم والمكان
+        //     $img2->save();
+
+        //     $date['image'] = $image;
+        // }
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            $file->move('img/responsible/', $filename);
+
+            $img2 = Image::make('img/responsible/' . $filename)->resize(240, 200);
             $img2->save();
 
-            $date['image'] = $image;
+            $date['image'] = 'img/responsible/' . $filename;
         }
+
+        $responsible->deleteImage();
 
         $responsible->update($date);
 
@@ -76,7 +113,8 @@ class AdminResponsibleController extends Controller
         return \redirect()->back();
     }
 
-    public function destroy(Responsible $responsible){
+    public function destroy(Responsible $responsible)
+    {
         $responsible->deleteImage();
         $responsible->delete();
         session()->flash('success', 'تم الحذف بنجاح');
