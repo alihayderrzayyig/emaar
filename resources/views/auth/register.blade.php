@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('css')
+{{-- @section('css')
     <style>
         #test1 {
             background-image: url("{{ asset('img/bg-register.PNG') }}");
         }
     </style>
-@endsection
+@endsection --}}
 
 @section('content')
-<section id="register" style="background: url('{{ asset('img/bg-register.PNG') }}') no-repeat center">
+<section id="register" style="background: url('{{ asset('img/bg-register.PNG') }}') no-repeat fixed">
     <div class="container py-5">
         <h1 class="text-center my-3">أهلاً وسهلاً بكم في إعمار</h1>
         <div class="card mx-auto">
@@ -91,3 +91,4 @@
     });
 </script>
 @endsection
+

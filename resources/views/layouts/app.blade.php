@@ -112,7 +112,7 @@
                     jQuery('#pass-error').append('<ul class="list-unstyled m-0"></ul>');
 
                     jQuery.each(errors.responseJSON.errors, function(key, value) {
-                    jQuery('#pass-error').show();
+                        jQuery('#pass-error').show();
                         jQuery('#pass-error ul').append('<li>' + value + '</li>');
                     });
 
