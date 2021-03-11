@@ -26,6 +26,7 @@ class CreateSituationsTable extends Migration
             $table->text('description')->require();
             $table->string('image')->require();
             $table->integer('status')->default(0);
+            $table->string('slug')->require()->unique();
             $table->timestamps();
         });
     }

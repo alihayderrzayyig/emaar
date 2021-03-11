@@ -43,10 +43,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <fieldset class="form-group">
                                         <div class="form-check">
-                                            {{-- checked --}}
                                             <input class="form-check-input" type="radio" name="show" id="gridRadios1"
                                                 value="1" @if (isset($project) && $project->show) checked @endif>
                                             <label class="form-check-label" for="gridRadios1">
@@ -61,7 +60,7 @@
                                             </label>
                                         </div>
                                     </fieldset>
-                                </div>
+                                </div> --}}
 
                                 @if (isset($project))
                                     <div class="col-12">

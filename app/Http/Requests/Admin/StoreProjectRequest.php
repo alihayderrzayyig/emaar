@@ -26,7 +26,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required|string',
-            'show' => 'required|boolean',
+            // 'show' => 'required|boolean',
             'image' => 'required|image',
         ];
     }
@@ -38,7 +38,7 @@ class StoreProjectRequest extends FormRequest
             'body.required'     => 'الوصف مطلوب',
             'body.string'       => 'الوصف مطلوب',
 
-            'show.required'     => 'يجب ان تختار عرض او اخفاء المنشور',
+            // 'show.required'     => 'يجب ان تختار عرض او اخفاء المنشور',
 
             'image.required'    => 'يجب ان تختار صورة',
             'image.image'       => 'يجب ان تختار صورة',

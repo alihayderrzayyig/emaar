@@ -45,7 +45,7 @@
             <form id="gift" action="{{ route('gift.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="recaptcha" id="recaptcha">
-                <input type="hidden" name="situation_id" value="{{ $situation->id }}">
+                <input type="hidden" name="situation_slug" value="{{ $situation->slug }}">
                 <div class="card2">
                     <h3 class="text-primary mb-4">تبرع الان:</h3>
                     <div class="row justify-content-between">

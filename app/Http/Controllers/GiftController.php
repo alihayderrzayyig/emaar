@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class GiftController extends Controller
 {
-
-
-
     public function __construct()
     {
         // $this->middleware(['auth']);
@@ -43,7 +40,7 @@ class GiftController extends Controller
         $governorates = Governorate::all();
         return view('gift.create', ['governorates' => $governorates]);
     }
-    
+
     public function create2(Situation $situation)
     {
         $governorates = Governorate::all();
@@ -61,7 +58,6 @@ class GiftController extends Controller
      */
     public function store(GiftRequest $request)
     {
-
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $remoteip = $_SERVER['REMOTE_ADDR'];
         $data_recaptcha = [
@@ -82,8 +78,9 @@ class GiftController extends Controller
 
         if ($resultJson->score >= 0.6) {
             if (Auth::check()) {
-                if (isset($request->situation_id)) {
-                    $situation_id = $request->situation_id;
+                if (isset($request->situation_slug)) {
+                    $situation = Situation::where('slug', '=', $request->situation_slug)->firstOrFail();
+                    $situation_id = $situation->id;
                 } else {
                     $situation_id = null;
                 }

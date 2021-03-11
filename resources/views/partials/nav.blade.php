@@ -40,7 +40,7 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
             <li class="nav-item @if ($active_sidebar=='about' ) active @endif">
-                <a class="nav-link" href="#">حول الموقع<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ route('about') }}">حول الموقع<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item @if ($active_sidebar=='achievements' ) active @endif">
                 <a class="nav-link" href="{{ route('achievements') }}">الانجازات</a>

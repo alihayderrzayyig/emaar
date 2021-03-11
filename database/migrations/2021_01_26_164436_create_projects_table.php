@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('title')->require();
             $table->text('body')->require();
-            $table->boolean('show');
+            // $table->boolean('show');
             $table->string('image');
             $table->timestamps();
         });

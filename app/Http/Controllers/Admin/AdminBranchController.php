@@ -8,11 +8,11 @@ use App\Http\Requests\Admin\StoreBranchRequest;
 use App\Http\Requests\Admin\UpdateBranchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class AdminBranchController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth', 'checkIsAdmin']);
@@ -26,8 +26,19 @@ class AdminBranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::all();
-        return \view('admin.branches.index', ['branches' => $branches]);
+        $branchesCount = DB::table('branches')->get()->count();
+        $projectsCount = DB::table('projects')->get()->count();
+
+        $branches = DB::table('branches')
+            ->orderByDesc('created_at')
+            ->select('id', 'title', 'image', 'created_at')
+            ->get();
+
+        return \view('admin.branches.index', [
+            'branches' => $branches,
+            'branchesCount'     => $branchesCount,
+            'projectsCount'     => $projectsCount,
+        ]);
     }
 
     /**
@@ -60,7 +71,6 @@ class AdminBranchController extends Controller
             // }
 
             if ($request->hasFile('image')) {
-
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = time() . '.' . $extension;
@@ -76,7 +86,7 @@ class AdminBranchController extends Controller
             Branch::create([
                 'title'     => $request->title,
                 'body'      => $request->body,
-                'show'      => $request->show,
+                // 'show'      => $request->show,
                 'image'     => $image,
             ]);
         }
@@ -133,7 +143,6 @@ class AdminBranchController extends Controller
         // }
 
         if ($request->hasFile('image')) {
-
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
@@ -143,9 +152,9 @@ class AdminBranchController extends Controller
             $img2->save();
 
             $date['image'] = 'img/branch/' . $filename;
+            $branch->deleteImage();
         }
 
-        $branch->deleteImage();
         $branch->update($date);
 
         session()->flash('success', 'تمة عملة التحديث بنجاح');

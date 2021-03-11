@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth', 'checkIsAdmin']);
@@ -43,17 +42,32 @@ class AdminController extends Controller
 
     public function achievments()
     {
-        $branches = Branch::where('show', true)->get();
-        $projects = Project::where('show', true)->get();
+        $branchesCount = DB::table('branches')->get()->count();
+        $projectsCount = DB::table('projects')->get()->count();
+
+
+        $branches = DB::table('branches')
+            ->orderByDesc('created_at')
+            ->select('id', 'title', 'image', 'created_at')
+            ->take('4')
+            ->get();
+
+        $projects = DB::table('projects')
+            ->orderByDesc('created_at')
+            ->select('id', 'title', 'image', 'created_at')
+            ->take('6')
+            ->get();
+
         return view('admin.achievments', [
             'branches'  => $branches,
             'projects'  => $projects,
+            'branchesCount'  => $branchesCount,
+            'projectsCount'  => $projectsCount,
         ]);
     }
 
     public function editImage(Request $request)
     {
-
         $request->validate([
             'image' => 'required|image',
         ]);
@@ -162,7 +176,8 @@ class AdminController extends Controller
         // ]);
     }
 
-    public function showGiftNotifications($id){
+    public function showGiftNotifications($id)
+    {
         $governorates = Governorate::all();
         $districts = District::all();
         $gift = DB::table('notifications')->where('id', $id)->first();
@@ -174,6 +189,5 @@ class AdminController extends Controller
             'governorates' => $governorates,
             'districts' => $districts,
         ]);
-
     }
 }

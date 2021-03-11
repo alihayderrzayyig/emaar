@@ -26,7 +26,7 @@ class UpdateBranchRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required|string',
-            'show' => 'required|boolean',
+            // 'show' => 'required|boolean',
             'image' => 'sometimes|required|image',
         ];
     }

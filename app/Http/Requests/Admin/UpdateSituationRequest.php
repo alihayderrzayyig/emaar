@@ -24,13 +24,13 @@ class UpdateSituationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string',
+            'name'          => 'required|string|min:11|max:75|regex:/^[\p{L} ]+$/u',
             'phone'         => ['required' , 'regex:/^0*7(7|8|9|5)\d{8}$/', 'max:11', 'min:10'],
             'governorate'   => 'required|integer',
             'district'      => 'required|integer',
-            'region'        => 'required|string',
+            'region'        => 'required|string|min:3|max:255|regex:/^[\p{L} ]+$/u',
             'money'         => 'required|integer',
-            'description'   => 'required|string',
+            'description'   => 'required|string|min:12|regex:/^[\p{L} ]+$/u',
             'image'         => 'sometimes|required|image',
         ];
     }
@@ -39,6 +39,10 @@ class UpdateSituationRequest extends FormRequest
     {
         return [
             'name.required'     => 'الاسم مطلوب',
+            'name.string'       => 'حقل الاسم يجب ان يكون نص فقط',
+            'name.min'          => 'الاسم يجب ان لايقل عن 11 حرف',
+            'name.max'          => 'الاسم يجب ان لا يزيد عن 75 حرف',
+            'name.regex'        => 'الاسم يجب ان يتكون من الاحرف والمسافات فقط',
 
             'phone.required'          => 'حقل الهاتف مطلوب',
             'phone.regex'             => 'تاكد من ادخال رقم هاتفك بشكل صحيح',
@@ -49,17 +53,23 @@ class UpdateSituationRequest extends FormRequest
             'governorate.integer'           => 'عليك اختيار محافضة.',
             'district.required'             => 'عليك اختيار قضاء معين',
             'district.integer'              => 'عليك اختيار قضاء معين',
-            'region.required'               => 'عليك اختيار منطقة/ناحية',
+
+            'region.required'       => 'حقل منطقة/ناحية مطلوب',
+            'region.string'         => 'حقل منطقة/ناحية يجب ان يحنوي على نص',
+            'region.min'            => 'حقل منطقة/ناحية يجب ان لا يقل عن 3 حروف',
+            'region.max'            => 'حقل منطقة/ناحية يجب ان لا يزيد عن 255 حروف',
+            'region.regex'          => 'حقل منطقة/ناحية يجب ان يتكوت من كلمات فقط',
 
             'money.required'        => 'حقل المبلغ مطلوب',
             'money.integer'         => 'قيمة المبلغ يجب ان تكون قيمة رقمية',
 
-            'description.required'          => 'يرجا ادخال وصف للحالة الانسانية',
+            'description.required'          => 'حقل (وصف الحالة) مطلوب',
+            'description.string'            => 'حقل (وصف الحالة) يجب ان يحتوي على نص',
+            'description.min'               => 'حقل (وصف الحالة) يجب ان لا يقل عن 12 حر',
+            'description.regex'             => 'حقل (وصف الحالة) يجب ان يتكون من الاحرف والمسافات فقط',
 
             'image.required'          => 'يجب ان تختار صورة معينة',
             'image.image'             => 'يجب ان تختار صورة معينة',
         ];
     }
-
-
 }

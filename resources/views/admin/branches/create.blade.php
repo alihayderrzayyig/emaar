@@ -43,10 +43,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <fieldset class="form-group">
                                         <div class="form-check">
-                                            {{-- checked --}}
                                             <input class="form-check-input" type="radio" name="show" id="gridRadios1"
                                                 value="1" @if (isset($branch) && $branch->show) checked
                                       @else
@@ -63,7 +62,7 @@
                                             </label>
                                         </div>
                                     </fieldset>
-                                </div>
+                                </div> --}}
 
                                 @if (isset($branch))
                                     <div class="col-12">

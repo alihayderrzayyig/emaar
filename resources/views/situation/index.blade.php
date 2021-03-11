@@ -30,7 +30,7 @@
                 </button>
             <div class="collapse" id="collapseExample">
                 <div class="card-body filter-body">
-                    <div class="row">
+                    <div class="row" style="direction: rtl">
                         <a class="" href="{{ route('situation.index') }}?filter=name&sort=des">الاسم ب-ا</a>
                         <a class="" href="{{ route('situation.index') }}?filter=name">الاسم أ-ب</a>
                         <a class="" href="{{ route('situation.index') }}?filter=money&sort=des">ترتيب حسب الهدف تنازلي</a>
@@ -63,9 +63,9 @@
                                 <h4>{{ $situation->name }}</h4>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ route('gift.create2', $situation->id) }}/#gift"
+                                <a href="{{ route('gift.create2', $situation->slug) }}/#gift"
                                     class="btn btn-primary m-0">تبرع الان</a>
-                                <a href="{{ route('situation.show', $situation->id) }}" class="btn btn-primary m-0">إقراء
+                                <a href="{{ route('situation.show', $situation->slug) }}" class="btn btn-primary m-0">إقراء
                                     المزيد</a>
                             </div>
                         </div>

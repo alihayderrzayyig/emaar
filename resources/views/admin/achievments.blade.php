@@ -27,6 +27,7 @@
                                 <th scope="col">ت</th>
                                 <th scope="col">صورة</th>
                                 <th scope="col">العنوان</th>
+                                <th scope="col">تاريخ الاضافة</th>
                                 <th scope="col">الإجراءات</th>
                                 </tr>
                             </thead>
@@ -36,6 +37,7 @@
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td><img style="height: 30px; width: 50px;" src="{{ asset($item->image) }}" alt="" srcset=""></td>
                                         <td>{{ $item->title }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                         <td>
                                             <div class="flex btn btn-info btn-table">
                                                 <a href="{{ route('admin.branch.show', $item->id) }}"><i class="fas fa-eye"></i></a>

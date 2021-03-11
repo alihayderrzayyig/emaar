@@ -37,6 +37,7 @@
                                         <th scope="col">ت</th>
                                         <th scope="col">الاسم</th>
                                         <th scope="col">البريد الالكتروني</th>
+                                        <th scope="col">تاريخ الانظمام</th>
                                         <th scope="col">Handle</th>
                                     </tr>
                                 </thead>
@@ -48,14 +49,15 @@
                                                 </td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                                                 <td class="d-flex">
-                                                    @if ($user->profile->completed)
+                                                    {{-- @if ($user->profile->completed) --}}
                                                         <div class="ml-2 flex btn btn-info btn-table">
                                                             <a href="{{ route('admin.users.show', $user->id) }}"><i
                                                                     class="fas fa-eye"></i></a>
                                                         </div>
 
-                                                    @endif
+                                                    {{-- @endif --}}
                                                     {{-- @if (true)
                                                 <form action="#" method="post">
                                                     @csrf
@@ -69,7 +71,8 @@
                                                         <a href="{{ route('admin.users.edit', $user->id) }}"><i
                                                                 class="fas fa-cog"></i></a>
                                                     </div>
-                                                    @if (!$user->authUserLogin())
+                                                    {{-- @if (!$user->authUserLogin()) --}}
+                                                    @if ($user->name != Auth()->user()->name)
 
                                                         <form action="{{ route('admin.users.destroy', $user->id) }}"
                                                             method="post">

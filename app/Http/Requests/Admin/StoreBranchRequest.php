@@ -26,7 +26,7 @@ class StoreBranchRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required|string',
-            'show' => 'required|boolean',
+            // 'show' => 'required|boolean',
             'image' => 'required|image',
         ];
     }

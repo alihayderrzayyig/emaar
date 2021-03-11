@@ -36,7 +36,7 @@
                 </div>
             @endif
 
-            <class class="card">
+            <div class="card">
                 {{-- <div class="img">
               <img src="
               {{ asset($user->profile->avatar) }}
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                 </form>
-            </class>
+            </div>
         </div>
         </div>
     </section>

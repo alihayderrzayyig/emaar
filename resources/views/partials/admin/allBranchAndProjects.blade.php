@@ -5,7 +5,10 @@
                 <i class="far fa-file-alt m-0 p-0"></i>
             </div>
             <div class="text">
-                <p class="m-0 p-0">كل الفروع</p>
+                <p class="m-0 p-0">
+                    {{ isset($branchesCount) ? $branchesCount : '' }}
+                    كل الفروع
+                </p>
             </div>
         </div>
     </a>
@@ -15,7 +18,10 @@
                 <i class="far fa-file-alt m-0 p-0"></i>
             </div>
             <div class="text">
-                <p class="m-0 p-0">كل المشاريع</p>
+                <p class="m-0 p-0">
+                    {{ isset($projectsCount) ? $projectsCount : '' }}
+                    كل المشاريع
+                </p>
             </div>
         </div>
     </a>

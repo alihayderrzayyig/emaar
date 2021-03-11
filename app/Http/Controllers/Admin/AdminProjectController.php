@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class AdminProjectController extends Controller
@@ -23,8 +24,19 @@ class AdminProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
-        return \view('admin.projects.index', ['projects' => $projects]);
+        $branchesCount = DB::table('branches')->get()->count();
+        $projectsCount = DB::table('projects')->get()->count();
+
+        $projects = DB::table('projects')
+            ->orderByDesc('created_at')
+            ->select('id', 'title', 'image', 'created_at')
+            ->get();
+
+        return \view('admin.projects.index', [
+            'projects'          => $projects,
+            'branchesCount'     => $branchesCount,
+            'projectsCount'     => $projectsCount,
+        ]);
     }
 
     /**
@@ -54,7 +66,6 @@ class AdminProjectController extends Controller
             //     $img2->save();
             // }
             if ($request->hasFile('image')) {
-
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = time() . '.' . $extension;
@@ -69,7 +80,7 @@ class AdminProjectController extends Controller
             Project::create([
                 'title'     => $request->title,
                 'body'      => $request->body,
-                'show'      => $request->show,
+                // 'show'      => $request->show,
                 'image'     => $image,
             ]);
         }
@@ -125,7 +136,6 @@ class AdminProjectController extends Controller
         // }
 
         if ($request->hasFile('image')) {
-
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
@@ -135,9 +145,9 @@ class AdminProjectController extends Controller
             $img2->save();
 
             $date['image'] = 'img/project/' . $filename;
+            $project->deleteImage();
         }
 
-            $project->deleteImage();
         $project->update($date);
 
         session()->flash('success', 'تمة عملة التحديث بنجاح');

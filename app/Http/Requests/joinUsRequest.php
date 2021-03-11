@@ -65,7 +65,7 @@ class joinUsRequest extends FormRequest
             'region.string'         => 'حقل منطقة/ناحية يجب ان يحنوي على نص',
             'region.min'            => 'حقل منطقة/ناحية يجب ان لا يقل عن 3 حروف',
             'region.max'            => 'حقل منطقة/ناحية يجب ان لا يزيد عن 255 حروف',
-            'region.regex'          => 'حقل منطقة/ناحية يجب ان يكون باللغة العربية فقط',
+            'region.regex'          => 'حقل منطقة/ناحية يجب ان يتكوت من كلمات فقط',
 
             'description.required'          => 'حقل التفاصيل مطلوب',
             'description.string'            => 'حقل التفاصيل يجب ان يحتوي على نص',
@@ -81,6 +81,4 @@ class joinUsRequest extends FormRequest
         session()->flash('joinus-error', 't');
         return parent::failedValidation($validator);
     }
-
-
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\DB;
 
 class AdminUserController extends Controller
 {
@@ -30,12 +31,20 @@ class AdminUserController extends Controller
     {
         $search = request()->query('search');
         if ($search) {
-            // dd(request()->query('search'));
-            $users = User::with(['profile'])->where('name', 'LIKE', '%' . $search . '%')
+            // $users = User::with(['profile'])->where('name', 'LIKE', '%' . $search . '%')
+            //     ->orWhere('email', 'LIKE', '%' . $search . '%')
+            //     ->paginate(30);
+
+            $users = DB::table('users')
+                ->select('id', 'name', 'email', 'created_at')
+                ->where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('email', 'LIKE', '%' . $search . '%')
                 ->paginate(30);
         } else {
-            $users = User::with(['profile'])->orderBy('name')->paginate(30);
+            // $users = User::with(['profile'])->orderBy('name')->paginate(30);
+            $users = DB::table('users')
+                ->select('id', 'name', 'email', 'created_at')
+                ->paginate(30);
         }
         return view('admin.user.index', ['users' => $users])->with('no', 1);
     }
@@ -59,7 +68,6 @@ class AdminUserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-
         if ($request->isAdmin === 'on') {
             $isAdmin = true;
         } else {
@@ -76,7 +84,6 @@ class AdminUserController extends Controller
 
 
         if ($request->hasFile('image')) {
-
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . Auth::user()->id . '.' . $extension;
@@ -198,7 +205,6 @@ class AdminUserController extends Controller
 
 
         if ($request->hasFile('image')) {
-
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . Auth::user()->id . '.' . $extension;

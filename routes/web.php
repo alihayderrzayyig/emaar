@@ -33,6 +33,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['profileCompleted']], function () {
+    Route::get('/about', function () {
+        // return  phpinfo();
+        return view('about');
+    })->name('about');
 
     Route::get('/', function () {
         $responsibles = DB::table('responsibles')->get();
@@ -48,7 +52,6 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
 
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
-
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/achievments', [AdminController::class, 'achievments'])->name('achievments');
 
@@ -100,11 +103,12 @@ Route::group(['middleware' => ['profileCompleted']], function () {
 
 
 
-    Route::get('/gift/{situation}/gift', 'GiftController@create2')->name('gift.create2');
+    Route::get('/gift/{situation:slug}/gift', 'GiftController@create2')->name('gift.create2');
     Route::resource('/gift', 'GiftController');
 
 
-    Route::resource('/situation', 'SituationController');
+    Route::resource('/situation', 'SituationController')->only(['index', 'create', 'store']);
+    Route::get('situation/{situation:slug}', 'SituationController@show')->name('situation.show');
 
 
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');

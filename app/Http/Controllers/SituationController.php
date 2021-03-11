@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
-
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class SituationController extends Controller
 {
@@ -56,6 +56,7 @@ class SituationController extends Controller
      */
     public function create()
     {
+        // dd('ttttttt');
         $governorates = DB::table('governorates')->get();
         return view('situation.create', ['governorates' => $governorates]);
     }
@@ -91,9 +92,7 @@ class SituationController extends Controller
 
 
         if ($resultJson->score >= 0.6) {
-
-            if($request->hasFile('image')){
-
+            if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename =time().'.'.$extension;
@@ -115,6 +114,7 @@ class SituationController extends Controller
                 'money'         => $request->money,
                 'image'         => 'img/situation/'.$filename,
                 'description'   => $request->description,
+                'slug' => SlugService::createSlug(Situation::class, 'slug', $request->name),
             ]);
 
             $users = User::where('isAdmin', 1)->get();
