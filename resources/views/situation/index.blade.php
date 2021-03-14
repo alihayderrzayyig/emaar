@@ -48,7 +48,8 @@
                             <img src="{{ $situation->image }}" alt="">
                             <div class="gole">
                                 <p>
-                                    <i class="fas fa-hand-holding-usd"></i>
+                                    <i class="fas fa-chart-line"></i>
+                                    {{-- <i class="fas fa-hand-holding-usd"></i> --}}
                                     الهدف:
                                     {{ $situation->money }}
                                     IQD
