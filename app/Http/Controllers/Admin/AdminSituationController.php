@@ -43,9 +43,13 @@ class AdminSituationController extends Controller
 
         // dd(Situation::where('status',0)->get()->count());
         $situationAccept = Situation::where('status', 0)->get()->count();
+        $situationCount = Situation::where('status', 1)->get()->count();
+
         return \view('admin.situation.index', [
             'situations' => $situations,
-        ])->with('situationAccept', $situationAccept);
+        ])
+        ->with('situationCount', $situationCount)
+        ->with('situationAccept', $situationAccept);
     }
 
 
@@ -74,7 +78,10 @@ class AdminSituationController extends Controller
         }
 
         $situationAccept = Situation::where('status', 0)->get()->count();
+        $situationCount = Situation::where('status', 1)->get()->count();
+
         return \view('admin.situation.index', ['situations' => $situations])
+            ->with('situationCount', $situationCount)
             ->with('situationAccept', $situationAccept)
             ->with('DisplayButton', $DisplayButton)
             ->with('accept', true);

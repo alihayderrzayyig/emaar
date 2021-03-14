@@ -32,6 +32,9 @@
 
     <section id="slider" class="">
         <h1 class="text-center h1-header">مشاريع تم انجازها</h1>
+        <div class="all-projects">
+            <a href="{{ route('all-projects') }}" class="btn">جميع المشاريع</a>
+        </div>
         <div class="regular slider">
             @foreach ($projects as $item)
                 <div>

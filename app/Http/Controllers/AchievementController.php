@@ -26,4 +26,15 @@ class AchievementController extends Controller
             'projects' => $projects,
         ]);
     }
+
+    public function allProjects()
+    {
+        $projects = DB::table('projects')
+            ->orderByDesc('created_at')
+            ->select('title', 'body', 'image')
+            ->get();
+        return view('allProjects', [
+            'projects' => $projects,
+        ]);
+    }
 }

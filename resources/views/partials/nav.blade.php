@@ -1,27 +1,39 @@
 <nav class="navbar navbar-expand-md navbar-light nav-primary">
     @auth
         <div class="nav-item dropdown">
-            <a class="navbar-brand " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+            <a class="navbar-brand shadow-lg" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="{{ asset(auth()->user()->profile->avatar) }}" width="30" height="30"
                     class="d-inline-block align-top" alt="" loading="lazy">
             </a>
             <div class="dropdown-menu text-left" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->slug) }}">معلومات الحساب</a>
-                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->slug) }}">
+                    معلومات الحساب
+                    <i class="far fa-user mr-2"></i>
+                </a>
+                {{-- <div class="dropdown-divider"></div> --}}
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-avatar">
                     تغيير الصوره الشخصية
+                    {{-- <i class="far fa-meh-blank mr-2"></i> --}}
+                    <i class="fas fa-image mr-2"></i>
                 </button>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()->slug) }}">تعديل الحساب</a>
-                <div class="dropdown-divider"></div>
+                {{-- <div class="dropdown-divider"></div> --}}
+                <a class="dropdown-item" href="{{ route('profile.edit', auth()->user()->slug) }}">
+                    تعديل الحساب
+                    <i class="fas fa-user-cog mr-2"></i>
+                </a>
+                {{-- <div class="dropdown-divider"></div> --}}
                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#ching-pass">
                     تعديل كلمة السر
+                    <i class="fas fa-fingerprint mr-2"></i>
                 </button>
                 <div class="dropdown-divider"></div>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <button type="submit" class="dropdown-item" href="">تسجيل الخروج</button>
+                    <button type="submit" class="dropdown-item">
+                        تسجيل الخروج
+                        <i class="fas fa-power-off mr-2"></i>
+                    </button>
                 </form>
             </div>
         </div>

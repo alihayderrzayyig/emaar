@@ -36,17 +36,23 @@
                         <a href="#joinUs" class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--doctor">
                             <h3 class="floatItem-tagline">أنضم إلينا</h3>
                             {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
-                            <i class="floatItem-icon fas fa-users-cog"></i>
+                            <div class="icon">
+                                <i class="floatItem-icon fas fa-users-cog"></i>
+                            </div>
                         </a>
                         <a href="{{ route('situation.create') }}"
                             class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--conditions">
                             <h3 class="floatItem-tagline">أضافة حالة</h3>
-                            <i class="floatItem-icon fas fa-plus"></i>
+                            <div class="icon">
+                                <i class="floatItem-icon fas fa-plus"></i>
+                            </div>
                         </a>
                         <a href="{{ route('gift.create') }}"
                             class="col-sm-12 col-md-4 col-xl-4 float-ch floatItem-column floatItem--appointment">
                             <h3 class="floatItem-tagline">تبرع الآن</h3>
-                            <i class="floatItem-icon fas fa-file-signature"></i>
+                            <div class="icon">
+                                <i class="floatItem-icon fas fa-file-signature"></i>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -122,10 +128,14 @@
                     <div class="col-12 col-md-4 col-lg-4 col-card">
                         <div class="card h-100">
                             <div class="card-body">
-                                <i class="floatItem-icon fas fa-landmark"></i>
+                                <div class="icon">
+                                    <i class="floatItem-icon fas fa-landmark"></i>
+                                </div>
                                 <h4>موادأولية</h4>
                                 <p>
-                                    هل انت تاجر، او صاحب محل لتجهيز مواد اوليه للبناء، او انت مواطن عادي اكمل بناء منزله وزادت عنده بعض المواد، أياً من كنت هنا يمكنك تقديم المساعدة بتقديم المواد الاولية ومساعدتهم
+                                    هل انت تاجر، او صاحب محل لتجهيز مواد اوليه للبناء، او انت مواطن عادي اكمل بناء منزله
+                                    وزادت عنده بعض المواد، أياً من كنت هنا يمكنك تقديم المساعدة بتقديم المواد الاولية
+                                    ومساعدتهم
                                 </p>
                             </div>
                             <div class="card-footer">
@@ -138,12 +148,14 @@
                     <div class="col-12 col-md-4 col-lg-4 col-card">
                         <div class="card h-100">
                             <div class="card-body">
-                                {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
-                                <i class="floatItem-icon fas fa-hand-holding-usd"></i>
-
+                                {{-- <i class="floatItem2-icon fas fa-user-md"></i> --}}
+                                <div class="icon">
+                                    <i class="floatItem-icon fas fa-hand-holding-usd"></i>
+                                </div>
                                 <h4>قيمة نقدية</h4>
                                 <p>
-                                    يمكن التبرع باي قيمة نقديه للمساعدة في اعمار منزل أي شخص محدد او يمكنك تقديمها لنا ونحن نتكفل بتقديمها حسب الاولوية
+                                    يمكن التبرع باي قيمة نقديه للمساعدة في اعمار منزل أي شخص محدد او يمكنك تقديمها لنا ونحن
+                                    نتكفل بتقديمها حسب الاولوية
                                 </p>
                             </div>
                             <div class="card-footer">
@@ -157,10 +169,13 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 {{-- <i class="floatItem-icon fas fa-user-md"></i> --}}
-                                <i class="floatItem-icon fas fa-people-carry"></i>
+                                <div class="icon">
+                                    <i class="floatItem-icon fas fa-people-carry"></i>
+                                </div>
                                 <h4>تطوع ميداني</h4>
                                 <p>
-                                    اذا كن مهندس بناء كربائي او عامل او يمكنك المساعدة في عمليات اعمار بي شكل من اشكال واحببت المساعدة يشرفنا قبول طلبك
+                                    اذا كن مهندس بناء كربائي او عامل او يمكنك المساعدة في عمليات اعمار بي شكل من اشكال
+                                    واحببت المساعدة يشرفنا قبول طلبك
                                 </p>
                             </div>
                             <div class="card-footer">
@@ -406,6 +421,7 @@
         html {
             scroll-behavior: smooth;
         }
+
         .session-messages {
             width: 90%;
             position: absolute;
@@ -423,19 +439,20 @@
 @section('js')
 
 
-<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.sitekey') }}"></script>
-<script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('{{ config('services.recaptcha.sitekey') }}', {
-            action: 'contact'
-        }).then(function(token) {
-            if (token) {
-                document.getElementById('recaptcha').value = token;
-                document.getElementById('recaptcha2').value = token;
-            }
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.sitekey') }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('services.recaptcha.sitekey') }}', {
+                action: 'contact'
+            }).then(function(token) {
+                if (token) {
+                    document.getElementById('recaptcha').value = token;
+                    document.getElementById('recaptcha2').value = token;
+                }
+            });
         });
-    });
-</script>
+
+    </script>
 
 
     <script>

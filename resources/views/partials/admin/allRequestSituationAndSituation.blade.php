@@ -5,7 +5,12 @@
                 <i class="fab fa-leanpub m-0" style="font-size: 2rem"></i>
             </div>
             <div class="text">
-                <p class="m-0 p-0">الحالات</p>
+                <p class="m-0 p-0">
+                    @isset($situationCount)
+                        {{ $situationCount }}
+                    @endisset
+                    الحالات
+                </p>
             </div>
         </div>
     </a>
@@ -15,7 +20,12 @@
                 <i class="far fa-clock m-0 p-0" style="font-size: 2rem"></i>
             </div>
             <div class="text">
-                <p class="m-0 p-0">{{ $situationAccept }} طلبات الموافقة</p>
+                <p class="m-0 p-0">
+                    @isset($situationAccept)
+                        {{ $situationAccept }}
+                    @endisset
+                    طلبات الموافقة
+                </p>
             </div>
         </div>
     </a>

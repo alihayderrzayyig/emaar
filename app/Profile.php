@@ -21,7 +21,10 @@ class Profile extends Model
     public function deleteImage(){
 
         if (\File::exists(public_path($this->avatar))) {
-            \file::delete(public_path($this->avatar));
+            // dd($this->avatar);
+            if($this->avatar != 'img/user.png'){
+                \file::delete(public_path($this->avatar));
+            }
         }
 
         // Storage::delete($this->avatar);
