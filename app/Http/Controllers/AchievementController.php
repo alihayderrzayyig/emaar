@@ -32,7 +32,7 @@ class AchievementController extends Controller
         $projects = DB::table('projects')
             ->orderByDesc('created_at')
             ->select('title', 'body', 'image')
-            ->get();
+            ->paginate(4);
         return view('allProjects', [
             'projects' => $projects,
         ]);

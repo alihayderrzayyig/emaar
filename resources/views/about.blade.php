@@ -43,7 +43,7 @@
                         <h4 class="mt-0 mb-3">علي حيدر رزيك</h4>
                         <p>خريج جامعة الانبار كلية علوم الحاسبات وتكنلوجيا المعلومات, قسم علوم الحاسبات.</p>
                     </div>
-                    <img src="{{ asset('img/1.jpg') }}" class="align-self-center mr-3 rounded-circle shadow-lg" alt="...">
+                    <img src="{{ asset('img/Ali.jpg') }}" class="align-self-center mr-3 rounded-circle shadow-lg" alt="...">
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6">

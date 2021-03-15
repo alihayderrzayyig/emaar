@@ -21,7 +21,9 @@
     <section id="allCases">
         <div class="container">
             <h1 class="h1-header text-center">جميع الحالات</h1>
-            <p class="filter">
+
+
+            {{-- <p class="filter">
                 <button class="btn btn-filter" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample">
                     ترتيب
@@ -40,7 +42,32 @@
                     </div>
                 </div>
             </div>
-            </p>
+            </p> --}}
+
+            <div class="filter">
+                <button class="btn btn-filter" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    ترتيب
+                    حسب
+                    :
+                </button>
+            </div>
+            <div class="collapse" id="collapseExample">
+                <div class="card-body filter-body">
+                    <div class="row" style="direction: rtl">
+                        <a class="" href="{{ route('situation.index') }}?filter=name&sort=des">الاسم ب-ا</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=name">الاسم أ-ب</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=money&sort=des">ترتيب حسب الهدف
+                            تنازلي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=money">ترتيب حسب الهدف تصاعدي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=achieve&sort=des">ترتيب حسب المنجز
+                            تنازلي</a>
+                        <a class="" href="{{ route('situation.index') }}?filter=achieve">ترتيب حسب المنجز تصاعدي</a>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row flex-row-reverse">
                 @foreach ($situations as $situation)
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
@@ -66,7 +93,8 @@
                             <div class="card-footer">
                                 <a href="{{ route('gift.create2', $situation->slug) }}/#gift"
                                     class="btn btn-primary m-0">تبرع الان</a>
-                                <a href="{{ route('situation.show', $situation->slug) }}" class="btn btn-primary m-0">إقراء
+                                <a href="{{ route('situation.show', $situation->slug) }}"
+                                    class="btn btn-primary m-0">إقراء
                                     المزيد</a>
                             </div>
                         </div>
@@ -98,6 +126,7 @@
             border-top-right-radius: 0rem;
             border-bottom-right-radius: 0rem;
         }
+
         .pagination .page-item:last-child .page-link {
             border-top-left-radius: 0rem;
             border-bottom-left-radius: 0rem;
