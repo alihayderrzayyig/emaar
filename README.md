@@ -26,3 +26,13 @@ $ php artisan key:generate
 # run migration and seeders
 $ php artisan migrate:fresh --seed
 ```
+
+
+## The admin account
+
+```bash
+email: admin@gmail.com
+password: 00000000
+```
+## Note
+- You must add an API for Google and Facebook to login by it, And ReCAPTCHA API.
