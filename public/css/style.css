@@ -1140,6 +1140,8 @@ nav {
       width: 50%; }
       #about .container-fluid .text h4 {
         width: 100%; }
+      #about .container-fluid .text .text-info {
+        font-weight: 600; }
 
 #about-designer {
   background-color: #D5EEED;
@@ -1761,12 +1763,14 @@ nav {
   nav {
     padding-left: .5rem !important;
     padding-right: .5rem !important; }
+    nav .navbar-nav {
+      padding: 0; }
   nav .navbar-nav .nav-link {
-    font-size: 1rem; }
+    font-size: .9rem; }
   .navbar-brand {
     margin-right: 1rem;
     padding: 0;
-    font-size: 1.5rem !important; }
+    font-size: 1.3rem !important; }
   .navbar-nav .nav-link {
     display: inline-block; } }
 
@@ -1824,7 +1828,10 @@ nav {
         left: 50%;
         transform: translate(-50%, -50%);
         color: white;
-        z-index: 1; } }
+        z-index: 1; }
+        #about .container-fluid .text .text-info {
+          color: white !important;
+          font-weight: 600; } }
 
 @media screen and (max-width: 805px) {
   nav .dropdown-menu {
@@ -1881,4 +1888,20 @@ nav {
       padding-top: 5rem !important;
       padding-bottom: 5rem !important; }
     #about .container-fluid .text {
+      height: 100%; } }
+
+@media screen and (max-width: 767px) {
+  nav .navbar-nav {
+    flex-direction: column-reverse !important; }
+    nav .navbar-nav .nav-item {
+      font-size: 1.3rem; } }
+
+@media screen and (min-width: 769px) and (max-width: 853px) {
+  #about {
+    height: 100%; }
+    #about .container-fluid .img {
+      padding-top: 5rem !important;
+      padding-bottom: 5rem !important; }
+    #about .container-fluid .text {
+      margin-top: 3rem;
       height: 100%; } }
