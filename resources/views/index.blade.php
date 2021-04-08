@@ -358,27 +358,27 @@
                                 <input type="hidden" name="recaptcha" id="recaptcha2">
                                 <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="form-group">
-                                        <input name="name" class="form-control" type="text" placeholder="الاسم الكامل"
+                                        <input name="com_name" class="form-control" type="text" value="{{ old("com_name") }}" placeholder="الاسم الكامل"
                                             required>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="form-group">
-                                        <input name="phone" class="form-control" type="text" placeholder="رقم الهاتف"
+                                        <input name="com_phone" class="form-control" type="text" value="{{ old("com_phone") }}" placeholder="رقم الهاتف"
                                             required>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-4">
                                     <div class="form-group">
-                                        <input name="email" class="form-control" type="text" placeholder="البريد الالكتروني"
+                                        <input name="com_email" class="form-control" type="text" value="{{ old("com_email") }}" placeholder="البريد الالكتروني"
                                             required>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1"
-                                            rows="5np" placeholder="الوصف" required></textarea>
+                                        <textarea name="com_description" class="form-control" id="exampleFormControlTextarea1"
+                                            rows="5np" placeholder="الوصف" required>{{ old("com_description") }}"</textarea>
                                     </div>
                                 </div>
 

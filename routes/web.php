@@ -114,7 +114,7 @@ Route::group(['middleware' => ['profileCompleted']], function () {
     Route::post('/join-us', [JoinUsController::class, 'store'])->name('join-us');
     Route::post('/message', [MessageController::class, 'store'])->name('message.store');
     Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
-    Route::get('/achievements/all-projects', [AchievementController::class, 'allProjects'])->name('all-projects');
+    // Route::get('/achievements/all-projects', [AchievementController::class, 'allProjects'])->name('all-projects');
 });
 
 

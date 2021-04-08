@@ -38,10 +38,10 @@ class MessageController extends Controller
         // if ($resultJson->success == true) {
             // dd($data);
             $m = Message::create([
-                'name'          =>$request->name,
-                'phone'         =>$request->phone,
-                'email'         =>$request->email,
-                'description'   =>$request->description,
+                'name'          =>$request->com_name,
+                'phone'         =>$request->com_phone,
+                'email'         =>$request->com_email,
+                'description'   =>$request->com_description,
             ]);
 
             $users = User::where('isAdmin', 1)->get();

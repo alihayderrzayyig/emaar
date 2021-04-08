@@ -9,7 +9,7 @@
 @endsection --}}
 
 @section('content')
-<section id="register" style="background: url('{{ asset('img/bg-register.PNG') }}') no-repeat fixed">
+<section id="register" style="background: url('{{ asset('img/bg-register.PNG') }}') content-box">
     <div class="container py-5">
         <h1 class="text-center my-3">أهلاً وسهلاً بكم في إعمار</h1>
         <div class="card mx-auto">

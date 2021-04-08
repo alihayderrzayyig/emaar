@@ -17,7 +17,7 @@ class AchievementController extends Controller
 
         $projects = DB::table('projects')
             ->orderByDesc('created_at')
-            ->select('title', 'body', 'image')
+            ->select('title', 'body', 'slug', 'image')
             ->take('6')
             ->get();
 
@@ -27,14 +27,14 @@ class AchievementController extends Controller
         ]);
     }
 
-    public function allProjects()
-    {
-        $projects = DB::table('projects')
-            ->orderByDesc('created_at')
-            ->select('title', 'body', 'image')
-            ->paginate(4);
-        return view('allProjects', [
-            'projects' => $projects,
-        ]);
-    }
+    // public function allProjects()
+    // {
+    //     $projects = DB::table('projects')
+    //         ->orderByDesc('created_at')
+    //         ->select('title', 'body', 'image')
+    //         ->paginate(4);
+    //     return view('allProjects', [
+    //         'projects' => $projects,
+    //     ]);
+    // }
 }

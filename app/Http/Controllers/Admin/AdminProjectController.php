@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProjectRequest;
 use App\Http\Requests\Admin\UpdateProjectRequest;
 use App\Project;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,6 +83,8 @@ class AdminProjectController extends Controller
                 'body'      => $request->body,
                 // 'show'      => $request->show,
                 'image'     => $image,
+                'slug' => SlugService::createSlug(Project::class, 'slug', $request->title),
+
             ]);
         }
 

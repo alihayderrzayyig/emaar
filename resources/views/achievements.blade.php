@@ -32,25 +32,53 @@
 
     <section id="slider" class="">
         <h1 class="text-center h1-header">مشاريع تم انجازها</h1>
-        <div class="all-projects">
+        {{-- <div class="all-projects">
             <a href="{{ route('all-projects') }}" class="btn">جميع المشاريع</a>
-        </div>
+        </div> --}}
         <div class="regular slider">
             @foreach ($projects as $item)
-                <div>
-                    <div class="card">
+                <div class="">
+                    <div class="card shadow" style="">
                         <img src="{{ asset($item->image) }}" alt="" srcset="">
                         <div class="card-body">
                             <h4 class="text-center m-3">{{ $item->title }}</h4>
-                            <p>{{ str_limit($item->body, 135) }}</p>
+                            <p>{{ str_limit($item->body, 85) }}</p>
+                            <button class="d-block btn btn-mor mx-auto" data-toggle="modal"
+                                data-target="#{{ $item->slug }}">
+                                المزيد
+                            </button>
                         </div>
-                        <div class="card-footer">
-                            {{-- <a href="" class="btn btn-info">المزيد</a> --}}
-                        </div>
+                        {{-- <div class="card-footer"> --}}
+                        {{-- <a href="" class="btn btn-info">المزيد</a> --}}
+                        {{-- </div> --}}
                     </div>
                 </div>
             @endforeach
         </div>
+
+
+        @foreach ($projects as $item)
+            <!-- Modal -->
+            <div class="modal fade" id="{{ $item->slug }}" tabindex="-1" aria-labelledby="{{ $item->slug }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content shadow-lg">
+                        <div class="modal-body">
+                            <div class="img">
+                                <img src="{{ asset($item->image) }}" class="img-fluid" alt="...">
+                            </div>
+                            <div class="text">
+                                <h4 class="mt-0">{{ $item->title }}</h4>
+                                <p>{{ $item->body }}</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            أغلاق
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </section>
 
 @endsection

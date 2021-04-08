@@ -26,16 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:deleteReadNotifications')->everyMinute();
-
-        // $schedule->exec('php artisan command:deleteReadNotifications')
-        //     ->timezone('Asia/Baghdad')
-        //     ->everyFiveMinutes();
-
-        // $schedule->call(function () {
-        //     DB::table('notifications')->where('read_at', '!=', null)->delete();
-        // })->everyMinute();
-
+        $schedule->command('command:deleteReadNotifications')->weekly();
     }
 
     /**
@@ -46,7 +37,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__ . '/Commands');
-
         require base_path('routes/console.php');
     }
 }
