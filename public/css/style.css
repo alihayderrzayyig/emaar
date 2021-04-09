@@ -1186,7 +1186,8 @@ nav {
 #about {
   height: 36rem; }
   #about .container {
-    display: flex; }
+    display: flex;
+    flex-direction: row-reverse; }
     #about .container .img {
       width: 50%; }
       #about .container .img img {
@@ -1283,33 +1284,6 @@ nav {
           background-color: #019897; }
     #projects-body .container .row .col-12:not(:last-child) {
       margin-bottom: 5rem !important; }
-
-@media screen and (max-width: 991px) {
-  #about-designer {
-    background-color: #D5EEED;
-    padding-top: 5rem !important;
-    padding-bottom: 5rem !important; }
-    #about-designer .container .row p {
-      direction: rtl; }
-    #about-designer .container .row .media {
-      border-bottom: 1px solid #5c5c5c;
-      flex-direction: column-reverse;
-      align-items: center;
-      margin-bottom: 3rem; }
-      #about-designer .container .row .media h4 {
-        text-align: center; }
-      #about-designer .container .row .media img {
-        width: 200px !important;
-        height: 200px !important;
-        margin-bottom: 3rem; }
-    #about-designer .container .row .info {
-      border-right: none; }
-      #about-designer .container .row .info h4 {
-        direction: rtl;
-        margin-right: 2rem; }
-      #about-designer .container .row .info ul {
-        display: inline-block;
-        padding-right: 3rem; } }
 
 @media screen and (max-width: 991px) {
   #about-designer {
@@ -2064,3 +2038,25 @@ nav {
       #showCase .container .card .des {
         padding: 1rem;
         width: 100%; } }
+
+@media screen and (max-width: 480px) {
+  #about {
+    display: block;
+    height: 100% !important; }
+    #about .container {
+      position: relative;
+      display: block; }
+      #about .container .img {
+        position: absolute;
+        padding-top: 5rem !important;
+        padding-bottom: 5rem !important; }
+        #about .container .img img {
+          height: 100%; }
+      #about .container .text {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+        margin: auto;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none; } }

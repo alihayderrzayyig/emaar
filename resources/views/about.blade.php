@@ -12,9 +12,6 @@
 
 <section id="about">
     <div class="container">
-        <div class="img">
-            <img class="img-fluid" src="{{ asset('/img/cfi.png') }}" alt="" srcset="">
-        </div>
         <div class="text px-3">
             <h1 class="text-center font-weight-bold mb-4">
                 من
@@ -25,6 +22,9 @@
                 <span class="text-info">CodeForIraq</span>
             </h4>
                 <p> نحن مبادرة إنسانية غير ربحية تهدف الى خدمة المجتمع عن طريق البرمجة Programming. تعتبر <span class="text-info">"CodeForIraq"</span> مبادرة تعليمية حقيقية ترعى المهتمين بتعلم تصميم وبرمجة تطبيقات الهاتف الجوال ومواقع الانترنت وبرامج الحاسوب والشبكات والاتصالات ونظم تشغيل الحاسوب باستخدام التقنيات مفتوحة المصدر Open Source ، كما توفر لهم جميع الدروس التعليمية اللازمة وبشكل مجاني تماماً </p>
+        </div>
+        <div class="img">
+            <img class="img-fluid" src="{{ asset('/img/cfi.png') }}" alt="" srcset="">
         </div>
     </div>
 </section>
