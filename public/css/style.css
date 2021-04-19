@@ -1193,6 +1193,7 @@ nav {
       #about .container .img img {
         max-height: 36rem; }
     #about .container .text {
+      color: #34495e;
       direction: rtl;
       display: flex;
       flex-direction: column;
@@ -1207,7 +1208,8 @@ nav {
 #about-designer {
   background-color: #D5EEED;
   padding-top: 5rem !important;
-  padding-bottom: 5rem !important; }
+  padding-bottom: 5rem !important;
+  color: #34495e; }
   #about-designer .container .row p {
     direction: rtl; }
   #about-designer .container .row .media img {
@@ -1216,6 +1218,7 @@ nav {
   #about-designer .container .row .info {
     border-right: 1px solid rgba(121, 121, 121, 0.548); }
     #about-designer .container .row .info h4 {
+      color: #2c3e50;
       direction: rtl;
       margin-right: 2rem; }
     #about-designer .container .row .info ul {
@@ -1284,6 +1287,23 @@ nav {
           background-color: #019897; }
     #projects-body .container .row .col-12:not(:last-child) {
       margin-bottom: 5rem !important; }
+
+#about-emaar {
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+  background-color: #D5EEED;
+  color: #34495e;
+  direction: rtl; }
+  #about-emaar .container {
+    max-width: 700px; }
+  #about-emaar h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600; }
+  #about-emaar p {
+    font-size: 1.1rem;
+    font-weight: 500; }
 
 @media screen and (max-width: 991px) {
   #about-designer {
@@ -1376,7 +1396,8 @@ nav {
         left: 50%;
         transform: translate(-50%, -50%);
         color: white;
-        z-index: 1; }
+        z-index: 1;
+        width: 100%; }
         #about .container .text .text-info {
           color: white !important;
           font-weight: 600; }
@@ -2059,4 +2080,5 @@ nav {
         position: relative;
         top: 0;
         left: 0;
-        transform: none; } }
+        transform: none;
+        width: 100%; } }

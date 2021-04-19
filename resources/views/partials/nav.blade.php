@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light nav-primary">
+<nav class="navbar navbar-expand-md navbar-light nav-primary shadow-sm">
     @auth
         <div class="nav-item dropdown">
             <a class="navbar-brand shadow-lg" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
